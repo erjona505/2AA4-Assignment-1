@@ -43,5 +43,6 @@ public class Game {
 	 * @return 
 	 */
 	public boolean isDone() {
+        return true;
 	}
 }

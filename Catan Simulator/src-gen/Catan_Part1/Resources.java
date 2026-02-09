@@ -5,25 +5,26 @@
 package Catan_Part1;
 
 /************************************************************/
+
+import java.util.Map;
+import java.util.HashMap;
+
 /**
  * 
  */
 public class Resources {
-	/**
-	 * 
-	 */
-	private ResourceCount[] resources;
+
+    private Map<ResourceType, Integer> resources = new HashMap<>();
 	/**
 				 * 
 				 */
-				public Resource Type
-	resource type;
+    public ResourceType resourceType;
 
 	/**
 	 * 
 	 * @param resources 
 	 */
-	public void Resources(ResourceCount resources) {
+	public void Resources(Map<ResourceType, Integer> resources) {
 	}
 
 	/**
@@ -31,19 +32,20 @@ public class Resources {
 	 * @return 
 	 */
 	public int totalCards() {
+        return 0;
+	}
+
+	/**
+	 *
+	 * @param resources
+	 */
+	public void add(Map<ResourceType, Integer> resources) {
 	}
 
 	/**
 	 * 
-	 * @param resource 
+	 * @param resources
 	 */
-	public void add(ResourceCount resource) {
-	}
-
-	/**
-	 * 
-	 * @param resource 
-	 */
-	public void remove(ResourceCount resource) {
+	public void remove(Map<ResourceType, Integer> resources) {
 	}
 }

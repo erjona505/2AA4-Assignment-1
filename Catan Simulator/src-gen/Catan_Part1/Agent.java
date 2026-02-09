@@ -20,19 +20,12 @@ public class Agent {
 	/**
 	 * 
 	 */
-	private undef resources;
+	private Resources resources;
 	/**
 	 * 
 	 */
 	public GameMap gamemap;
-	/**
-	 * 
-	 */
-	public Resources resources;
-	/**
-	 * 
-	 */
-	public GameMap gamemap;
+
 
 	/**
 	 * 
@@ -40,7 +33,7 @@ public class Agent {
 	 * @param resources 
 	 * @param points 
 	 */
-	public void Agents(int id, undef resources, int points) {
+	public void Agents(int id, Resources resources, int points) {
 	}
 
 	/**
@@ -48,6 +41,7 @@ public class Agent {
 	 * @return 
 	 */
 	public int getId() {
+        return 0;
 	}
 
 	/**
@@ -55,6 +49,7 @@ public class Agent {
 	 * @return 
 	 */
 	public int getPoints() {
+        return 0;
 	}
 
 	/**
@@ -71,6 +66,7 @@ public class Agent {
 	 * @return 
 	 */
 	public boolean buildRoad(int edgeId, GameMap map) {
+        return true;
 	}
 
 	/**
@@ -80,6 +76,7 @@ public class Agent {
 	 * @return 
 	 */
 	public boolean buildSettlement(int nodeId, GameMap map) {
+        return true;
 	}
 
 	/**
@@ -89,6 +86,7 @@ public class Agent {
 	 * @return 
 	 */
 	public boolean buildCity(int nodeId, GameMap map) {
+        return true;
 	}
 
 	/**
@@ -96,6 +94,7 @@ public class Agent {
 	 * @return 
 	 */
 	public boolean isSevenCards() {
+        return true;
 	}
 
 	/**

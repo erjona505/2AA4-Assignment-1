@@ -16,7 +16,7 @@ public class Tile {
 	/**
 	 * 
 	 */
-	private undef resourceType;
+	private ResourceType resourceType;
 	/**
 	 * 
 	 */
@@ -38,6 +38,7 @@ public class Tile {
 	 * @return 
 	 */
 	public int getNumberToken() {
+        return 0;
 	}
 
 	/**
@@ -45,6 +46,6 @@ public class Tile {
 	 * @param id 
 	 * @param building 
 	 */
-	public void Tile(int id, undef building) {
+	public void Tile(int id, Building building) {
 	}
 }

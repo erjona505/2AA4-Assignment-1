@@ -27,6 +27,7 @@ public class Edge {
 	 * @return 
 	 */
 	public int getId() {
+        return 0;
 	}
 
 	/**
@@ -34,6 +35,7 @@ public class Edge {
 	 * @return 
 	 */
 	public Road getRoad() {
+        return new Road();
 	}
 
 	/**
@@ -41,6 +43,7 @@ public class Edge {
 	 * @return 
 	 */
 	public boolean isOccupied() {
+        return true;
 	}
 
 	/**

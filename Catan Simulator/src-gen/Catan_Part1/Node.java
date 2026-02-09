@@ -16,17 +16,14 @@ public class Node {
 	/**
 	 * 
 	 */
-	private undef building;
-	/**
-	 * 
-	 */
-	public Building building;
+	private Building building;
 
 	/**
 	 * 
 	 * @return 
 	 */
 	public int getId() {
+        return 0;
 	}
 
 	/**
@@ -35,6 +32,7 @@ public class Node {
 	 * @return 
 	 */
 	public void getBuilding() {
+
 	}
 
 	/**
@@ -49,6 +47,7 @@ public class Node {
 	 * @return 
 	 */
 	public boolean isOccupied() {
+        return true;
 	}
 
 	/**
@@ -56,6 +55,6 @@ public class Node {
 	 * @param id 
 	 * @param building 
 	 */
-	public void Node(int id, undef building) {
+	public void Node(int id, Building building) {
 	}
 }

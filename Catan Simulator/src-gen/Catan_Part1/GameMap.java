@@ -21,18 +21,7 @@ public class GameMap {
 	 * 
 	 */
 	private Edge[] edges;
-	/**
-	 * 
-	 */
-	public Edge[] edge;
-	/**
-	 * 
-	 */
-	public Tile[] tile;
-	/**
-	 * 
-	 */
-	public Node[] node;
+
 	/**
 	 * 
 	 */
@@ -53,6 +42,7 @@ public class GameMap {
 	 * @return 
 	 */
 	public Tile getTile(int id) {
+        return new Tile();
 	}
 
 	/**
@@ -61,6 +51,7 @@ public class GameMap {
 	 * @return 
 	 */
 	public Node getNode(int id) {
+        return new Node();
 	}
 
 	/**
@@ -69,6 +60,7 @@ public class GameMap {
 	 * @return 
 	 */
 	public Edge getEdge(int id) {
+        return new Edge();
 	}
 
 	/**
@@ -78,6 +70,7 @@ public class GameMap {
 	 * @return 
 	 */
 	public boolean isRoad(Agent agent, int edgeId) {
+        return true;
 	}
 
 	/**
@@ -87,6 +80,7 @@ public class GameMap {
 	 * @return 
 	 */
 	public boolean isSettlement(Agent agent, int nodeId) {
+        return true;
 	}
 
 	/**
@@ -96,6 +90,7 @@ public class GameMap {
 	 * @return 
 	 */
 	public boolean isCity(Agent agent, int nodeId) {
+        return true;
 	}
 
 	/**
