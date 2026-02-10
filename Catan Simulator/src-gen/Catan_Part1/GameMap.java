@@ -10,12 +10,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ */
 public class GameMap {
 
 
-	private ArrayList<Tile> tiles;
-	private ArrayList<Node> nodes;
-	private ArrayList<Edge> edges;
+    private ArrayList<Tile> tiles;
+    private ArrayList<Node> nodes;
+    private ArrayList<Edge> edges;
 
     private Map<Integer, List<Integer>> tilesToNodes;
     private Map<Integer, List<Integer>> edgeToNodes;
@@ -23,7 +26,7 @@ public class GameMap {
 
 
 
-	public  GameMap() {
+    public  GameMap() {
         tiles= new ArrayList<Tile>();
         nodes=new ArrayList<Node>();
         edges=new ArrayList<Edge>();
@@ -372,10 +375,10 @@ public class GameMap {
 
     //creates and returns a list of all the neigbors of a node
     private List<Integer> getNeighborNodes(int nodeId){
-        return nodeNeighbors.getOrDefault(nodeId, new ArrayList<>())
+        return nodeNeighbors.getOrDefault(nodeId, new ArrayList<>());
     }
 
-    public boolean isValidSettlementPostion(int nodeId){
+    public boolean isValidSettlementPosition(int nodeId){
         Node targetNode= getNode(nodeId);
         //check if the node does not exist
         if (targetNode==null)
@@ -448,7 +451,7 @@ public class GameMap {
         for (int nodeId: endpoints) {
             //check if the nodes have a building (either settlement or city)
             Node node = getNode(nodeId);
-            if (node != null && node.isOccupied() && agent.equals(node.getBuilding().getOwner)) {
+            if (node != null && node.isOccupied() && agent.equals(node.getBuilding().getOwner())) {
                 return true;
             }
             //check for any road on any other edge at this node
@@ -468,36 +471,12 @@ public class GameMap {
 
 
 
-
-
-
-
-    public void getAgentRoadCount(){}
-    public int getAgentSettelmentCount(){
-        return 0;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	public Tile getTile(int id) {
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Tile getTile(int id) {
         if (id>=0 && id<tiles.size()){
             return tiles.get(id);
         }
@@ -516,7 +495,7 @@ public class GameMap {
         }
         return null;
 
-	}
+    }
 
 	/**
 	 * 
@@ -530,71 +509,179 @@ public class GameMap {
 
         }
         return null;
-	}
+    }
 
 
 
 
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param edgeId 
-	 * @return 
-	 */
-	public boolean isRoad(Agent agent, int edgeId) {
+    /**
+     *
+     * @param agent
+     * @param edgeId
+     * @return
+     */
+    public boolean isRoad(Agent agent, int edgeId) {
+        Edge edge = getEdge(edgeId);
+
+        if (edge != null && edge.isOccupied()) {
+            return edge.getRoad().getOwner() == agent;
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * @param agent
+     * @param nodeId
+     * @return
+     */
+    public boolean isSettlement(Agent agent, int nodeId) {
+        Node node = getNode(nodeId);
+
+        if (node != null && node.isOccupied() && node.getBuilding() instanceof Settlement) {
+            return node.getBuilding().getOwner() == agent;
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * @param agent
+     * @param nodeId
+     * @return
+     */
+    public boolean isCity(Agent agent, int nodeId) {
+        Node node = getNode(nodeId);
+
+        if (node != null && node.isOccupied() && node.getBuilding() instanceof City) {
+            return node.getBuilding().getOwner() == agent;
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * @param agent
+     * @param edgeId
+     */
+    public boolean placeRoad(Agent agent, int edgeId) {
+        Edge edge = getEdge(edgeId);
+
+        if (edge == null || edge.isOccupied()) {
+            return false;
+        }
+
+        if (!isConnectedToAgent(agent, edgeId)) {
+            return false;
+        }
+
+        edge.setRoad(new Road(agent, edgeId));
         return true;
-	}
+    }
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param nodeId 
-	 * @return 
-	 */
-	public boolean isSettlement(Agent agent, int nodeId) {
+
+
+
+
+    /**
+     *
+     * @param agent
+     * @param nodeId
+     */
+    public boolean placeSettlement(Agent agent, int nodeId, boolean isInitialPlacement) {
+        Node node = getNode(nodeId);
+
+        if (node == null || node.isOccupied()) {
+            return false;
+        }
+
+        if (!isValidSettlementPosition(nodeId)){
+              return false;
+        }
+
+        if (!isInitialPlacement && !hasAdjacentRoad(agent, nodeId)) {
+              return false;
+        }
+
+        node.setBuilding(new Settlement(agent, nodeId));
         return true;
-	}
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param nodeId 
-	 * @return 
-	 */
-	public boolean isCity(Agent agent, int nodeId) {
+    }
+
+    /**
+     *
+     * @param agent
+     * @param nodeId
+     */
+    private boolean placeCity(Agent agent, int nodeId) {
+        Node node = getNode(nodeId);
+
+        if (node == null) {
+            return false;
+        }
+
+        if (!isSettlement(agent, nodeId)) {
+            return false;
+        }
+
+        node.setBuilding(new City(agent, nodeId));
         return true;
-	}
+    }
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param edgeId 
-	 */
-	public void placeRoad(Agent agent, int edgeId) {
-	}
+    /**
+     *
+     * @param agent
+     * @param nodeId
+     */
+    public boolean upgrade(Agent agent, int nodeId) {
+        return placeCity(agent, nodeId);
+    }
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param nodeId 
-	 */
-	public void placeSettlement(Agent agent, int nodeId) {
-	}
+    public List<Tile> getTiles() {
+        return tiles;
+    }
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param nodeId 
-	 */
-	public void placeCity(Agent agent, int nodeId) {
-	}
+    public List<Node> getNodes() {
+        return nodes;
+    }
+    public List<Edge> getEdges() {
+        return edges;
+    }
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param nodeId 
-	 */
-	public void upgrade(Agent agent, int nodeId) {
-	}
+    public void distributeResources(int diceRoll) {
+
+        if (diceRoll == 7) {
+            return;
+        }
+
+        for (Tile tile : tiles) {
+
+            if (tile.getNumberToken() != diceRoll) {
+                continue;
+            }
+
+            List<Integer> adjacentNodes = tilesToNodes.get(tile.getId());
+
+            for (int nodeId : adjacentNodes) {
+
+                Node node = getNode(nodeId);
+                if (node == null || !node.isOccupied()) {
+                    continue;
+                }
+
+                Building building = node.getBuilding();
+                int resourceAmount = building.getResourceAmount();
+                Agent owner = building.getOwner();
+
+                owner.getResources().add(tile.getResourceType(), resourceAmount);
+            }
+
+
+
+        }
+    }
 }

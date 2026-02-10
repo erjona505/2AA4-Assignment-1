@@ -33,6 +33,10 @@ public class Edge {
         return this.road;
 	}
 
+    public void setRoad(Road road) {
+        this.road = road;
+    }
+
 	/**
 	 * 
 	 * @return 
@@ -46,6 +50,7 @@ public class Edge {
         }
 
 	}
+
 
 	/**
 	 * 
