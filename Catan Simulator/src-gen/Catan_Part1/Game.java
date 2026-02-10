@@ -36,7 +36,7 @@ public class Game {
 
 	//runs the game
 	public void runGame() {
-		while(!gameOver){
+		while(!gameOver()){
 			runRound();
 			round ++;
 		}
@@ -46,7 +46,7 @@ public class Game {
 	//runs one full round
 	public void runRound() {
 		for (Agent agent : agents){
-			agent.takeTurn(map, round)
+			agent.takeTurn(map, round);
         }
 
 		stats();
@@ -60,7 +60,7 @@ public class Game {
 		}
 
 		for (Agent agent : agents) {
-            if (agent.getPoints() == 10) {
+            if (agent.getTotalPoints() == 10) {
                 return true;
             }
         
@@ -71,12 +71,12 @@ public class Game {
 	}
 
 	//print round and each player points
-	public String stats(){
+	public void stats(){
 
 		System.out.print("Round: " + round);
 
 		for (Agent agent : agents) {
-            System.out.print( " Player: " + agent.getId() + "=" + agent.getPoints() + " ");
+            System.out.print( " Player: " + agent.getId() + "=" + agent.getTotalPoints() + " ");
         }
 
         System.out.println();
