@@ -45,6 +45,11 @@ public class Game {
 
 	//runs one full round
 	public void runRound() {
+
+		Dice dice = new Dice();
+		int dice_roll = dice.roll();
+		map.distributeResources(dice_roll);
+
 		for (Agent agent : agents){
 			agent.takeTurn(map, round);
         }
