@@ -9,13 +9,8 @@ package Catan_Part1;
  * 
  */
 public class Edge {
-	/**
-	 * 
-	 */
+
 	private int id;
-	/**
-	 * 
-	 */
 	private Road road;
 	/**
 	 * 
@@ -24,10 +19,10 @@ public class Edge {
 
 	/**
 	 * 
-	 * @return 
+	 * @return id of the edge
 	 */
 	public int getId() {
-        return 0;
+        return this.id;
 	}
 
 	/**
@@ -35,7 +30,7 @@ public class Edge {
 	 * @return 
 	 */
 	public Road getRoad() {
-        return new Road();
+        return this.road;
 	}
 
 	/**
@@ -43,7 +38,13 @@ public class Edge {
 	 * @return 
 	 */
 	public boolean isOccupied() {
-        return true;
+        if (this.road==null){
+            return false;
+        }
+        else {
+            return true;
+        }
+
 	}
 
 	/**
@@ -51,6 +52,8 @@ public class Edge {
 	 * @param id 
 	 * @param road 
 	 */
-	public void Edge(int id, Road road) {
+	public  Edge(int id, Road road) {
+        this.id=id;
+        this.road=null;
 	}
 }
