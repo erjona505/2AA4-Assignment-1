@@ -61,10 +61,12 @@ public class GameMap {
 	 * @return node
 	 */
 	public Node getNode(int id) {
+
         if (id>=0 && id>nodes.size()){
             return nodes.get(id);
         }
         return null;
+
 	}
 
 	/**
