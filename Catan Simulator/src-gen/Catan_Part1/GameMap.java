@@ -160,9 +160,11 @@ public class GameMap {
             return false;
         }
 
-        // add adjacency check
+        if (!isConnectedtoAgent(edgeId)) {
+            return false;
+        }
 
-        edge.setRoad(new Road(agent));
+        edge.setRoad(new Road(agent, edgeId));
         return true;
     }
 
@@ -175,22 +177,22 @@ public class GameMap {
      * @param agent
      * @param nodeId
      */
-    public boolean placeSettlement(Agent agent, int nodeId) {
+    public boolean placeSettlement(Agent agent, int nodeId, boolean isInitialPlacement) {
         Node node = getNode(nodeId);
 
         if (node == null || node.isOccupied()) {
             return false;
         }
 
-        // if (!isValidSettlementPosition(nodeId)){
-        //      return false;
-        //}
+        if (!isValidSettlementPosition(nodeId)){
+              return false;
+        }
 
-        //if (!hasAdjacentRoad(agent, nodeId)) {
-        //      return false;
-        //}
+        if (!isInitialPlacement && !hasAdjacentRoad(agent, nodeId)) {
+              return false;
+        }
 
-        node.setBuilding(new Settlement(agent));
+        node.setBuilding(new Settlement(agent, nodeId));
         return true;
 
     }
@@ -200,7 +202,7 @@ public class GameMap {
      * @param agent
      * @param nodeId
      */
-    public boolean placeCity(Agent agent, int nodeId) {
+    private boolean placeCity(Agent agent, int nodeId) {
         Node node = getNode(nodeId);
 
         if (node == null) {
@@ -211,7 +213,7 @@ public class GameMap {
             return false;
         }
 
-        node.setBuilding(new City(agent));
+        node.setBuilding(new City(agent, nodeId));
         return true;
     }
 
@@ -220,8 +222,8 @@ public class GameMap {
      * @param agent
      * @param nodeId
      */
-    public void upgrade(Agent agent, int nodeId) {
-        placeCity(agent, nodeId);
+    public boolean upgrade(Agent agent, int nodeId) {
+        return placeCity(agent, nodeId);
     }
 
     public List<Tile> getTiles() {
@@ -233,5 +235,38 @@ public class GameMap {
     }
     public List<Edge> getEdges() {
         return edges;
+    }
+
+    public void distributeResources(int diceRoll) {
+
+        if (diceRoll == 7) {
+            return;
+        }
+
+        for (Tile tile : tiles) {
+
+            if (tile.getNumberToken() != diceRoll) {
+                continue;
+            }
+
+            List<Integer> adjacentNodes = tilesToNodes.get(tile.getId());
+
+            for (int nodeId : adjacentNodes) {
+
+                Node node = getNode(nodeId);
+                if (node == null || !node.isOccupied()) {
+                    continue;
+                }
+
+                Building building = node.getBuilding();
+                int resourceAmount = building.getResourceAmount();
+                Agent owner = building.getOwner();
+
+                owner.getResources.add(tile.getResourceType(), resourceAmount);
+            }
+
+
+
+        }
     }
 }
