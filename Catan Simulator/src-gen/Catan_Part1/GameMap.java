@@ -5,36 +5,43 @@
 package Catan_Part1;
 
 /************************************************************/
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 
  */
 public class GameMap {
-	/**
-	 * 
-	 */
-	private Tile[] tiles;
-	/**
-	 * 
-	 */
-	private Node[] nodes;
-	/**
-	 * 
-	 */
-	private Edge[] edges;
 
-	/**
-	 * 
-	 */
-	public Game game;
 
-	/**
-	 * 
-	 * @param tiles 
-	 * @param nodes 
-	 * @param edges 
-	 */
-	public void GameMap(Tile[] tiles, Node[] nodes, Edge[] edges) {
-	}
+	private ArrayList<Tile> tiles;
+	private ArrayList<Node> nodes;
+	private ArrayList<Edge> edges;
+
+    private Map<Integer, List<Integer>> tilesToNodes;
+    private Map<Integer, List<Integer>> nodeToEdges;
+    private Map<Integer, List<Integer>> nodeNeighbors;
+
+
+
+	public  GameMap() {
+        tiles= new ArrayList<Tile>();
+        nodes=new ArrayList<Node>();
+        edges=new ArrayList<Edge>();
+
+        tilesToNodes= new HashMap<Integer, List<Integer>>();
+        nodeToEdges= new HashMap<Integer, List<Integer>>();
+        nodeNeighbors= new HashMap<Integer, List<Integer>>();
+
+
+
+
+
+
+    }
 
 	/**
 	 * 
@@ -42,16 +49,24 @@ public class GameMap {
 	 * @return 
 	 */
 	public Tile getTile(int id) {
-        return new Tile();
+        if (id>=0 && id<tiles.size()){
+            return tiles.get(id);
+        }
+        return null;
 	}
 
 	/**
 	 * 
 	 * @param id 
-	 * @return 
+	 * @return
 	 */
 	public Node getNode(int id) {
-        return new Node();
+
+        if (id>=0 && id>nodes.size()){
+            return nodes.get(id);
+        }
+        return null;
+
 	}
 
 	/**
@@ -60,8 +75,30 @@ public class GameMap {
 	 * @return 
 	 */
 	public Edge getEdge(int id) {
-        return new Edge();
+        //check if the id does truly exist and that it is not out of bounds
+        if (id>=0){
+            return edges.get(id);
+
+        }
+        return null;
 	}
+
+    /// helper method to allow nodes to recognize  who their neighbors are
+    private void addNodeNeighbor(int IdNode1, int IdNode2){
+        //do nothing if the nodes do not exist
+        if (getNode(IdNode1)==null || getNode(IdNode2)==null){
+            return;
+        }
+        //add node 2 as a neighbor for node 1
+        if (!nodeNeighbors.get(IdNode1).contains(IdNode2)){
+            nodeNeighbors.get(IdNode1).add(IdNode2);
+        }
+        //other way around
+        if (!nodeNeighbors.get(IdNode2).contains(IdNode2)){
+            nodeNeighbors.get(IdNode2).add(IdNode1);
+        }
+
+    }
 
 	/**
 	 * 
