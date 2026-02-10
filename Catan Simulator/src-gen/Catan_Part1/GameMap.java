@@ -578,8 +578,9 @@ public class GameMap {
         if (!isConnectedToAgent(agent, edgeId)) {
             return false;
         }
-
-        edge.setRoad(new Road(agent, edgeId));
+        Road road =new Road(agent, edgeId);
+        edge.setRoad(road);
+        agent.addPoints(road.getPoints());
         return true;
     }
 
@@ -606,8 +607,9 @@ public class GameMap {
         if (!isInitialPlacement && !hasAdjacentRoad(agent, nodeId)) {
               return false;
         }
-
-        node.setBuilding(new Settlement(agent, nodeId));
+        Settlement settlement =new Settlement(agent, nodeId);
+        node.setBuilding(settlement);
+        agent.addPoints(settlement.getPoints());
         return true;
 
     }
@@ -627,8 +629,9 @@ public class GameMap {
         if (!isSettlement(agent, nodeId)) {
             return false;
         }
-
-        node.setBuilding(new City(agent, nodeId));
+        City city =new City(agent, nodeId);
+        node.setBuilding(city);
+        agent.addPoints(city.getPoints());
         return true;
     }
 
@@ -638,6 +641,7 @@ public class GameMap {
      * @param nodeId
      */
     public boolean upgrade(Agent agent, int nodeId) {
+
         return placeCity(agent, nodeId);
     }
 

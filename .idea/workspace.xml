@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="583a7e61-c001-4cc0-8993-8062c7f921f4" name="Changes" comment="added agent">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/catan.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Catan Simulator/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Catan Simulator/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Catan Simulator/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Catan Simulator/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Catan Simulator/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Catan Simulator/Catan Simulator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Catan Simulator/Catan Simulator.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Catan Simulator/src-gen/Catan_Part1/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Catan Simulator/src-gen/Catan_Part1/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Catan Simulator/src-gen/Catan_Part1/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/Catan Simulator/src-gen/Catan_Part1/Building.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Catan Simulator/src-gen/Catan_Part1/GameMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/Catan Simulator/src-gen/Catan_Part1/GameMap.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,24 +29,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/zaink/Desktop/2AA4/2AA4-Assignment-1",
-    "onboarding.tips.debug.path": "C:/Users/zaink/Desktop/2AA4/2AA4-Assignment-1/src/Main.java",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "to.speed.mode.migration.done": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/zaink/Desktop/2AA4/2AA4-Assignment-1&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/zaink/Desktop/2AA4/2AA4-Assignment-1/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="2AA4-Assignment-1" />
