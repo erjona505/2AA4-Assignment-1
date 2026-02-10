@@ -49,16 +49,22 @@ public class GameMap {
 	 * @return 
 	 */
 	public Tile getTile(int id) {
-        return new Tile();
+        if (id>=0 && id<tiles.size()){
+            return tiles.get(id);
+        }
+        return null;
 	}
 
 	/**
 	 * 
 	 * @param id 
-	 * @return 
+	 * @return
 	 */
 	public Node getNode(int id) {
-        return new Node();
+        if (id>=0 && id>nodes.size()){
+            return nodes.get(id);
+        }
+        return null;
 	}
 
 	/**
@@ -68,13 +74,29 @@ public class GameMap {
 	 */
 	public Edge getEdge(int id) {
         //check if the id does truly exist and that it is not out of bounds
-        if (id>=0 && id<edges.size()){
-            return edges.get(id); //gives the edge at the id
-
+        if (id>=0){
+            return edges.get(id);
 
         }
         return null;
 	}
+
+    /// helper method to allow nodes to recognize  who their neighbors are
+    private void addNodeNeighbor(int IdNode1, int IdNode2){
+        //do nothing if the nodes do not exist
+        if (getNode(IdNode1)==null || getNode(IdNode2)==null){
+            return;
+        }
+        //add node 2 as a neighbor for node 1
+        if (!nodeNeighbors.get(IdNode1).contains(IdNode2)){
+            nodeNeighbors.get(IdNode1).add(IdNode2);
+        }
+        //other way around
+        if (!nodeNeighbors.get(IdNode2).contains(IdNode2)){
+            nodeNeighbors.get(IdNode2).add(IdNode1);
+        }
+
+    }
 
 	/**
 	 * 
