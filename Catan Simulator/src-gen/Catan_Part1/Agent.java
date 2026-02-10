@@ -33,7 +33,10 @@ public class Agent {
 	 * @param resources 
 	 * @param points 
 	 */
-	public void Agents(int id, Resources resources, int points) {
+	public Agent(int id, Resources resources, int points) {
+        this.id = id;
+        this.resources = resources;
+        this.points = points;
 	}
 
 	/**
@@ -41,7 +44,7 @@ public class Agent {
 	 * @return 
 	 */
 	public int getId() {
-        return 0;
+        return id;
 	}
 
 	/**
@@ -49,7 +52,7 @@ public class Agent {
 	 * @return 
 	 */
 	public int getPoints() {
-        return 0;
+        return points;
 	}
 
 	/**
@@ -63,38 +66,90 @@ public class Agent {
 	 * 
 	 * @param edgeId 
 	 * @param map 
-	 * @return 
+	 * @return boolean
 	 */
 	public boolean buildRoad(int edgeId, GameMap map) {
-        return true;
+
+        Edge edge = map.getEdge(edgeId);
+
+        if(edge == null || edge.isOccupied()) {
+            return false;
+        }
+
+        if(map.isRoad(this, edgeId)) {
+            return false;
+        }
+
+        // Cost: 1 wood, 1 brick
+        if(resources.hasResource(ResourceType.WOOD, 1) && resources.hasResource(ResourceType.BRICK, 1)) {
+            resources.remove(ResourceType.WOOD, 1);
+            resources.remove(ResourceType.BRICK, 1);
+            return true;
+        }
+        return false;
 	}
 
 	/**
 	 * 
 	 * @param nodeId 
 	 * @param map 
-	 * @return 
+	 * @return boolean
 	 */
 	public boolean buildSettlement(int nodeId, GameMap map) {
-        return true;
+
+        Node node = map.getNode(nodeId);
+        if(node == null || node.isOccupied()) {
+            return false;
+        }
+
+        if(map.isSettlement(this, nodeId)) {
+            return false;
+        }
+
+        // Cost: 1 wood, 1 brick, 1 wheat, 1 sheep
+        if(resources.hasResource(ResourceType.WOOD, 1) && resources.hasResource(ResourceType.BRICK, 1)
+        && resources.hasResource(ResourceType.WHEAT, 1) && resources.hasResource(ResourceType.SHEEP, 1)) {
+            resources.remove(ResourceType.WOOD, 1);
+            resources.remove(ResourceType.BRICK, 1);
+            resources.remove(ResourceType.WHEAT, 1);
+            resources.remove(ResourceType.SHEEP, 1);
+            return true;
+        }
+        return false;
 	}
 
 	/**
 	 * 
 	 * @param nodeId 
 	 * @param map 
-	 * @return 
+	 * @return boolean
 	 */
 	public boolean buildCity(int nodeId, GameMap map) {
-        return true;
+
+        Node node = map.getNode(nodeId);
+        if(node == null || node.isOccupied()) {
+            return false;
+        }
+
+        if(map.isCity(this, nodeId)) {
+            return false;
+        }
+
+        // Cost: 2 wheat, 3 ore
+        if(resources.hasResource(ResourceType.WHEAT, 2) && resources.hasResource(ResourceType.ORE, 3)) {
+            resources.remove(ResourceType.WHEAT, 2);
+            resources.remove(ResourceType.ORE, 3);
+            return true;
+        }
+        return false;
 	}
 
 	/**
 	 * 
-	 * @return 
+	 * @return boolean
 	 */
 	public boolean isSevenCards() {
-        return true;
+        return resources.totalCards()>7;
 	}
 
 	/**
@@ -102,5 +157,6 @@ public class Agent {
 	 * @param points 
 	 */
 	public void addPoints(int points) {
+        this.points += points;
 	}
 }
