@@ -6,55 +6,76 @@ package Catan_Part1;
 
 /************************************************************/
 /**
- * 
+ * Represents a vertex (node) on the game board
+ *
+ * Each node has a unique identifier from 0-53 and can only
+ * hold one building at a time. The inner nodes are around the center tiles
+ * and outer nodes go outward near the board edges
+ *
+ * Players can place settlements and cities on nodes.
+ *
+ * Game rules related to nodes:
+ * - A node is either unoccupied or has exactly one building
+ * - the class is later used in the GameMap class to enforce the distance rule
  */
 public class Node {
 	/**
-	 * 
+	 * Unique node identifier
 	 */
 	private int id;
+
 	/**
-	 * 
+	 * settlement or city placed on a node
 	 */
 	private Building building;
 
-	/**
+    /**
+     * Creates an unoccupied node with its id
+     *
+     * @param id unique node identifier
+     */
+    public Node(int id) {
+        this.id = id;
+        this.building = null;
+    }
+
+    /**
 	 * 
-	 * @return 
+	 * @return id (unique node identifier)
 	 */
 	public int getId() {
-        return 0;
+        return id;
 	}
 
 	/**
-	 * 
-	 * @return 
-	 * @return 
+	 *
+	 * @return the building placed on this node, or null if unoccupied
+	 *
 	 */
-	public void getBuilding() {
-
+	public Building getBuilding() {
+        return building;
 	}
 
 	/**
-	 * 
-	 * @param b 
+	 * creates a building on this node
+     *
+	 * @param building the building on this node
 	 */
-	public void setBuilding(Building b) {
+	public void setBuilding(Building building) {
+        this.building = building;
 	}
 
 	/**
-	 * 
-	 * @return 
+	 * checks if the node is unoccupied or not
+     *
+	 * @return false if building is null, otherwise true
 	 */
 	public boolean isOccupied() {
+        if (building == null) {
+            return false;
+        }
+
         return true;
 	}
 
-	/**
-	 * 
-	 * @param id 
-	 * @param building 
-	 */
-	public void Node(int id, Building building) {
-	}
 }

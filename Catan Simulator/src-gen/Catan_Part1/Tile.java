@@ -10,42 +10,59 @@ package Catan_Part1;
  */
 public class Tile {
 	/**
-	 * 
+	 * Unique tile identifier
 	 */
 	private int id;
+
 	/**
-	 * 
+	 * Resource type on this tile
 	 */
 	private ResourceType resourceType;
+
 	/**
-	 * 
+	 * Tile token that produces resources on dice roll
 	 */
 	private int numToken;
-	/**
-	 * 
-	 */
-	public Resources resources;
+
+    /**
+     * Creates a tile with its id, resource type, and token number
+     *
+     * @param id unique tile identifier
+     * @param resourceType type of resource the tile has
+     * @param numToken token number for dice rolls
+     */
+    public Tile(int id, ResourceType resourceType, int numToken) {
+        this.id = id;
+        this.resourceType = resourceType;
+        this.numToken = numToken;
+    }
+
+    /**
+     *
+     * @return the identifier of this tile
+     */
+    public int getId() {
+        return id;
+    }
 
 	/**
 	 * 
-	 * @return 
+	 * @return the type of resource that this tile produces, null if desert
 	 */
-	public void getResourceType() {
+	public ResourceType getResourceType() {
+        if (resourceType == ResourceType.DESERT) {
+            return null;
+        }
+
+        return resourceType;
 	}
 
 	/**
 	 * 
-	 * @return 
+	 * @return token number on the tile used during dice rolls
 	 */
 	public int getNumberToken() {
-        return 0;
+        return numToken;
 	}
 
-	/**
-	 * 
-	 * @param id 
-	 * @param building 
-	 */
-	public void Tile(int id, Building building) {
-	}
 }
