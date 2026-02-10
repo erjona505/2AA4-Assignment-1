@@ -46,7 +46,7 @@ public class GameMap {
 	/**
 	 * 
 	 * @param id 
-	 * @return 
+	 * @return tile
 	 */
 	public Tile getTile(int id) {
         if (id>=0 && id<tiles.size()){
@@ -58,7 +58,7 @@ public class GameMap {
 	/**
 	 * 
 	 * @param id 
-	 * @return
+	 * @return node
 	 */
 	public Node getNode(int id) {
         if (id>=0 && id>nodes.size()){
@@ -70,7 +70,7 @@ public class GameMap {
 	/**
 	 * 
 	 * @param id 
-	 * @return 
+	 * @return  edge
 	 */
 	public Edge getEdge(int id) {
         //check if the id does truly exist and that it is not out of bounds
