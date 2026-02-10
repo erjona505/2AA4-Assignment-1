@@ -50,10 +50,6 @@ public class Tile {
 	 * @return the type of resource that this tile produces, null if desert
 	 */
 	public ResourceType getResourceType() {
-        if (resourceType == ResourceType.DESERT) {
-            return null;
-        }
-
         return resourceType;
 	}
 
