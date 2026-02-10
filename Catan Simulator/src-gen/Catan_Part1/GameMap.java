@@ -511,7 +511,7 @@ public class GameMap {
 	 */
 	public Node getNode(int id) {
 
-        if (id>=0 && id>nodes.size()){
+        if (id>=0 && id<nodes.size()){
             return nodes.get(id);
         }
         return null;
