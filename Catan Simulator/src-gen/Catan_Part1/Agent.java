@@ -24,7 +24,6 @@ public class Agent {
 	/**
 	 * 
 	 */
-	public GameMap gamemap;
 
 
 	/**
@@ -36,7 +35,7 @@ public class Agent {
 	public Agent(int id, Resources resources, int points) {
         this.id = id;
         this.resources = resources;
-        this.points = points;
+        this.totalpoint = points;
 	}
 
     public Resources getResources() {
@@ -73,16 +72,6 @@ public class Agent {
 	 * @return boolean
 	 */
 	public boolean buildRoad(int edgeId, GameMap map) {
-
-        Edge edge = map.getEdge(edgeId);
-
-        if(edge == null || edge.isOccupied()) {
-            return false;
-        }
-
-        if(map.isRoad(this, edgeId)) {
-            return false;
-        }
 
         // Cost: 1 wood, 1 brick
         if(resources.hasResource(ResourceType.WOOD, 1) && resources.hasResource(ResourceType.BRICK, 1)) {
@@ -161,6 +150,6 @@ public class Agent {
 	 * @param points 
 	 */
 	public void addPoints(int points) {
-        this.points += points;
+        this.totalPoint += points;
 	}
 }
