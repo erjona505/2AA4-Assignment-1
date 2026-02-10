@@ -55,9 +55,8 @@ public class Edge {
 	/**
 	 * 
 	 * @param id 
-	 * @param road 
 	 */
-	public  Edge(int id, Road road) {
+	public  Edge(int id) {
         this.id=id;
         this.road=null;
 	}
