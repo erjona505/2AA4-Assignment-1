@@ -3,7 +3,7 @@ package Catan_Part1;
 
 public abstract class Building {
 	
-	private Agent owner; //immutable after construction
+	protected Agent owner; //immutable after construction
 
     //constructor
 	public Building(Agent owner) {

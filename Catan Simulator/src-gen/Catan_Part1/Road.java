@@ -13,6 +13,8 @@ public class Road extends Building {
 
 		}
 		this.edgeId = edgeId;
+
+
 	}
 
 
@@ -22,6 +24,8 @@ public class Road extends Building {
 
 
 	public boolean isPlaced() {
+        owner.addPoints(getPoints());
+
 		return edgeId >= 0;
 	}
 

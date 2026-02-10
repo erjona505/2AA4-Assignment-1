@@ -15,7 +15,7 @@ public class Game {
 	//constructor 
 	public Game(GameMap map, Agent[] agents, int round, int max_rounds){
 		this.map = map;
-		this.agent = agent;
+		this.agents = agents;
 		this.round = round;
 		this.max_rounds = max_rounds;
 	}
@@ -71,12 +71,12 @@ public class Game {
 	}
 
 	//print round and each player points
-	public String stats(){
+	public void stats(){
 
 		System.out.print("Round: " + round);
 
 		for (Agent agent : agents) {
-            System.out.print( " Player: " + agent.getId() + "=" + agent.getPoints() + " ");
+            System.out.print( " Player: " + agent.getId() + "=" + agent.getTotalPoints() + " ");
         }
 
         System.out.println();
