@@ -39,6 +39,10 @@ public class Agent {
         this.points = points;
 	}
 
+    public Resources getResources() {
+        return resources;
+    }
+
 	/**
 	 * 
 	 * @return 
