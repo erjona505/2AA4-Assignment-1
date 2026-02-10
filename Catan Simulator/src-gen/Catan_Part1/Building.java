@@ -5,8 +5,8 @@ public abstract class Building {
 	
 	private Agent owner; //immutable after construction
 
-	//constructor 
-	public void Building(Agent owner) {
+    //constructor
+	public Building(Agent owner) {
 		if (owner == null){
 			throw new IllegalArgumentException("Owner cannot be null");
 		}
