@@ -3,31 +3,26 @@ package Catan_Part1;
 
 public class Road extends Building {
 	
-	private int pathId; //path edge where road is placed
+	private int edgeId; //path edge where road is placed
 
-	/*constructor for when pathId is unspecified
-	public void Road(Agent owner) {
+	
+	public Road(Agent owner, int edgeId){
 		super(owner);
-		this.pathId = -1; 
-	}*/
-
-	public Road(Agent owner, int pathId){
-		super(owner);
-		if (pathId < 0){
+		if (edgeId < 0){
 			throw new IllegalArgumentException("Path ID cannot be negative");
 
 		}
-		this.pathId = pathId;
+		this.edgeId = edgeId;
 	}
 
 
-	public int getPathId(){
-		return pathId;
+	public int getEdgeId(){
+		return edgeId;
 	}
 
 
 	public boolean isPlaced() {
-		return pathId >= 0;
+		return edgeId >= 0;
 	}
 
 	@Override
@@ -42,7 +37,7 @@ public class Road extends Building {
 
 	@Override
 	public String toString() {
-		return "Road(owner=" + getOwner() + ", pathId=" + pathId + ")";
+		return "Road(owner=" + getOwner() + ", pathId=" + edgeId + ")";
 	}
 
 

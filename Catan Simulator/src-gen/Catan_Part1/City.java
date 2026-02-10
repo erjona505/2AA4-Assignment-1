@@ -6,8 +6,8 @@ public class City extends Building {
 
     public City(Agent owner, int nodeId) {
         super(owner);
-        if (nodeId < 0) {
-            throw new IllegalArgumentException("Node ID cannot be negative");
+        if (nodeId == null) {
+            throw new IllegalArgumentException("Node ID cannot be null");
         }
         this.nodeId = nodeId;
     }

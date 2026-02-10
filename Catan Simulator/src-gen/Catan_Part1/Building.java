@@ -19,13 +19,14 @@ public abstract class Building {
 		return owner;
 	}
 
+
 	//victory points (0 for roads, 1 for settlements, 2 for cities)
 	public abstarct int getPoints();
 
 	//determines how many resource cards player gets
 	public abstarct int getResourceAmount();
 
-	
+
 
 
 }
