@@ -13,15 +13,15 @@ public abstract class Building {
 	 * 
 	 */
 	private Agent owner;
-	/**
-	 * 
-	 */
-	public Agent agent;
+
 
 	/**
 	 * 
 	 * @param owner 
 	 */
 	public void Building(Agent owner) {
+        this.owner = owner;
 	}
+
+    public Agent getOwner() { return owner; }
 }

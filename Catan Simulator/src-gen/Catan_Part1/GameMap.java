@@ -12,14 +12,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ *
  */
 public class GameMap {
 
 
-	private ArrayList<Tile> tiles;
-	private ArrayList<Node> nodes;
-	private ArrayList<Edge> edges;
+    private ArrayList<Tile> tiles;
+    private ArrayList<Node> nodes;
+    private ArrayList<Edge> edges;
 
     private Map<Integer, List<Integer>> tilesToNodes;
     private Map<Integer, List<Integer>> nodeToEdges;
@@ -27,7 +27,7 @@ public class GameMap {
 
 
 
-	public  GameMap() {
+    public  GameMap() {
         tiles= new ArrayList<Tile>();
         nodes=new ArrayList<Node>();
         edges=new ArrayList<Edge>();
@@ -43,45 +43,45 @@ public class GameMap {
 
     }
 
-	/**
-	 * 
-	 * @param id 
-	 * @return 
-	 */
-	public Tile getTile(int id) {
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Tile getTile(int id) {
         if (id>=0 && id<tiles.size()){
             return tiles.get(id);
         }
         return null;
-	}
+    }
 
-	/**
-	 * 
-	 * @param id 
-	 * @return
-	 */
-	public Node getNode(int id) {
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Node getNode(int id) {
 
         if (id>=0 && id>nodes.size()){
             return nodes.get(id);
         }
         return null;
 
-	}
+    }
 
-	/**
-	 * 
-	 * @param id 
-	 * @return 
-	 */
-	public Edge getEdge(int id) {
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Edge getEdge(int id) {
         //check if the id does truly exist and that it is not out of bounds
         if (id>=0){
             return edges.get(id);
 
         }
         return null;
-	}
+    }
 
     /// helper method to allow nodes to recognize  who their neighbors are
     private void addNodeNeighbor(int IdNode1, int IdNode2){
@@ -100,65 +100,138 @@ public class GameMap {
 
     }
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param edgeId 
-	 * @return 
-	 */
-	public boolean isRoad(Agent agent, int edgeId) {
+    /**
+     *
+     * @param agent
+     * @param edgeId
+     * @return
+     */
+    public boolean isRoad(Agent agent, int edgeId) {
+        Edge edge = getEdge(edgeId);
+
+        if (edge != null && edge.isOccupied()) {
+            return edge.getRoad().getOwner() == agent;
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * @param agent
+     * @param nodeId
+     * @return
+     */
+    public boolean isSettlement(Agent agent, int nodeId) {
+        Node node = getNode(nodeId);
+
+        if (node != null && node.isOccupied() && node.getBuilding() instanceof Settlement) {
+            return node.getBuilding().getOwner() == agent;
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * @param agent
+     * @param nodeId
+     * @return
+     */
+    public boolean isCity(Agent agent, int nodeId) {
+        Node node = getNode(nodeId);
+
+        if (node != null && node.isOccupied() && node.getBuilding() instanceof City) {
+            return node.getBuilding().getOwner() == agent;
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * @param agent
+     * @param edgeId
+     */
+    public boolean placeRoad(Agent agent, int edgeId) {
+        Edge edge = getEdge(edgeId);
+
+        if (edge == null || edge.isOccupied()) {
+            return false;
+        }
+
+        // add adjacency check
+
+        edge.setRoad(new Road(agent));
         return true;
-	}
+    }
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param nodeId 
-	 * @return 
-	 */
-	public boolean isSettlement(Agent agent, int nodeId) {
+
+
+
+
+    /**
+     *
+     * @param agent
+     * @param nodeId
+     */
+    public boolean placeSettlement(Agent agent, int nodeId) {
+        Node node = getNode(nodeId);
+
+        if (node == null || node.isOccupied()) {
+            return false;
+        }
+
+        // if (!isValidSettlementPosition(nodeId)){
+        //      return false;
+        //}
+
+        //if (!hasAdjacentRoad(agent, nodeId)) {
+        //      return false;
+        //}
+
+        node.setBuilding(new Settlement(agent));
         return true;
-	}
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param nodeId 
-	 * @return 
-	 */
-	public boolean isCity(Agent agent, int nodeId) {
+    }
+
+    /**
+     *
+     * @param agent
+     * @param nodeId
+     */
+    public boolean placeCity(Agent agent, int nodeId) {
+        Node node = getNode(nodeId);
+
+        if (node == null) {
+            return false;
+        }
+
+        if (!isSettlement(agent, nodeId)) {
+            return false;
+        }
+
+        node.setBuilding(new City(agent));
         return true;
-	}
+    }
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param edgeId 
-	 */
-	public void placeRoad(Agent agent, int edgeId) {
-	}
+    /**
+     *
+     * @param agent
+     * @param nodeId
+     */
+    public void upgrade(Agent agent, int nodeId) {
+        placeCity(agent, nodeId);
+    }
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param nodeId 
-	 */
-	public void placeSettlement(Agent agent, int nodeId) {
-	}
+    public List<Tile> getTiles() {
+        return tiles;
+    }
 
-	/**
-	 * 
-	 * @param agent 
-	 * @param nodeId 
-	 */
-	public void placeCity(Agent agent, int nodeId) {
-	}
-
-	/**
-	 * 
-	 * @param agent 
-	 * @param nodeId 
-	 */
-	public void upgrade(Agent agent, int nodeId) {
-	}
+    public List<Node> getNodes() {
+        return nodes;
+    }
+    public List<Edge> getEdges() {
+        return edges;
+    }
 }

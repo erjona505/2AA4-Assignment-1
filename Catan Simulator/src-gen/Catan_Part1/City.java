@@ -14,10 +14,12 @@ public class City extends Building {
 	 */
 	private Agent owner;
 
-	/**
-	 * 
-	 * @param owner 
-	 */
-	public void City(Agent owner) {
-	}
+    public City(Agent owner) {
+        super();
+    }
+
+
+    public Agent getOwner() {
+        return owner;
+    }
 }

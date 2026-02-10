@@ -14,10 +14,18 @@ public class Road extends Building {
 	 */
 	private Agent owner;
 
-	/**
+
+
+    /**
 	 * 
 	 * @param owner 
 	 */
-	public void Road(Agent owner) {
+	public Road(Agent owner) {
+        this.owner = owner;
 	}
+
+    public Agent getOwner() {
+        return owner;
+    }
+
 }

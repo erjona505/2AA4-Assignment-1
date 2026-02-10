@@ -14,10 +14,13 @@ public class Settlement extends Building {
 	 */
 	private Agent owner;
 
-	/**
-	 * 
-	 * @param owner 
-	 */
-	public void Settlement(Agent owner) {
-	}
+    public Settlement(Agent owner) {
+        super();
+    }
+
+
+
+    public Agent getOwner() {
+        return owner;
+    }
 }
