@@ -29,6 +29,7 @@ This project implements a simulator of Settlers of Catan
 
 
 # Project Structure 📂
+```
   Catan-Simulator
   │
   └───src-gen
@@ -46,6 +47,7 @@ This project implements a simulator of Settlers of Catan
           │   Settlement.java
           │
           └───UML
+```
 # How to Run 💻
   1. Clone the repository
      https://github.com/erjona505/2AA4-Assignment-1
