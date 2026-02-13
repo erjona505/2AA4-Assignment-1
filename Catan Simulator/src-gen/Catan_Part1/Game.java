@@ -45,7 +45,7 @@ public class Game {
 	//runs one full round
 	public void runRound() {
 
-		Dice dice = new Dice();
+		Dice dice = new GameDice(new Random());
 		int dice_roll = dice.roll();
 		map.distributeResources(dice_roll);
 
