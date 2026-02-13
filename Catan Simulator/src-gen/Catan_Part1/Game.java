@@ -14,7 +14,7 @@ public class Game {
 
 
 	//constructor 
-	public Game(GameMap map, Agent[] agents, int round, int max_rounds) {
+	public Game(GameMap map, Agent[] agents, int max_rounds) {
 		this.map = map;
 		this.agents = agents;
 		this.round = 0;
