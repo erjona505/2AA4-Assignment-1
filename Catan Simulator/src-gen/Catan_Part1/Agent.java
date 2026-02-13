@@ -55,78 +55,28 @@ public class Agent {
      * @param map
      */
     public void takeTurn(GameMap map, int round) {
-        // R1.8 - If more than 7 cards, must try to spend
-        boolean built = true;
-        while (isSevenCards() && built) {
-            built = false;
-
-            Random random = new Random();
-            List<String> actions = new ArrayList<>(List.of("city", "settlement", "road"));
-            java.util.Collections.shuffle(actions, random);
-
-            for (String action : actions) {
-                if (built) break;
-
-                if (action.equals("city")) {
-                    for (int i = 0; i < 54; i++) {
-                        if (map.isSettlement(this, i) && buildCity(map)) {
-                            map.upgrade(this, i);
-                            System.out.println(round + " / " + id + ": Upgraded settlement to city at node " + i);
-                            built = true;
-                            break;
-                        }
-                    }
-                } else if (action.equals("settlement")) {
-                    int nodeId = settlementLocation(map, false);
-                    if (nodeId != -1 && buildSettlement(map)) {
-                        map.placeSettlement(this, nodeId, false);
-                        System.out.println(round + " / " + id + ": Built settlement at node " + nodeId);
-                        built = true;
-                    }
-                } else {
-                    int edgeId = roadLocation(map);
-                    if (edgeId != -1 && buildRoad(map)) {
-                        map.placeRoad(this, edgeId);
-                        System.out.println(round + " / " + id + ": Built road at edge " + edgeId);
-                        built = true;
-                    }
-                }
+        for(int i=0;i<54;i++ ){
+            if(buildCity(map)){
+                if(map.upgrade(this, i))
+                    return;
+            }
+        }
+        for(int i=0;i<54;i++ ){
+            if(buildSettlement(map)){
+                if(map.placeSettlement(this, i, false))
+                    return;
             }
         }
 
-        // Normal turn - try to build something
-        if (!isSevenCards()) {
-            Random random = new Random();
-            List<String> actions = new ArrayList<>(List.of("city", "settlement", "road"));
-            java.util.Collections.shuffle(actions, random);
-
-            for (String action : actions) {
-                if (action.equals("city")) {
-                    for (int i = 0; i < 54; i++) {
-                        if (map.isSettlement(this, i) && buildCity(map)) {
-                            map.upgrade(this, i);
-                            System.out.println(round + " / " + id + ": Upgraded settlement to city at node " + i);
-                            return;
-                        }
-                    }
-                } else if (action.equals("settlement")) {
-                    int nodeId = settlementLocation(map, false);
-                    if (nodeId != -1 && buildSettlement(map)) {
-                        map.placeSettlement(this, nodeId, false);
-                        System.out.println(round + " / " + id + ": Built settlement at node " + nodeId);
-                        return;
-                    }
-                } else {
-                    int edgeId = roadLocation(map);
-                    if (edgeId != -1 && buildRoad(map)) {
-                        map.placeRoad(this, edgeId);
-                        System.out.println(round + " / " + id + ": Built road at edge " + edgeId);
-                        return;
-                    }
-                }
+        for(int i=0;i<72;i++ ){
+            if(buildRoad(map)){
+                if(map.placeRoad(this, i))
+                    return;
             }
         }
+
     }
+
 
     public int getTotalPoints() {
         return totalPoints;
