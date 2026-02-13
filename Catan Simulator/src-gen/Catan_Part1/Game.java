@@ -1,5 +1,7 @@
 package Catan_Part1;
 
+import java.util.Random;
+
 public class Game {
 	
 	private GameMap map;
