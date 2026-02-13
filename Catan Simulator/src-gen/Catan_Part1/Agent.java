@@ -68,11 +68,11 @@ public class Agent {
             boolean built = false;
 
             int choice = random.nextInt(3);
-            switch (choice) {
-                case 2: built = tryBuildRoad(map); break;
-                case 1: built = tryBuildSettlement(map); break;
-                case 0: built = tryBuildCity(map); break;
-            }
+            
+            if(choice==0){built = tryBuildRoad(map); break;}
+            else if(choice==1){built = tryBuildSettlement(map); break;}
+            else if(choice==2){built = tryBuildCity(map); break;}
+
             // If that random pick didn’t work, try the other options too
             if (!built) {
                 built = tryBuildCity(map) || tryBuildSettlement(map) || tryBuildRoad(map);
@@ -150,10 +150,7 @@ public class Agent {
     }
 
     public boolean checkRoadCost() {
-        if(resources.hasResource(ResourceType.WOOD, 1) && resources.hasResource(ResourceType.BRICK, 1)) {
-            return true;
-        }
-        return false;
+        return (resources.hasResource(ResourceType.WOOD, 1) && resources.hasResource(ResourceType.BRICK, 1)) 
     }
 
     /**
@@ -172,13 +169,10 @@ public class Agent {
     }
 
     public boolean checkSettlementCost() {
-        if(resources.hasResource(ResourceType.WOOD, 1)
+        return (resources.hasResource(ResourceType.WOOD, 1)
                 && resources.hasResource(ResourceType.BRICK, 1)
                 && resources.hasResource(ResourceType.WHEAT, 1)
-                && resources.hasResource(ResourceType.SHEEP, 1)) {
-            return true;
-        }
-        return false;
+                && resources.hasResource(ResourceType.SHEEP, 1)) 
     }
 
     /**
@@ -191,14 +185,10 @@ public class Agent {
         // Cost: 2 wheat, 3 ore
         resources.remove(ResourceType.WHEAT, 2);
         resources.remove(ResourceType.ORE, 3);
-
     }
 
     public boolean checkCityCost() {
-        if(resources.hasResource(ResourceType.WHEAT, 2) && resources.hasResource(ResourceType.ORE, 3)) {
-            return true;
-        }
-        return false;
+        return resources.hasResource(ResourceType.WHEAT, 2) && resources.hasResource(ResourceType.ORE, 3) 
     }
 
     /**
@@ -253,7 +243,7 @@ public class Agent {
         if(validEdges.isEmpty()) {
             return -1;
         }
-        
+
         return validEdges.get(random.nextInt(validEdges.size()));
     }
 
@@ -267,7 +257,7 @@ public class Agent {
         }
 
         if (valid.isEmpty()) return -1;
-        
+
         return valid.get(random.nextInt(valid.size()));
     }
 
