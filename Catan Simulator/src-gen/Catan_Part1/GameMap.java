@@ -125,18 +125,18 @@ public class GameMap {
     //HELPERS for establishing relationship b/m nodes, tiles and edges
 
     /// helper method to allow nodes to recognize  who their neighbors are
-    private void addSingleNodeNeighbor(int IdNode1, int IdNode2){
+    private void addSingleNodeNeighbor(int nodeId1, int nodeId2){
         //do nothing if the nodes do not exist
-        if (getNode(IdNode1)==null || getNode(IdNode2)==null){
+        if (getNode(nodeId1)==null || getNode(nodeId2)==null){
             return;
         }
         //add node 2 as a neighbor for node 1
-        if (!nodeNeighbors.get(IdNode1).contains(IdNode2)){
-            nodeNeighbors.get(IdNode1).add(IdNode2);
+        if (!nodeNeighbors.get(nodeId1).contains(nodeId2)){
+            nodeNeighbors.get(nodeId1).add(nodeId2);
         }
         //other way around
-        if (!nodeNeighbors.get(IdNode2).contains(IdNode1)){
-            nodeNeighbors.get(IdNode2).add(IdNode1);
+        if (!nodeNeighbors.get(nodeId2).contains(nodeId1)){
+            nodeNeighbors.get(nodeId2).add(nodeId1);
         }
 
     }
@@ -644,16 +644,6 @@ public class GameMap {
         return placeCity(agent, nodeId);
     }
 
-    public List<Tile> getTiles() {
-        return tiles;
-    }
-
-    public List<Node> getNodes() {
-        return nodes;
-    }
-    public List<Edge> getEdges() {
-        return edges;
-    }
 
     public void distributeResources(int diceRoll) {
 

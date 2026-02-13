@@ -17,7 +17,7 @@ public class Game {
 	public Game(GameMap map, Agent[] agents, int maxRounds) {
 		this.map = map;
 		this.agents = agents;
-		this.round = 0;
+		this.round = 1;
 		this.maxRounds = maxRounds;
 	}
 
@@ -27,9 +27,11 @@ public class Game {
 			for (int i = 0; i < 2; i++){
 				int nodeId = agent.settlementLocation(map, true);
 				map.placeSettlement(agent, nodeId, true);
+                System.out.println("Player " + agent.getId() + ": Settlement at node " + nodeId);
 
 				int edgeId = agent.roadLocation(map);
 				map.placeRoad(agent, edgeId);
+                System.out.println("Player " + agent.getId() + ": Road at edge " + edgeId);
 			}
 		}
 		stats();
@@ -52,7 +54,7 @@ public class Game {
 		map.distributeResources(dice_roll);
 
 		for (Agent agent : agents){
-			agent.takeTurn(map);
+			agent.takeTurn(map, round);
         }
 
 		stats();

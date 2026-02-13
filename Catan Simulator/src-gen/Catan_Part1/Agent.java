@@ -6,6 +6,7 @@ package Catan_Part1;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Collections;
 
 /************************************************************/
 /**
@@ -16,6 +17,8 @@ public class Agent {
      *
      */
     private int id;
+    private int edgeId;
+    private int nodeId;
     /**
      *
      */
@@ -59,7 +62,7 @@ public class Agent {
      *
      * @param map
      */
-    public void takeTurn(GameMap map) {
+    public void takeTurn(GameMap map, int round) {
 
         int tries=0;
         do {
@@ -67,19 +70,48 @@ public class Agent {
             if (tries > 50) return; // safety break
             boolean built = false;
 
-            int choice = random.nextInt(3);
+            List<Integer> options = new ArrayList<>();
+            options.add(0);
+            options.add(1);
+            options.add(2);
+            Collections.shuffle(options, random);
 
-            if(choice==0){built = tryBuildRoad(map);}
-            else if(choice==1){built = tryBuildSettlement(map);}
-            else if(choice==2){built = tryBuildCity(map);}
 
-            // If that random pick didn’t work, try the other options too
-            if (!built) {
-                built = tryBuildCity(map) || tryBuildSettlement(map) || tryBuildRoad(map);
+            for (int choice : options) {
+
+                if (choice == 0){
+                    built = tryBuildRoad(map);
+
+                    if (built) {
+                        System.out.println(round + " / " + id + ": Built road at edge " + edgeId);
+                    }
+                }
+                else if ( choice == 1) {
+                    built = tryBuildSettlement(map);
+
+                    if (built) {
+                        System.out.println(round + " / " + id + ": Built settlement at node " + nodeId);
+                    }
+                }
+
+                else {
+                    built = tryBuildCity(map);
+
+                    if (built) {
+                        System.out.println(round + " / " + id + ": Upgraded to city at node " + nodeId);
+                    }
+                }
+
+                if (built) {
+                    break;
+                }
             }
 
+
             // If nothing worked, end the turn
-            if(!built){return;}
+            if (!built) {
+                return;
+            }
 
         }while (isSevenCards());
 
@@ -89,7 +121,7 @@ public class Agent {
         if (roadsRemaining <= 0) return false;
         if(!checkRoadCost()){return false;}
 
-        int edgeId=roadLocation(map);
+        edgeId=roadLocation(map);
         if(edgeId==-1){return false;}
 
         if(map.placeRoad(this, edgeId)){
@@ -105,7 +137,7 @@ public class Agent {
         if (settlementsRemaining <= 0) return false;
         if(!checkSettlementCost()){return false;}
 
-        int nodeId=settlementLocation(map, false);
+        nodeId=settlementLocation(map, false);
         if(nodeId==-1){return false;}
 
         if(map.placeSettlement(this, nodeId, false)){
@@ -121,10 +153,11 @@ public class Agent {
         if (citiesRemaining <= 0) return false;
         if(!checkCityCost()){return false;}
 
-        int nodeId=cityLocation(map);
+        nodeId=cityLocation(map);
         if (nodeId == -1) return false;
 
-        if(map.upgrade(this, nodeId)){
+        if(map.isSettlement(this, nodeId) && checkCityCost()){
+            map.upgrade(this, nodeId);
             buyCity();
             citiesRemaining--;
             settlementsRemaining++;
