@@ -21,10 +21,10 @@ public class Game {
 		this.maxRounds = maxRounds;
 	}
 
-	//initial round, each agent palces 2 settlements & 2 roads
+	//initial round, each agent place 2 settlements & 2 roads
 	public void initalRound(){
 		for (Agent agent : agents){
-			for (int round =0; round < 2; round++){
+			for (int i = 0; i < 2; i++){
 				int nodeId = agent.settlementLocation(map, true);
 				map.placeSettlement(agent, nodeId, true);
 
