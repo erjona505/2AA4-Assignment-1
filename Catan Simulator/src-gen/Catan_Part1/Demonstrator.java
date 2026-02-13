@@ -8,17 +8,17 @@ public class Demonstrator {
 
     public static void main(String[] args) {
 
-        int max_rounds = 0;
+        int maxRounds = 0;
 
 
         //read config file for number of rounds
         try (Scanner sc = new Scanner(new File("config.txt"))){
             
             String[] num = sc.nextLine().split(":");
-            max_rounds = Integer.parseInt(num[1].trim());
+            maxRounds = Integer.parseInt(num[1].trim());
             
     
-            if (max_rounds < 1 || max_rounds > 8192) {
+            if (maxRounds < 1 || maxRounds > 8192) {
                     System.out.println("Invalid number of rounds, must be between 1-8192.");
                     return;
                 }
@@ -38,7 +38,7 @@ public class Demonstrator {
             }
 
 
-        Game game = new Game(map, agents, max_rounds);
+        Game game = new Game(map, agents, maxRounds);
 
 
         game.initalRound();

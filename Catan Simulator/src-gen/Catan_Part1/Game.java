@@ -10,15 +10,15 @@ public class Game {
 	
 	private int round;
 
-	private int max_rounds;
+	private int maxRounds;
 
 
 	//constructor 
-	public Game(GameMap map, Agent[] agents, int max_rounds) {
+	public Game(GameMap map, Agent[] agents, int maxRounds) {
 		this.map = map;
 		this.agents = agents;
 		this.round = 0;
-		this.max_rounds = max_rounds;
+		this.maxRounds = maxRounds;
 	}
 
 	//initial round, each agent palces 2 settlements & 2 roads
@@ -61,7 +61,7 @@ public class Game {
 
 	//check conditions to end the game
 	public boolean gameOver() {
-		if (round >= max_rounds){
+		if (round >= maxRounds){
 			return true;
 		}
 
