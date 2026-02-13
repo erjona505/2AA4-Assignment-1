@@ -511,10 +511,6 @@ public class GameMap {
         return null;
     }
 
-
-
-
-
     /**
      *
      * @param agent
