@@ -28,6 +28,8 @@ public class Agent {
     private int roadsRemaining = 15;
     private int settlementsRemaining = 5;
     private int citiesRemaining = 4;
+
+    private final Random random = new Random();
     /**
      *
      * @param id
@@ -58,7 +60,7 @@ public class Agent {
      * @param map
      */
     public void takeTurn(GameMap map, int round) {
-        Random random = new Random();
+
         int tries=0;
         do {
             tries++;
@@ -143,8 +145,8 @@ public class Agent {
      * @return boolean
      */
     public void buyRoad() {
-            resources.remove(ResourceType.WOOD, 1);
-            resources.remove(ResourceType.BRICK, 1);
+        resources.remove(ResourceType.WOOD, 1);
+        resources.remove(ResourceType.BRICK, 1);
     }
 
     public boolean checkRoadCost() {
@@ -251,8 +253,7 @@ public class Agent {
         if(validEdges.isEmpty()) {
             return -1;
         }
-
-        Random random = new Random();
+        
         return validEdges.get(random.nextInt(validEdges.size()));
     }
 
@@ -266,8 +267,7 @@ public class Agent {
         }
 
         if (valid.isEmpty()) return -1;
-
-        Random random = new Random();
+        
         return valid.get(random.nextInt(valid.size()));
     }
 
