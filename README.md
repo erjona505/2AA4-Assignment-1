@@ -1,7 +1,6 @@
 # Catan Simulator
 SFWRENG 2AA4 - Assignment 1
 Winter 2026
----
 
 # Project Overview 📝
 This project implements a simulator of Settlers of Catan 
@@ -13,21 +12,21 @@ This project implements a simulator of Settlers of Catan
 - Terminates when a player reaches 10 victory points or the round limit is reached
 - Prints actions to the console
 - Includes a Demonstrator class to showcase core functionality
----
+
 
 # Team Members 👤
   - Zain Al-Sakaji
   - Harnoor Sagar
   - Erjona Kalari
   - Zain Khalbous
----
+
 
 # Tech Stack ⚙️
    - Java 24
    - Eclipse-compatible project structure
    - SonarQube for code analysis
    - YAML for build
----
+
 
 # Project Structure 📂
   Catan-Simulator
@@ -54,7 +53,6 @@ This project implements a simulator of Settlers of Catan
      File → Import → Existing Projects into Workspace
   3. Run:
      Catan_Part1.Demonstrator
----
      
 # Code Quality 🔍
 SonarQube Analysis 
