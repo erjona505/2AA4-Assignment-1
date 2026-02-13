@@ -10,21 +10,21 @@ public class Game {
 	
 	private int round;
 
-	private int max_rounds = 100; //change back to 8192
+	private int max_rounds;
 
 
 	//constructor 
-	public Game(GameMap map, Agent[] agents, int round){
+	public Game(GameMap map, Agent[] agents, int round, int max_rounds) {
 		this.map = map;
 		this.agents = agents;
-		this.round = round;
-		//this.max_rounds = max_rounds;
+		this.round = 0;
+		this.max_rounds = max_rounds;
 	}
 
 	//initial round, each agent palces 2 settlements & 2 roads
 	public void initalRound(){
 		for (Agent agent : agents){
-			for (int round = 0; round < 2; round++){
+			for (int round =0; round < 2; round++){
 				int nodeId = agent.settlementLocation(map, true);
 				map.placeSettlement(agent, nodeId, true);
 
@@ -61,7 +61,7 @@ public class Game {
 
 	//check conditions to end the game
 	public boolean gameOver() {
-		if (round > max_rounds){
+		if (round >= max_rounds){
 			return true;
 		}
 
