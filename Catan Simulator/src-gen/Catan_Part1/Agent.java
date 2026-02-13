@@ -59,7 +59,7 @@ public class Agent {
      *
      * @param map
      */
-    public void takeTurn(GameMap map, int round) {
+    public void takeTurn(GameMap map) {
 
         int tries=0;
         do {
@@ -68,10 +68,10 @@ public class Agent {
             boolean built = false;
 
             int choice = random.nextInt(3);
-            
-            if(choice==0){built = tryBuildRoad(map); break;}
-            else if(choice==1){built = tryBuildSettlement(map); break;}
-            else if(choice==2){built = tryBuildCity(map); break;}
+
+            if(choice==0){built = tryBuildRoad(map);}
+            else if(choice==1){built = tryBuildSettlement(map);}
+            else if(choice==2){built = tryBuildCity(map);}
 
             // If that random pick didn’t work, try the other options too
             if (!built) {
@@ -150,7 +150,7 @@ public class Agent {
     }
 
     public boolean checkRoadCost() {
-        return (resources.hasResource(ResourceType.WOOD, 1) && resources.hasResource(ResourceType.BRICK, 1));
+        return (resources.hasResource(ResourceType.WOOD, 1) && resources.hasResource(ResourceType.BRICK, 1))
     }
 
     /**
@@ -172,7 +172,7 @@ public class Agent {
         return (resources.hasResource(ResourceType.WOOD, 1)
                 && resources.hasResource(ResourceType.BRICK, 1)
                 && resources.hasResource(ResourceType.WHEAT, 1)
-                && resources.hasResource(ResourceType.SHEEP, 1)); 
+                && resources.hasResource(ResourceType.SHEEP, 1))
     }
 
     /**
@@ -188,7 +188,7 @@ public class Agent {
     }
 
     public boolean checkCityCost() {
-        return resources.hasResource(ResourceType.WHEAT, 2) && resources.hasResource(ResourceType.ORE, 3); 
+        return resources.hasResource(ResourceType.WHEAT, 2) && resources.hasResource(ResourceType.ORE, 3)
     }
 
     /**
@@ -226,7 +226,6 @@ public class Agent {
             return -1;
         }
 
-        Random random = new Random();
         return validNodes.get(random.nextInt(validNodes.size()));
     }
 
