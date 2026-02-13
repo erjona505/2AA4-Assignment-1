@@ -8,16 +8,15 @@ public class Game {
 	
 	private int round;
 
-	private int max_rounds = 8192;
+	private int max_rounds = 100; //change back to 8192
 
-	public Agent[] agent;
 
 	//constructor 
-	public Game(GameMap map, Agent[] agents, int round, int max_rounds){
+	public Game(GameMap map, Agent[] agents, int round){
 		this.map = map;
-		this.agent = agent;
+		this.agents = agents;
 		this.round = round;
-		this.max_rounds = max_rounds;
+		//this.max_rounds = max_rounds;
 	}
 
 	//initial round, each agent palces 2 settlements & 2 roads
@@ -36,17 +35,22 @@ public class Game {
 
 	//runs the game
 	public void runGame() {
-		while(!gameOver){
+		while(!gameOver()){
 			runRound();
-			round ++;
+			round++;
 		}
 
 	}
 
 	//runs one full round
 	public void runRound() {
+
+		Dice dice = new Dice();
+		int dice_roll = dice.roll();
+		map.distributeResources(dice_roll);
+
 		for (Agent agent : agents){
-			agent.takeTurn(map, round)
+			agent.takeTurn(map, round);
         }
 
 		stats();
@@ -60,7 +64,7 @@ public class Game {
 		}
 
 		for (Agent agent : agents) {
-            if (agent.getPoints() == 10) {
+            if (agent.getTotalPoints() == 10) {
                 return true;
             }
         
@@ -71,12 +75,12 @@ public class Game {
 	}
 
 	//print round and each player points
-	public String stats(){
+	public void stats(){
 
 		System.out.print("Round: " + round);
 
 		for (Agent agent : agents) {
-            System.out.print( " Player: " + agent.getId() + "=" + agent.getPoints() + " ");
+            System.out.print( " Player " + agent.getId() + ": " + agent.getTotalPoints() + " ");
         }
 
         System.out.println();

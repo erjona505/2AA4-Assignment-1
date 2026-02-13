@@ -580,6 +580,7 @@ public class GameMap {
         }
 
         edge.setRoad(new Road(agent, edgeId));
+        agent.addPoints(edge.getRoad().getPoints());
         return true;
     }
 
@@ -608,6 +609,7 @@ public class GameMap {
         }
 
         node.setBuilding(new Settlement(agent, nodeId));
+        agent.addPoints(node.getBuilding().getPoints());
         return true;
 
     }
@@ -629,6 +631,7 @@ public class GameMap {
         }
 
         node.setBuilding(new City(agent, nodeId));
+        agent.addPoints(node.getBuilding().getPoints());
         return true;
     }
 
@@ -660,6 +663,10 @@ public class GameMap {
 
         for (Tile tile : tiles) {
 
+            if (tile.getResourceType() == ResourceType.DESERT) {
+                continue;
+            }
+
             if (tile.getNumberToken() != diceRoll) {
                 continue;
             }
@@ -676,6 +683,10 @@ public class GameMap {
                 Building building = node.getBuilding();
                 int resourceAmount = building.getResourceAmount();
                 Agent owner = building.getOwner();
+
+                // DEBUG - remove later
+                System.out.println("  Giving " + resourceAmount + " " + tile.getResourceType()
+                        + " to Player " + owner.getId());
 
                 owner.getResources().add(tile.getResourceType(), resourceAmount);
             }
