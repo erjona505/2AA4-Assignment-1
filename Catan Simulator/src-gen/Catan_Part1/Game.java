@@ -52,7 +52,7 @@ public class Game {
 		map.distributeResources(dice_roll);
 
 		for (Agent agent : agents){
-			agent.takeTurn(map, round);
+			agent.takeTurn(map);
         }
 
 		stats();
