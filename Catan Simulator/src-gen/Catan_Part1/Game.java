@@ -25,9 +25,11 @@ public class Game {
 			for (int round = 0; round < 2; round++){
 				int nodeId = agent.settlementLocation(map, true);
 				map.placeSettlement(agent, nodeId, true);
+                System.out.println("Player " + agent.getId() + ": Settlement at node " + nodeId);
 
 				int edgeId = agent.roadLocation(map);
 				map.placeRoad(agent, edgeId);
+                System.out.println("Player " + agent.getId() + ": Road at edge " + edgeId);
 			}
 		}
 		stats();

@@ -12,10 +12,15 @@ public class Edge {
 
 	private int id;
 	private Road road;
-	/**
-	 * 
-	 */
-	public Building building;
+
+    /**
+     *
+     * @param id
+     */
+    public  Edge(int id) {
+        this.id=id;
+        this.road=null;
+    }
 
 	/**
 	 * 
@@ -52,12 +57,5 @@ public class Edge {
 	}
 
 
-	/**
-	 * 
-	 * @param id 
-	 */
-	public  Edge(int id) {
-        this.id=id;
-        this.road=null;
-	}
+
 }
