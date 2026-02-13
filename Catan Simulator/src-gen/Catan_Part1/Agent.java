@@ -51,14 +51,31 @@ public class Agent {
 
 
     /**
-     * CHANGE LATER ----------------------------------------------------------------------------
+     *
      * @param map
      */
     public void takeTurn(GameMap map, int round) {
+        for(int i=0;i<54;i++ ){
+            if(buildCity(map)){
+                if(map.upgrade(this, i))
+                    return;
+            }
+        }
+        for(int i=0;i<54;i++ ){
+            if(buildSettlement(map)){
+                if(map.placeSettlement(this, i, false))
+                    return;
+            }
+        }
 
+        for(int i=0;i<72;i++ ){
+            if(buildRoad(map)){
+                if(map.placeRoad(this, i))
+                    return;
+            }
+        }
 
     }
-
 
     public int getTotalPoints() {
         return totalPoints;
