@@ -150,7 +150,7 @@ public class Agent {
     }
 
     public boolean checkRoadCost() {
-        return (resources.hasResource(ResourceType.WOOD, 1) && resources.hasResource(ResourceType.BRICK, 1))
+        return (resources.hasResource(ResourceType.WOOD, 1) && resources.hasResource(ResourceType.BRICK, 1));
     }
 
     /**
@@ -172,7 +172,7 @@ public class Agent {
         return (resources.hasResource(ResourceType.WOOD, 1)
                 && resources.hasResource(ResourceType.BRICK, 1)
                 && resources.hasResource(ResourceType.WHEAT, 1)
-                && resources.hasResource(ResourceType.SHEEP, 1))
+                && resources.hasResource(ResourceType.SHEEP, 1));
     }
 
     /**
@@ -188,7 +188,7 @@ public class Agent {
     }
 
     public boolean checkCityCost() {
-        return resources.hasResource(ResourceType.WHEAT, 2) && resources.hasResource(ResourceType.ORE, 3)
+        return resources.hasResource(ResourceType.WHEAT, 2) && resources.hasResource(ResourceType.ORE, 3);
     }
 
     /**
