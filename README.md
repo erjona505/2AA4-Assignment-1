@@ -1,1 +1,1 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=erjona505_2AA4-Assignment-1&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=erjona505_2AA4-Assignment-1)
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/new_code?id=erjona505_2AA4-Assignment-1)
