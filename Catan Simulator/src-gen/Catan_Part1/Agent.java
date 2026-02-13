@@ -25,6 +25,11 @@ public class Agent {
      */
     private Resources resources;
 
+    private int roadsRemaining = 15;
+    private int settlementsRemaining = 5;
+    private int citiesRemaining = 4;
+
+    private final Random random = new Random();
     /**
      *
      * @param id
@@ -54,27 +59,79 @@ public class Agent {
      *
      * @param map
      */
-    public void takeTurn(GameMap map, int round) {
-        for(int i=0;i<54;i++ ){
-            if(buildCity(map)){
-                if(map.upgrade(this, i))
-                    return;
+    public void takeTurn(GameMap map) {
+
+        int tries=0;
+        do {
+            tries++;
+            if (tries > 50) return; // safety break
+            boolean built = false;
+
+            int choice = random.nextInt(3);
+
+            if(choice==0){built = tryBuildRoad(map);}
+            else if(choice==1){built = tryBuildSettlement(map);}
+            else if(choice==2){built = tryBuildCity(map);}
+
+            // If that random pick didn’t work, try the other options too
+            if (!built) {
+                built = tryBuildCity(map) || tryBuildSettlement(map) || tryBuildRoad(map);
             }
-        }
-        for(int i=0;i<54;i++ ){
-            if(buildSettlement(map)){
-                if(map.placeSettlement(this, i, false))
-                    return;
-            }
+
+            // If nothing worked, end the turn
+            if(!built){return;}
+
+        }while (isSevenCards());
+
+    }
+
+    private boolean tryBuildRoad(GameMap map) {
+        if (roadsRemaining <= 0) return false;
+        if(!checkRoadCost()){return false;}
+
+        int edgeId=roadLocation(map);
+        if(edgeId==-1){return false;}
+
+        if(map.placeRoad(this, edgeId)){
+            buyRoad();
+            roadsRemaining--;
+            return true;
         }
 
-        for(int i=0;i<72;i++ ){
-            if(buildRoad(map)){
-                if(map.placeRoad(this, i))
-                    return;
-            }
+        return false;
+    }
+
+    private boolean tryBuildSettlement(GameMap map){
+        if (settlementsRemaining <= 0) return false;
+        if(!checkSettlementCost()){return false;}
+
+        int nodeId=settlementLocation(map, false);
+        if(nodeId==-1){return false;}
+
+        if(map.placeSettlement(this, nodeId, false)){
+            buySettlement();
+            settlementsRemaining--;
+            return true;
         }
 
+        return false;
+    }
+
+    private boolean tryBuildCity(GameMap map){
+        if (citiesRemaining <= 0) return false;
+        if(!checkCityCost()){return false;}
+
+        int nodeId=cityLocation(map);
+        if (nodeId == -1) return false;
+
+        if(map.upgrade(this, nodeId)){
+            buyCity();
+            citiesRemaining--;
+            settlementsRemaining++;
+            return true;
+        }
+
+        return false;
     }
 
     public int getTotalPoints() {
@@ -84,54 +141,54 @@ public class Agent {
     /**
      *
      *
-     * @param map
+     *
      * @return boolean
      */
-    public boolean buildRoad(GameMap map) {
-        // Cost: 1 wood, 1 brick
-        if(resources.hasResource(ResourceType.WOOD, 1) && resources.hasResource(ResourceType.BRICK, 1)) {
-            resources.remove(ResourceType.WOOD, 1);
-            resources.remove(ResourceType.BRICK, 1);
-            return true;
-        }
-        return false;
+    public void buyRoad() {
+        resources.remove(ResourceType.WOOD, 1);
+        resources.remove(ResourceType.BRICK, 1);
+    }
+
+    public boolean checkRoadCost() {
+        return (resources.hasResource(ResourceType.WOOD, 1) && resources.hasResource(ResourceType.BRICK, 1));
     }
 
     /**
      *
      *
-     * @param map
+     *
      * @return boolean
      */
-    public boolean buildSettlement(GameMap map) {
+    public void buySettlement() {
         // Cost: 1 wood, 1 brick, 1 wheat, 1 sheep
-        if(resources.hasResource(ResourceType.WOOD, 1)
+        resources.remove(ResourceType.WOOD, 1);
+        resources.remove(ResourceType.BRICK, 1);
+        resources.remove(ResourceType.WHEAT, 1);
+        resources.remove(ResourceType.SHEEP, 1);
+
+    }
+
+    public boolean checkSettlementCost() {
+        return (resources.hasResource(ResourceType.WOOD, 1)
                 && resources.hasResource(ResourceType.BRICK, 1)
                 && resources.hasResource(ResourceType.WHEAT, 1)
-                && resources.hasResource(ResourceType.SHEEP, 1)) {
-            resources.remove(ResourceType.WOOD, 1);
-            resources.remove(ResourceType.BRICK, 1);
-            resources.remove(ResourceType.WHEAT, 1);
-            resources.remove(ResourceType.SHEEP, 1);
-            return true;
-        }
-        return false;
+                && resources.hasResource(ResourceType.SHEEP, 1));
     }
 
     /**
      *
      *
-     * @param map
+     *
      * @return boolean
      */
-    public boolean buildCity(GameMap map) {
+    public void buyCity() {
         // Cost: 2 wheat, 3 ore
-        if(resources.hasResource(ResourceType.WHEAT, 2) && resources.hasResource(ResourceType.ORE, 3)) {
-            resources.remove(ResourceType.WHEAT, 2);
-            resources.remove(ResourceType.ORE, 3);
-            return true;
-        }
-        return false;
+        resources.remove(ResourceType.WHEAT, 2);
+        resources.remove(ResourceType.ORE, 3);
+    }
+
+    public boolean checkCityCost() {
+        return resources.hasResource(ResourceType.WHEAT, 2) && resources.hasResource(ResourceType.ORE, 3);
     }
 
     /**
@@ -169,7 +226,6 @@ public class Agent {
             return -1;
         }
 
-        Random random = new Random();
         return validNodes.get(random.nextInt(validNodes.size()));
     }
 
@@ -187,7 +243,21 @@ public class Agent {
             return -1;
         }
 
-        Random random = new Random();
         return validEdges.get(random.nextInt(validEdges.size()));
     }
+
+    private int cityLocation(GameMap map) {
+        List<Integer> valid = new ArrayList<>();
+
+        for (int i = 0; i < 54; i++) {
+            if (map.isSettlement(this, i)) {
+                valid.add(i);
+            }
+        }
+
+        if (valid.isEmpty()) return -1;
+
+        return valid.get(random.nextInt(valid.size()));
+    }
+
 }

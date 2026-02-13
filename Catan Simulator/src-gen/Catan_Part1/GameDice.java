@@ -6,7 +6,7 @@ public class GameDice implements Dice{
 
     private Random random;
 
-    public Dice(Random random){
+    public GameDice(Random random){
         this.random = random;
     }
 

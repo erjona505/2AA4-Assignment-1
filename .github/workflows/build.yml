@@ -20,6 +20,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Compile Java files
+        shell: bash
         run: |
           mkdir -p build
           javac -d build "Catan Simulator/src-gen/Catan_Part1"/*.java

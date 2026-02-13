@@ -1,5 +1,7 @@
 package Catan_Part1;
 
+import java.util.Random;
+
 public class Game {
 	
 	private GameMap map;
@@ -8,21 +10,21 @@ public class Game {
 	
 	private int round;
 
-	private int max_rounds = 100; //change back to 8192
+	private int maxRounds;
 
 
 	//constructor 
-	public Game(GameMap map, Agent[] agents, int round){
+	public Game(GameMap map, Agent[] agents, int maxRounds) {
 		this.map = map;
 		this.agents = agents;
-		this.round = round;
-		//this.max_rounds = max_rounds;
+		this.round = 0;
+		this.maxRounds = maxRounds;
 	}
 
 	//initial round, each agent palces 2 settlements & 2 roads
 	public void initalRound(){
 		for (Agent agent : agents){
-			for (int round = 0; round < 2; round++){
+			for (int round =0; round < 2; round++){
 				int nodeId = agent.settlementLocation(map, true);
 				map.placeSettlement(agent, nodeId, true);
                 System.out.println("Player " + agent.getId() + ": Settlement at node " + nodeId);
@@ -47,12 +49,12 @@ public class Game {
 	//runs one full round
 	public void runRound() {
 
-		Dice dice = new Dice();
+		Dice dice = new GameDice(new Random());
 		int dice_roll = dice.roll();
 		map.distributeResources(dice_roll);
 
 		for (Agent agent : agents){
-			agent.takeTurn(map, round);
+			agent.takeTurn(map);
         }
 
 		stats();
@@ -61,7 +63,7 @@ public class Game {
 
 	//check conditions to end the game
 	public boolean gameOver() {
-		if (round > max_rounds){
+		if (round >= maxRounds){
 			return true;
 		}
 
