@@ -6,7 +6,14 @@ package Catan_Part1;
 
 /************************************************************/
 /**
- * 
+ * Represents a hexagon tile on the game board
+ *
+ * Each tile has a unique ID from 0-18, a resource type that it produces,
+ * and a number token from 2-12. The tokens determine when the tile produces the resources
+ * based on a dice roll. The desert tile has no production.
+ *
+ * @author Harnoor Sagar
+ *
  */
 public class Tile {
 	/**

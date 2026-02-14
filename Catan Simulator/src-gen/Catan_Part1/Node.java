@@ -16,7 +16,9 @@ package Catan_Part1;
  *
  * Game rules related to nodes:
  * - A node is either unoccupied or has exactly one building
- * - the class is later used in the GameMap class to enforce the distance rule
+ * - the class is later used in the GameMap class to enforce the distance rule and set building
+ *
+ * @author Harnoor Sagar
  */
 public class Node {
 	/**
