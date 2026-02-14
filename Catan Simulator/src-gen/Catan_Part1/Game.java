@@ -7,16 +7,21 @@ public class Game {
 	private GameMap map;
 	
 	private Agent[] agents;
+
+	private Dice dice;
 	
 	private int round;
 
 	private int maxRounds;
+
+	private int startPlayerIndex = 0; //index of player who starts each round, rotates each round
 
 
 	//constructor 
 	public Game(GameMap map, Agent[] agents, int maxRounds) {
 		this.map = map;
 		this.agents = agents;
+		this.dice = new GameDice(new Random());
 		this.round = 1;
 		this.maxRounds = maxRounds;
 	}
@@ -58,7 +63,6 @@ public class Game {
 	public void runGame() {
 		while(!gameOver()){
 			runRound();
-			round++;
 		}
 
 	}
@@ -66,14 +70,14 @@ public class Game {
 	//runs one full round
 	public void runRound() {
 
-		Dice dice = new GameDice(new Random());
 		int dice_roll = dice.roll();
 		map.distributeResources(dice_roll);
 
-		for (Agent agent : agents){
-			agent.takeTurn(map, round);
-        }
-
+		for (int i = 0; i < agents.length; i++){
+			int index = (startPlayerIndex + i) % agents.length;
+			agents[index].takeTurn(map);
+		}
+		round++;
 		stats();
 	}
 
