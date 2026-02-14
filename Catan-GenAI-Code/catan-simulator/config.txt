@@ -1,0 +1,4 @@
+# Catan Simulator Configuration
+# Maximum number of rounds (1-8192)
+# Each round consists of 4 turns (one per player)
+turns: 50
