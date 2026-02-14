@@ -5,8 +5,14 @@
 
 package Catan_Part1;
 
-/************************************************************/
-
+/**
+ * Resources is class where the resources card saved, we can add card, remove card
+ * and check if player has resources
+ *
+ * Author: Zain Khalboos
+ * Course: SFWRENG 2AA4
+ * Date: 2026-02-13
+ */
 import java.util.Map;
 import java.util.HashMap;
 
@@ -15,14 +21,13 @@ import java.util.HashMap;
  */
 public class Resources {
 
-    private Map<ResourceType, Integer> resources;
+    private Map<ResourceType, Integer> resources; //map of resources
     /**
      *
      */
 
     /**
-     *
-     *
+     *Constructor to initialize map of resources where each recourse has count of 0
      */
     public Resources() {
         resources = new HashMap<>();
@@ -35,7 +40,7 @@ public class Resources {
     }
 
     /**
-     *
+     *return how much card in total
      * @return int
      */
     public int totalCards() {
@@ -47,7 +52,7 @@ public class Resources {
     }
 
     /**
-     *
+     *add card to map
      * @param resourceType
      * @param amount
      */
@@ -59,7 +64,7 @@ public class Resources {
     }
 
     /**
-     *
+     *remove card from map
      * @param resourceType
      * @param amount
      */
@@ -76,6 +81,11 @@ public class Resources {
         return false;
     }
 
+    /**
+     *check if we have the needed resources
+     * @param resourceType
+     * @param needAmount
+     */
     public boolean hasResource(ResourceType resourceType, int needAmount) {
         if(resourceType != ResourceType.DESERT && needAmount > 0){
             Integer Actulamount = resources.get(resourceType);
