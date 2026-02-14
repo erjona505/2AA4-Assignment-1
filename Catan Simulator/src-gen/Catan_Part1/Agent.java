@@ -13,7 +13,7 @@ import java.util.Collections;
  * Handles building roads, settlements, and cities.
  * handle the resources card that the agent has
  *
- * Author: Zain Khalboos
+ * @author Zain Khalboos
  * Course: SFWRENG 2AA4
  * Date: 2026-02-13add
  */

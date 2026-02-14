@@ -4,7 +4,7 @@
 
 package Catan_Part1;
 
-/*
+/**
  * Represents the Catan game board and its relationships (tiles, nodes, edges).
  * Provides utilities for board initialization and placement/validation logic.
  *
@@ -513,13 +513,14 @@ public class GameMap {
 
     /**
      *
-     * @param agent
-     * @param edgeId
-     * @return
+     * Checks if the road on a specific edge is owned by the agent
+     *
      */
     public boolean isRoad(Agent agent, int edgeId) {
         Edge edge = getEdge(edgeId);
 
+        // if edge exists and is occupied,
+        // return whether this agent is the owner
         if (edge != null && edge.isOccupied()) {
             return edge.getRoad().getOwner() == agent;
         }
@@ -529,13 +530,14 @@ public class GameMap {
 
     /**
      *
-     * @param agent
-     * @param nodeId
-     * @return
+     * Checks if settlement on the specific node is owned by the agent
+     *
      */
     public boolean isSettlement(Agent agent, int nodeId) {
         Node node = getNode(nodeId);
 
+        // if the node exists and is occupied and the building on the node is a settlement,
+        // return whether this agent is the owner
         if (node != null && node.isOccupied() && node.getBuilding() instanceof Settlement) {
             return node.getBuilding().getOwner() == agent;
         }
@@ -545,13 +547,13 @@ public class GameMap {
 
     /**
      *
-     * @param agent
-     * @param nodeId
-     * @return
+     * Checks if the city on the specific node is owned by the agent
      */
     public boolean isCity(Agent agent, int nodeId) {
         Node node = getNode(nodeId);
 
+        // if the node exists and is occupied and the building on the node is a city,
+        // return whether this agent is the owner
         if (node != null && node.isOccupied() && node.getBuilding() instanceof City) {
             return node.getBuilding().getOwner() == agent;
         }
@@ -561,21 +563,30 @@ public class GameMap {
 
     /**
      *
-     * @param agent
-     * @param edgeId
+     * Places the road on the specific edge for the agent
+     *
+     * - Checks if the edge already has a road on it
+     * - checks if the edge getting the road is connected to an existing road
+     *   settlement or city owned by the same agent
+     *
      */
     public boolean placeRoad(Agent agent, int edgeId) {
         Edge edge = getEdge(edgeId);
 
+        // returns false if edge is null or already occupied
         if (edge == null || edge.isOccupied()) {
             return false;
         }
 
+        // return false if edge is connected to an existing agent building or road
         if (!isConnectedToAgent(agent, edgeId)) {
             return false;
         }
 
+        // creates new road and sets it on that edge
         edge.setRoad(new Road(agent, edgeId));
+
+        // adds road points to agent when road is placed
         agent.addPoints(edge.getRoad().getPoints());
         return true;
     }
@@ -586,60 +597,82 @@ public class GameMap {
 
     /**
      *
-     * @param agent
-     * @param nodeId
+     * places a settlement on the specific node for the agent
+     *
+     *  - Settlements must follow distance rule (no neighboring node must have settlement or city)
+     *  - must connect to one of the agent owned roads (skipped during initial placement)
      */
     public boolean placeSettlement(Agent agent, int nodeId, boolean isInitialPlacement) {
         Node node = getNode(nodeId);
 
+        // return false if the node doesn't exist or is occupied
         if (node == null || node.isOccupied()) {
             return false;
         }
 
+        // returns false if neighbouring node has a settlement
         if (!isValidSettlementPosition(nodeId)){
               return false;
         }
 
+        // checks if it is the first placements and
+        // whether the node is attached to a road
         if (!isInitialPlacement && !hasAdjacentRoad(agent, nodeId)) {
               return false;
         }
 
+        // creates a settlement and sets building
         node.setBuilding(new Settlement(agent, nodeId));
+
+        // adds settlement points to agent
         agent.addPoints(node.getBuilding().getPoints());
         return true;
 
     }
 
     /**
+     * Places a city on the specified node by upgrading an existing agent settlement
      *
-     * @param agent
-     * @param nodeId
+     * - settlement must be owned by same agent
+     *
      */
     private boolean placeCity(Agent agent, int nodeId) {
         Node node = getNode(nodeId);
 
+        // checks if node exists
         if (node == null) {
             return false;
         }
 
+        // checks if node has a settlement by the agent
         if (!isSettlement(agent, nodeId)) {
             return false;
         }
 
+        // swithces settlement to a city
         node.setBuilding(new City(agent, nodeId));
+
+        // adds city points to agent
         agent.addPoints(node.getBuilding().getPoints());
         return true;
     }
 
     /**
+     * public wrapper for placeCity.
      *
-     * @param agent
-     * @param nodeId
+     * upgrades existing settlement to a city
      */
     public boolean upgrade(Agent agent, int nodeId) {
         return placeCity(agent, nodeId);
     }
 
+    /**
+     *
+     * distributes the initial resources to an agent based on the location of their second settlement
+     *
+     * agent receives one resource card from each of the 3 adjacent tiles
+     *
+     */
     public void distributeInitialResources(Agent agent, int settlementNodeId) {
 
         // loop through all tiles and check if this node touches that tile
@@ -649,9 +682,11 @@ public class GameMap {
                 continue;
             }
 
+            // get the list of node ids related to this tile
             List<Integer> adjacentNodes = tilesToNodes.get(tile.getId());
             if (adjacentNodes == null) continue;
 
+            // if this settlement's node is on that tile, get resource
             if (adjacentNodes.contains(settlementNodeId)) {
                 // setup rule = 1 card per adjacent tile
                 agent.getResources().add(tile.getResourceType(), 1);
@@ -660,6 +695,13 @@ public class GameMap {
     }
 
 
+    /**
+     * distributes resources to the agents based on the dice roll
+     *
+     * if the tile token matches the roll amount, the agents receive 1 or 2
+     * resources based on if they have a settlement or city there
+     * if a 7 is rolled, no resources are distributed (robber is ignored)
+     */
     public void distributeResources(int diceRoll) {
 
         if (diceRoll == 7) {
@@ -668,27 +710,35 @@ public class GameMap {
 
         for (Tile tile : tiles) {
 
+            // skips if desert
             if (tile.getResourceType() == ResourceType.DESERT) {
                 continue;
             }
 
+            // skips if token num doesnt match dice roll
             if (tile.getNumberToken() != diceRoll) {
                 continue;
             }
 
+            // gets all nodes around this tile
             List<Integer> adjacentNodes = tilesToNodes.get(tile.getId());
 
+            // checks each node for buildings
             for (int nodeId : adjacentNodes) {
 
                 Node node = getNode(nodeId);
+
+                // skip if node doesnt exist or is unoccupied
                 if (node == null || !node.isOccupied()) {
                     continue;
                 }
 
+                // gets the owner, the building and resource amount allotted to it
                 Building building = node.getBuilding();
                 int resourceAmount = building.getResourceAmount();
                 Agent owner = building.getOwner();
 
+                // gives the owner the amount of resources allotted of the tile resource type
                 owner.getResources().add(tile.getResourceType(), resourceAmount);
             }
 
