@@ -21,19 +21,36 @@ public class Game {
 		this.maxRounds = maxRounds;
 	}
 
-	//initial round, each agent place 2 settlements & 2 roads
+	//initial round, each agent place 1 settlement & 1 road
 	public void initalRound(){
-		for (Agent agent : agents){
-			for (int i = 0; i < 2; i++){
-				int nodeId = agent.settlementLocation(map, true);
-				map.placeSettlement(agent, nodeId, true);
-                System.out.println("Player " + agent.getId() + ": Settlement at node " + nodeId);
+		
+		for (int i = 0; i < agents.length; i++){
+			Agent agent = agents[i];
+			int nodeId = agent.settlementLocation(map, true);
+			map.placeSettlement(agent, nodeId, true);
+            System.out.println("Player " + agent.getId() + ": Settlement at node " + nodeId);
 
-				int edgeId = agent.roadLocation(map);
-				map.placeRoad(agent, edgeId);
-                System.out.println("Player " + agent.getId() + ": Road at edge " + edgeId);
-			}
+			int edgeId = agent.roadLocation(map);
+			map.placeRoad(agent, edgeId);
+            System.out.println("Player " + agent.getId() + ": Road at edge " + edgeId);
+			
 		}
+
+		//reverse agent turn order for round 2
+		for (int i = agents.length - 1; i >= 0; i--){
+			Agent agent = agents[i];
+			
+			int nodeId = agent.settlementLocation(map, true);
+			map.placeSettlement(agent, nodeId, true);
+			System.out.println("Player " + agent.getId() + ": Settlement at node " + nodeId);
+
+			int edgeId = agent.roadLocation(map);
+			map.placeRoad(agent, edgeId);
+			System.out.println("Player " + agent.getId() + ": Road at edge " + edgeId);
+
+		}
+
+
 		stats();
 	}
 
