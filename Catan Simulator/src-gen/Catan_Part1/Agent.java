@@ -8,33 +8,33 @@ import java.util.List;
 import java.util.Random;
 import java.util.Collections;
 
-/************************************************************/
 /**
+ * Represents a player (Agent) in the Catan game.
+ * Handles building roads, settlements, and cities.
+ * handle the resources card that the agent has
  *
+ * Author: Zain Khalboos
+ * Course: SFWRENG 2AA4
+ * Date: 2026-02-13add
  */
 public class Agent {
-    /**
-     *
-     */
+
     private int id;
     private int edgeId;
     private int nodeId;
-    /**
-     *
-     */
+
     private int totalPoints;
     /**
      *
      */
     private Resources resources;
-
-    private int roadsRemaining = 15;
-    private int settlementsRemaining = 5;
-    private int citiesRemaining = 4;
+    private int roadsRemaining = 15; //number of roads agent has
+    private int settlementsRemaining = 5; //number of roads agent has
+    private int citiesRemaining = 4;//number of roads agent has
 
     private final Random random = new Random();
     /**
-     *
+     *Constructor for agent
      * @param id
      * @param resources
      * @param points
@@ -45,13 +45,17 @@ public class Agent {
         this.totalPoints = points;
     }
 
+    /**
+     * get the resources that player has
+     * @return Resourses
+    * */
     public Resources getResources() {
         return resources;
     }
 
     /**
-     *
-     * @return
+     *get the id of the player
+     * @return int
      */
     public int getId() {
         return id;
@@ -59,24 +63,26 @@ public class Agent {
 
 
     /**
-     *
+     * Let the player take turn throw random building they can do with their resources
+     * @param round
      * @param map
+     * retun
      */
     public void takeTurn(GameMap map, int round) {
 
-        int tries=0;
-        do {
+        int tries=0; //tries to make loop finite
+        do { //start with one turn initially
             tries++;
             if (tries > 50) return; // safety break
             boolean built = false;
 
-            List<Integer> options = new ArrayList<>();
+            List<Integer> options = new ArrayList<>(); //list our options
             options.add(0);
             options.add(1);
             options.add(2);
-            Collections.shuffle(options, random);
+            Collections.shuffle(options, random); //shuffling the cards
 
-
+            //loop through the options
             for (int choice : options) {
 
                 if (choice == 0){
@@ -117,6 +123,11 @@ public class Agent {
 
     }
 
+    /**
+     * we try to build if we build we subtract 1 from roadsRemaining
+     * @param map
+     * @return boolean
+     * **/
     private boolean tryBuildRoad(GameMap map) {
         if (roadsRemaining <= 0) return false;
         if(!checkRoadCost()){return false;}
@@ -133,6 +144,11 @@ public class Agent {
         return false;
     }
 
+    /**
+     * we try to build if we build we subtract 1 from settlementRemaining
+     * @param map
+     * @return boolean
+     * **/
     private boolean tryBuildSettlement(GameMap map){
         if (settlementsRemaining <= 0) return false;
         if(!checkSettlementCost()){return false;}
@@ -149,6 +165,11 @@ public class Agent {
         return false;
     }
 
+    /**
+     * we try to build if we build we subtract 1 from cityRemaining
+     * @param map
+     * @return boolean
+     * **/
     private boolean tryBuildCity(GameMap map){
         if (citiesRemaining <= 0) return false;
         if(!checkCityCost()){return false;}
@@ -167,14 +188,19 @@ public class Agent {
         return false;
     }
 
+
+    /**
+     *
+     * get total points player has
+     * @return int
+     *
+     * **/
     public int getTotalPoints() {
         return totalPoints;
     }
 
     /**
-     *
-     *
-     *
+     *takes the resources from the resources list for road
      * @return boolean
      */
     public void buyRoad() {
@@ -182,14 +208,18 @@ public class Agent {
         resources.remove(ResourceType.BRICK, 1);
     }
 
+
+    /**
+     *
+     * check if we have the cost for road
+     * @return boolean
+    * **/
     public boolean checkRoadCost() {
         return (resources.hasResource(ResourceType.WOOD, 1) && resources.hasResource(ResourceType.BRICK, 1));
     }
 
     /**
-     *
-     *
-     *
+     *takes the resources from the resources list for Settlement
      * @return boolean
      */
     public void buySettlement() {
@@ -201,6 +231,12 @@ public class Agent {
 
     }
 
+
+    /**
+     *
+     * check if we have the cost for settlement
+     * @return boolean
+     * **/
     public boolean checkSettlementCost() {
         return (resources.hasResource(ResourceType.WOOD, 1)
                 && resources.hasResource(ResourceType.BRICK, 1)
@@ -209,9 +245,7 @@ public class Agent {
     }
 
     /**
-     *
-     *
-     *
+     *takes the resources from the resources list for City
      * @return boolean
      */
     public void buyCity() {
@@ -220,12 +254,17 @@ public class Agent {
         resources.remove(ResourceType.ORE, 3);
     }
 
+    /**
+     *
+     * check if we have the cost for city
+     * @return boolean
+     * **/
     public boolean checkCityCost() {
         return resources.hasResource(ResourceType.WHEAT, 2) && resources.hasResource(ResourceType.ORE, 3);
     }
 
     /**
-     *
+     *check if we have more than 7 cards
      * @return boolean
      */
     public boolean isSevenCards() {
@@ -233,16 +272,23 @@ public class Agent {
     }
 
     /**
-     *
+     *add points to player
      * @param points
      */
     public void addPoints(int points) {
         this.totalPoints += points;
     }
 
+    /**
+     * checks valid position for placement for settlement
+     * @param isInitialPlacement
+     * @param map
+     * @return int
+     * **/
     public int settlementLocation(GameMap map, boolean isInitialPlacement) {
         List<Integer> validNodes = new ArrayList<>();
 
+        //loop through nodes
         for (int i = 0; i < 54; i++) {
             Node node = map.getNode(i);
             if (node == null || node.isOccupied()) continue;
@@ -262,9 +308,15 @@ public class Agent {
         return validNodes.get(random.nextInt(validNodes.size()));
     }
 
+    /**
+     * checks valid position for placement for road
+     * @param map
+     * @return int
+     * **/
     public int roadLocation(GameMap map){
         ArrayList<Integer> validEdges = new ArrayList<>();
 
+        //loop through edges
         for (int i = 0; i < 72; i++) {
             Edge edge = map.getEdge(i);
             if(edge == null || edge.isOccupied()) { continue;}
@@ -279,9 +331,15 @@ public class Agent {
         return validEdges.get(random.nextInt(validEdges.size()));
     }
 
+    /**
+     * checks valid position for placement for city
+     * @param map
+     * @return int
+     * **/
     private int cityLocation(GameMap map) {
         List<Integer> valid = new ArrayList<>();
 
+        //loop through nodes
         for (int i = 0; i < 54; i++) {
             if (map.isSettlement(this, i)) {
                 valid.add(i);
