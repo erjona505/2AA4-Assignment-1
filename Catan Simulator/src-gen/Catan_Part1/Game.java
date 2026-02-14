@@ -22,7 +22,7 @@ public class Game {
 		this.map = map;
 		this.agents = agents;
 		this.dice = new GameDice(new Random());
-		this.round = 1;
+		this.round = 3;
 		this.maxRounds = maxRounds;
 	}
 
@@ -30,28 +30,50 @@ public class Game {
 	public void initalRound(){
 		
 		for (int i = 0; i < agents.length; i++){
+
+            System.out.print("Round: " + 1);
+
+            for (Agent agent : agents) {
+                System.out.print( " Player " + agent.getId() + ": " + agent.getTotalPoints() + " ");
+            }
+
+            System.out.println();
+
 			Agent agent = agents[i];
 			int nodeId = agent.settlementLocation(map, true);
 			map.placeSettlement(agent, nodeId, true);
-            System.out.println("Player " + agent.getId() + ": Settlement at node " + nodeId);
+            System.out.println(round + " / " + agent.getId() + ": Built settlement at node " + nodeId);
 
 			int edgeId = agent.roadLocation(map);
 			map.placeRoad(agent, edgeId);
-            System.out.println("Player " + agent.getId() + ": Road at edge " + edgeId);
+            System.out.println(round + " / " + agent.getId() + ": Built road at edge " + edgeId);
+
+            System.out.println();
 			
 		}
 
 		//reverse agent turn order for round 2
 		for (int i = agents.length - 1; i >= 0; i--){
+
+            System.out.print("Round: " + 2);
+
+            for (Agent agent : agents) {
+                System.out.print( " Player " + agent.getId() + ": " + agent.getTotalPoints() + " ");
+            }
+
+            System.out.println();
+
 			Agent agent = agents[i];
 			
 			int nodeId = agent.settlementLocation(map, true);
 			map.placeSettlement(agent, nodeId, true);
-			System.out.println("Player " + agent.getId() + ": Settlement at node " + nodeId);
+            System.out.println(round + " / " + agent.getId() + ": Built settlement at node " + nodeId);
 
 			int edgeId = agent.roadLocation(map);
 			map.placeRoad(agent, edgeId);
-			System.out.println("Player " + agent.getId() + ": Road at edge " + edgeId);
+            System.out.println(round + " / " + agent.getId() + ": Built road at edge " + edgeId);
+
+            System.out.println();
 
 		}
 
@@ -75,7 +97,7 @@ public class Game {
 
 		for (int i = 0; i < agents.length; i++){
 			int index = (startPlayerIndex + i) % agents.length;
-			agents[index].takeTurn(map);
+			agents[index].takeTurn(map, round);
 		}
 		round++;
 		stats();
@@ -89,7 +111,7 @@ public class Game {
 		}
 
 		for (Agent agent : agents) {
-            if (agent.getTotalPoints() == 10) {
+            if (agent.getTotalPoints() >= 10) {
                 return true;
             }
         
