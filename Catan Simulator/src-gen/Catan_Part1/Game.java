@@ -49,7 +49,10 @@ public class Game {
 			map.placeSettlement(agent, nodeId, true);
 			System.out.println("Player " + agent.getId() + ": Settlement at node " + nodeId);
 
-			int edgeId = agent.roadLocation(map);
+            map.distributeInitialResources(agent, nodeId);
+            System.out.println("Player " + agent.getId() + ": collected initial resources");
+
+            int edgeId = agent.roadLocation(map);
 			map.placeRoad(agent, edgeId);
 			System.out.println("Player " + agent.getId() + ": Road at edge " + edgeId);
 

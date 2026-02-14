@@ -644,6 +644,25 @@ public class GameMap {
         return placeCity(agent, nodeId);
     }
 
+    public void distributeInitialResources(Agent agent, int settlementNodeId) {
+
+        // loop through all tiles and check if this node touches that tile
+        for (Tile tile : tiles) {
+
+            if (tile.getResourceType() == ResourceType.DESERT) {
+                continue;
+            }
+
+            List<Integer> adjacentNodes = tilesToNodes.get(tile.getId());
+            if (adjacentNodes == null) continue;
+
+            if (adjacentNodes.contains(settlementNodeId)) {
+                // setup rule = 1 card per adjacent tile
+                agent.getResources().add(tile.getResourceType(), 1);
+            }
+        }
+    }
+
 
     public void distributeResources(int diceRoll) {
 
