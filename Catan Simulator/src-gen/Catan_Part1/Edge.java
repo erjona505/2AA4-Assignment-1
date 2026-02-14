@@ -4,36 +4,36 @@
 
 package Catan_Part1;
 
-/************************************************************/
 /**
- * 
+ * Represents an edge on the Catan board.
+ * An edge may contain a road owned by an agent.
+ *
+ * @author Zain Al-Sakaji
+ * @version 1.0
+ * @since 2026-02-13
  */
+
 public class Edge {
 
 	private int id;
 	private Road road;
 
     /**
+     * Constructs an Edge with a unique identifier.
+     * Initially, the edge has no road placed on it.
      *
-     * @param id
      */
     public  Edge(int id) {
         this.id=id;
         this.road=null;
     }
 
-	/**
-	 * 
-	 * @return id of the edge
-	 */
+    //Returns the edge identifier.
 	public int getId() {
         return this.id;
 	}
 
-	/**
-	 * 
-	 * @return 
-	 */
+
 	public Road getRoad() {
         return this.road;
 	}
@@ -42,10 +42,7 @@ public class Edge {
         this.road = road;
     }
 
-	/**
-	 * 
-	 * @return 
-	 */
+    //Checks whether this edge is occupied by a road.
 	public boolean isOccupied() {
         if (this.road==null){
             return false;

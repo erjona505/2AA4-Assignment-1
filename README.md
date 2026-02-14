@@ -50,11 +50,11 @@ This project implements a simulator of Settlers of Catan
 ```
 # How to Run 💻
   1. Clone the repository
-     https://github.com/erjona505/2AA4-Assignment-1
-  2. Import into Eclipse
-     File → Import → Existing Projects into Workspace
-  3. Run:
-     Catan_Part1.Demonstrator
+  git clone https://github.com/erjona505/2AA4-Assignment-1
+  2. Open the project in your preferred IDE (Eclipse, IntelliJ, VS Code, etc.)
+   3. Navigate to: 
+   Catan Simulator/src-gen/Catan_Part1/Demonstrator.java
+   4. Run Demonstrator.java as a Java application.
      
 # Code Quality 🔍
 SonarQube Analysis 
