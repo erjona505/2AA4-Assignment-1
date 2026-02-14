@@ -9,7 +9,7 @@ package Catan_Part1;
  * Resources is class where the resources card saved, we can add card, remove card
  * and check if player has resources
  *
- * Author: Zain Khalboos
+ * @author Zain Khalboos
  * Course: SFWRENG 2AA4
  * Date: 2026-02-13
  */

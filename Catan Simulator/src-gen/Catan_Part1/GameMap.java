@@ -4,7 +4,7 @@
 
 package Catan_Part1;
 
-/*
+/**
  * Represents the Catan game board and its relationships (tiles, nodes, edges).
  * Provides utilities for board initialization and placement/validation logic.
  *
