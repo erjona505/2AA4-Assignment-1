@@ -4,15 +4,21 @@
 
 package Catan_Part1;
 
-
+/*
+ * Represents the Catan game board and its relationships (tiles, nodes, edges).
+ * Provides utilities for board initialization and placement/validation logic.
+ *
+ * @author Zain Al-Sakaji
+ * @author  Harnoor Sagar
+ * @version 1.0.0
+ */
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- */
+
+
 public class GameMap {
 
 
@@ -26,6 +32,8 @@ public class GameMap {
 
 
 
+     //Initializes collections for tiles, nodes, edges, and their relationship maps.
+     
     public  GameMap() {
         tiles= new ArrayList<Tile>();
         nodes=new ArrayList<Node>();
@@ -37,7 +45,7 @@ public class GameMap {
 
     }
 
-
+// Builds the board by creating tiles/nodes/edges and wiring all adjacency mappings.
     public void initboard(){
 
         //initialize all nodes, tiles and edges
@@ -58,11 +66,10 @@ public class GameMap {
 
 
 
-    /**A list of helper functions to aid with initializing the board and establishing relationship between tiles, nodes and edges* */
+    /*A list of helper functions to aid with initializing the board and establishing relationship between tiles, nodes and edges* */
 
 
-    //init the inner lists in every
-    ///HELPERS FOR INITIALIZE THE BOARD
+    //HELPERS FOR INITIALIZE THE BOARD
 
     //init all 19 tiles
     private void initTiles(){
@@ -122,9 +129,9 @@ public class GameMap {
     }
 
 
-    //HELPERS for establishing relationship b/m nodes, tiles and edges
+    //HELPERS for establishing relationship b/n nodes, tiles and edges
 
-    /// helper method to allow nodes to recognize  who their neighbors are
+    // helper method to allow nodes to recognize  who their neighbors are
     private void addSingleNodeNeighbor(int nodeId1, int nodeId2){
         //do nothing if the nodes do not exist
         if (getNode(nodeId1)==null || getNode(nodeId2)==null){
@@ -392,7 +399,7 @@ public class GameMap {
         for (int neighborId: getNeighborNodes(nodeId)){
             //get that specfic node object
             Node neighbor=getNode(neighborId);
-            //check if its a valid node and is full
+            //check if its a valid node and is not full
             if (neighbor!= null && !neighbor.isOccupied()){ return true;}
         }
 
@@ -426,7 +433,6 @@ public class GameMap {
                 if (edge.getRoad() != null && agent.equals(edge.getRoad().getOwner())) {
                     return true; //FOUND one adjacent road owned by the agent
                 }
-                //check if that edge has a road owned by this agent
 
 
             }
@@ -435,13 +441,9 @@ public class GameMap {
     }
 
 
+    
+    
     //helper method returns a list of which edges are touching this node
-
-
-
-
-
-
     //check if the agent has a road, sett, city at either end of the edge
     public boolean isConnectedToAgent(Agent agent, int edgeId){
 
@@ -462,7 +464,6 @@ public class GameMap {
         }
         return false;
 
-        //check if the agent has a road on any o
     }
 
 
@@ -471,11 +472,6 @@ public class GameMap {
 
 
 
-    /**
-     *
-     * @param id
-     * @return
-     */
     public Tile getTile(int id) {
         if (id>=0 && id<tiles.size()){
             return tiles.get(id);
