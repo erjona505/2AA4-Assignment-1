@@ -693,10 +693,6 @@ public class GameMap {
                 int resourceAmount = building.getResourceAmount();
                 Agent owner = building.getOwner();
 
-                // DEBUG - remove later
-                System.out.println("  Giving " + resourceAmount + " " + tile.getResourceType()
-                        + " to Player " + owner.getId());
-
                 owner.getResources().add(tile.getResourceType(), resourceAmount);
             }
 
