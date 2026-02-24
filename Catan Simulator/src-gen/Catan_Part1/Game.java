@@ -21,7 +21,7 @@ public class Game {
 	public Game(GameMap map, Agent[] agents, int maxRounds) {
 		this.map = map;
 		this.agents = agents;
-		this.dice = new GameDice(new Random());
+		this.dice = new GameDice();
 		this.round = 0;
 		this.maxRounds = maxRounds;
 	}

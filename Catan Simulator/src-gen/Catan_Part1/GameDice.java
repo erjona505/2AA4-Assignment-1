@@ -13,8 +13,9 @@ public class GameDice implements Dice{
     //random number generator used to simulate dice rolls
     private Random random;
 
-    public GameDice(Random random){
-        this.random = random;
+
+    public GameDice(){
+        this.random = new Random();
     }
 
      /**
