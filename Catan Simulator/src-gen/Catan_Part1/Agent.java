@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Collections;
+import Catan_Part1.Resources;
 
 /**
  * Represents a player (Agent) in the Catan game.
