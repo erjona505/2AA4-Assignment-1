@@ -17,7 +17,7 @@ import java.util.Random;
  * Course: SFWRENG 2AA4
  * Date: 2026-02-13add
  */
-public class Agent {
+public abstract class Agent {
 
     private int id;
     private int edgeId;
@@ -28,9 +28,11 @@ public class Agent {
      *
      */
     private Resources resources;
-    private int roadsRemaining = 15; //number of roads agent has
-    private int settlementsRemaining = 5; //number of roads agent has
-    private int citiesRemaining = 4;//number of roads agent has
+    protected int roadsRemaining;
+    protected int settlementsRemaining;
+    protected int citiesRemaining;
+
+
 
     private final Random random = new Random();
     /**
@@ -43,6 +45,9 @@ public class Agent {
         this.id = id;
         this.resources = resources;
         this.totalPoints = points;
+        roadsRemaining = 15; //number of roads agent has
+        settlementsRemaining = 5; //number of roads agent has
+        citiesRemaining = 4;//number of roads agent has
     }
 
     /**
@@ -68,60 +73,7 @@ public class Agent {
      * @param map
      * retun
      */
-    public void takeTurn(GameMap map, int round) {
-
-        int tries=0; //tries to make loop finite
-        do { //start with one turn initially
-            tries++;
-            if (tries > 50) return; // safety break
-            boolean built = false;
-
-            List<Integer> options = new ArrayList<>(); //list our options
-            options.add(0);
-            options.add(1);
-            options.add(2);
-            Collections.shuffle(options, random); //shuffling the cards
-
-            //loop through the options
-            for (int choice : options) {
-
-                if (choice == 0){
-                    built = tryBuildRoad(map);
-
-                    if (built) {
-                        System.out.println(round + " / " + id + ": Built road at edge " + edgeId);
-                    }
-                }
-                else if ( choice == 1) {
-                    built = tryBuildSettlement(map);
-
-                    if (built) {
-                        System.out.println(round + " / " + id + ": Built settlement at node " + nodeId);
-                    }
-                }
-
-                else {
-                    built = tryBuildCity(map);
-
-                    if (built) {
-                        System.out.println(round + " / " + id + ": Upgraded to city at node " + nodeId);
-                    }
-                }
-
-                if (built) {
-                    break;
-                }
-            }
-
-
-            // If nothing worked, end the turn
-            if (!built) {
-                return;
-            }
-
-        }while (isSevenCards());
-
-    }
+    public abstract void takeTurn(GameMap map, int round);
 
     /**
      * we try to build if we build we subtract 1 from roadsRemaining
