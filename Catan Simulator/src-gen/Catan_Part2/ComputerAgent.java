@@ -19,6 +19,7 @@ import java.util.Random;
  */
 public class ComputerAgent extends Agent{
 
+    private final Random random = new Random();
 
     /**
      * Constructor for agent
@@ -31,8 +32,63 @@ public class ComputerAgent extends Agent{
         super(id, resources, points);
     }
 
+
+
     @Override
     public void takeTurn(GameMap map, int round) {
+
+
+        int tries=0; //tries to make loop finite
+        do { //start with one turn initially
+            tries++;
+            if (tries > 50) return; // safety break
+            boolean built = false;
+
+            List<Integer> options = new ArrayList<>(); //list our options
+            options.add(0);
+            options.add(1);
+            options.add(2);
+            Collections.shuffle(options, random); //shuffling the cards
+
+            //loop through the options
+            for (int choice : options) {
+
+                if (choice == 0){
+                    built = tryBuildRoad(map);
+
+                    if (built) {
+                        System.out.println(round + " / " + getId() + ": Built road at edge " + getEdgeId());
+                    }
+                }
+                else if ( choice == 1) {
+                    built = tryBuildSettlement(map);
+
+                    if (built) {
+                        System.out.println(round + " / " + getId() + ": Built settlement at node " + getNodeId());
+                    }
+                }
+
+                else {
+                    built = tryBuildCity(map);
+
+                    if (built) {
+                        System.out.println(round + " / " + getId() + ": Upgraded to city at node " + getNodeId());
+                    }
+                }
+
+                if (built) {
+                    break;
+                }
+            }
+
+
+            // If nothing worked, end the turn
+            if (!built) {
+                return;
+            }
+
+        }while (isSevenCards());
+
 
     }
 }
