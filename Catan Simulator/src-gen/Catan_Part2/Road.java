@@ -10,9 +10,11 @@ package Catan_Part2;
  * @author Erjona Kalari
  */
 
-public class Road extends Building {
+public class Road {
 	
-	private int edgeId; //ID of the board edge where road is placed
+	private final Agent owner;
+    private int edgeId; //ID of the board edge where road is placed
+
 
 	/**
 	 * Constructs a Road with the specified owner and edge location.
@@ -21,34 +23,34 @@ public class Road extends Building {
 	 * @param edgeId the ID of the board edge where the road is placed
 	 * @throws IllegalArgumentException if edgeId is negative
 	 */
-	public Road(Agent owner, int edgeId){
-		super(owner);
-		if (edgeId < 0){
-			throw new IllegalArgumentException("Path ID cannot be negative");
+    public Road(Agent owner, int edgeId){
+        if (owner==null || edgeId < 0){
+            throw new IllegalArgumentException("Agent cannot be null and/or Edge ID cannot be negative");
+        }
+        this.owner = owner;
+        this.edgeId = edgeId;
+    }
 
-		}
-		this.edgeId = edgeId;
-	}
-
+    public Agent getOwner() {
+        return owner;
+    }
 
 	public int getEdgeId(){
-		return edgeId;
+        return edgeId;
 	}
 
 
 	public boolean isPlaced() {
-		return edgeId >= 0; //true if edgeID is non-negative
+
+        return edgeId >= 0; //true if edgeID is non-negative
 	}
 
-	@Override
+
 	public int getPoints() {
-		return 0;
+
+        return 0;
 	}
 
-	@Override
-    public int getResourceAmount() {
-        return 0; //roads do not produce resources
-    }
 
 	/**
 	 * Returns a string representation of this Road
@@ -59,7 +61,6 @@ public class Road extends Building {
 	public String toString() {
 		return "Road(owner=" + getOwner() + ", pathId=" + edgeId + ")";
 	}
-
 
 
 }

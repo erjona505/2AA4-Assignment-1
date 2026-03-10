@@ -9,7 +9,7 @@ package Catan_Part2;
 
 import java.util.Random;
 
-public class GameDice implements Dice {
+public class GameDice {
 
     //random number generator used to simulate dice rolls
     private Random random;
@@ -24,7 +24,7 @@ public class GameDice implements Dice {
      *
      * @return the sum of the two dice rolls
      */
-    @Override
+
     public int roll(){
         int die1 = random.nextInt(6) + 1; 
         int die2 = random.nextInt(6) + 1; 

@@ -47,17 +47,20 @@ public class Demonstrator {
         //create 4 agents with unique IDs and empty resources
         Agent[] agents = new Agent[4];
             for (int i = 0; i < 4; i++) {
-            agents[i] = new Agent(i + 1, new Resources(), 0);
+            agents[i] = new ComputerAgent(i + 1, new Resources(), 0);
             }
 
 
         Game game = new Game(map, agents, maxRounds);
-
+        ExportGameState exporter = new ExportGameState("state.json");
 
         game.initalRound();
 
-        game.runGame();
+        exporter.export(game); //export initial state after setup
 
-       
+        game.runGame(exporter);
+
+
+
     }
 }

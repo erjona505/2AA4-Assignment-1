@@ -5,8 +5,6 @@ public class Game {
 	private GameMap map;
 	
 	private Agent[] agents;
-
-	private Dice dice;
 	
 	private int round;
 
@@ -15,11 +13,12 @@ public class Game {
 	private int startPlayerIndex = 0; //index of player who starts each round, rotates each round
 
 
+    GameDice dice = new GameDice();
+
 	//constructor 
 	public Game(GameMap map, Agent[] agents, int maxRounds) {
 		this.map = map;
 		this.agents = agents;
-		this.dice = new GameDice();
 		this.round = 0;
 		this.maxRounds = maxRounds;
 	}
@@ -73,13 +72,17 @@ public class Game {
 
 	}
 
-	//runs the game
-	public void runGame() {
-		while(!gameOver()){
-			runRound();
-		}
 
-	}
+    //run the game and export state after each round
+    public void runGame(ExportGameState exporter) {
+
+        while(!gameOver()){
+            runRound();
+            exporter.export(this);
+
+        }
+
+    }
 
 	//runs one full round
 	public void runRound() {
