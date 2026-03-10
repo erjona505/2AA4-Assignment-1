@@ -66,6 +66,14 @@ public abstract class Agent {
         return id;
     }
 
+    public int getEdgeId() {
+        return edgeId;
+    }
+
+    public int getNodeId() {
+        return nodeId;
+    }
+
 
     /**
      * Let the player take turn throw random building they can do with their resources
@@ -80,7 +88,7 @@ public abstract class Agent {
      * @param map
      * @return boolean
      * **/
-    private boolean tryBuildRoad(GameMap map) {
+    protected boolean tryBuildRoad(GameMap map) {
         if (roadsRemaining <= 0) return false;
         if(!checkRoadCost()){return false;}
 
@@ -101,7 +109,7 @@ public abstract class Agent {
      * @param map
      * @return boolean
      * **/
-    private boolean tryBuildSettlement(GameMap map){
+    protected boolean tryBuildSettlement(GameMap map){
         if (settlementsRemaining <= 0) return false;
         if(!checkSettlementCost()){return false;}
 
@@ -122,7 +130,7 @@ public abstract class Agent {
      * @param map
      * @return boolean
      * **/
-    private boolean tryBuildCity(GameMap map){
+    protected boolean tryBuildCity(GameMap map){
         if (citiesRemaining <= 0) return false;
         if(!checkCityCost()){return false;}
 
@@ -237,7 +245,7 @@ public abstract class Agent {
      * @param map
      * @return int
      * **/
-    public int settlementLocation(GameMap map, boolean isInitialPlacement) {
+    protected int settlementLocation(GameMap map, boolean isInitialPlacement) {
         List<Integer> validNodes = new ArrayList<>();
 
         //loop through nodes
@@ -265,7 +273,7 @@ public abstract class Agent {
      * @param map
      * @return int
      * **/
-    public int roadLocation(GameMap map){
+    protected int roadLocation(GameMap map){
         ArrayList<Integer> validEdges = new ArrayList<>();
 
         //loop through edges
@@ -288,7 +296,7 @@ public abstract class Agent {
      * @param map
      * @return int
      * **/
-    private int cityLocation(GameMap map) {
+    protected int cityLocation(GameMap map) {
         List<Integer> valid = new ArrayList<>();
 
         //loop through nodes
