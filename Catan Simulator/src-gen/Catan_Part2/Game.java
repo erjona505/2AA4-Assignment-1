@@ -130,4 +130,7 @@ public class Game {
     }
 
 
+    public GameMap getMap() {
+        return map;
+    }
 }
