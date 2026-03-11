@@ -1,5 +1,8 @@
 package Catan_Part2;
 
+import java.util.List;
+import java.util.Random;
+
 public class Game {
 	
 	private GameMap map;
@@ -11,6 +14,8 @@ public class Game {
 	private int maxRounds;
 
 	private int startPlayerIndex = 0; //index of player who starts each round, rotates each round
+
+    private Robber robber;
 
 
     GameDice dice = new GameDice();
@@ -28,6 +33,7 @@ public class Game {
 
         System.out.println("------INITIAL SETUP-------");
 
+        Robber robber = new Robber();
 
 		for (int i = 0; i < agents.length; i++){
 
@@ -88,7 +94,15 @@ public class Game {
 	public void runRound() {
 
 		int dice_roll = dice.roll();
-		map.distributeResources(dice_roll);
+
+        if (dice_roll == 7) {
+            Agent agentRolled = agents[startPlayerIndex];
+            handleRobber(agentRolled);
+        }
+        else {
+            map.distributeResources(dice_roll);
+        }
+
 
 		for (int i = 0; i < agents.length; i++){
 			int index = (startPlayerIndex + i) % agents.length;
@@ -98,6 +112,27 @@ public class Game {
 		stats();
 
 	}
+
+    private void handleRobber(Agent agentRolled) {
+
+        Random random = new Random();
+
+        for (Agent agent : agents) {
+
+            if (agent.getResources().totalCards() > 7) {
+                agent.loseHalf();
+            }
+        }
+
+        map.moveRobberRandom(robber);
+
+        List<Agent> choices = map.robberTileAdjacent(agentRolled, robber.getTileId());
+
+        if (!choices.isEmpty()) {
+            Agent victim = choices.get(random.nextInt(choices.size()));
+            agentRolled.stealCard(victim);
+        }
+    }
 
 
 	//check conditions to end the game

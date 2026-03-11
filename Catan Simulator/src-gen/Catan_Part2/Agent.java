@@ -311,4 +311,37 @@ public abstract class Agent {
         return valid.get(random.nextInt(valid.size()));
     }
 
+    protected void loseHalf() {
+
+        int returned = 0;
+        int half = resources.totalCards() / 2;
+        ResourceType[] types = {ResourceType.WOOD, ResourceType.BRICK, ResourceType.SHEEP, ResourceType.ORE, ResourceType.WHEAT};
+
+        while (returned < half) {
+            ResourceType type = types[random.nextInt(types.length)];
+
+            if (resources.hasResource(type, 1)) {
+                resources.remove(type, 1);
+                returned++;
+            }
+        }
+    }
+
+    protected void stealCard(Agent victim) {
+
+        if (victim.getResources().totalCards() == 0) {
+            return;
+        }
+
+        ResourceType[] types = {ResourceType.WOOD, ResourceType.BRICK, ResourceType.SHEEP, ResourceType.ORE, ResourceType.WHEAT};
+
+        ResourceType type;
+        do {
+            type = types[random.nextInt(types.length)];
+        } while (!victim.getResources().hasResource(type, 1));
+
+        victim.getResources().remove(type, 1);
+        this.resources.add(type, 1);
+    }
+
 }

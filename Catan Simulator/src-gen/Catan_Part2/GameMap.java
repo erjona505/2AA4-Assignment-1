@@ -13,11 +13,7 @@ package Catan_Part2;
  * @version 1.0.0
  */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import java.util.*;
 
 
 public class GameMap {
@@ -380,6 +376,28 @@ public class GameMap {
 
     }
 
+    public List<Agent> robberTileAdjacent (Agent agentRolled, int tileId) {
+
+        List<Agent> choices = new ArrayList<>();
+        List<Integer> adjacentNodes = tilesToNodes.get(tileId);
+
+        for (int id : adjacentNodes){
+
+            Node node = getNode(id);
+
+            if (node != null && node.isOccupied()) {
+                Agent owner = node.getBuilding().getOwner();
+
+                if (owner != agentRolled && !choices.contains(owner)) {
+                    choices.add(owner);
+                }
+            }
+        }
+
+        return choices;
+
+    }
+
 
     //creates and returns a list of all the neigbors of a node
     private List<Integer> getNeighborNodes(int nodeId){
@@ -705,6 +723,8 @@ public class GameMap {
      */
     public void distributeResources(int diceRoll) {
 
+        Robber robber = new Robber();
+
         if (diceRoll == 7) {
             return;
         }
@@ -713,6 +733,11 @@ public class GameMap {
 
             // skips if desert
             if (tile.getResourceType() == ResourceType.DESERT) {
+                continue;
+            }
+
+            // skips if robber is on that tile
+            if (tile.getId() == robber.getTileId()) {
                 continue;
             }
 
@@ -747,6 +772,18 @@ public class GameMap {
         }
 
         
+    }
+
+    public void moveRobberRandom(Robber robber) {
+
+        Random rand = new Random();
+        int newTile;
+
+        do {
+            newTile = rand.nextInt(tiles.size());
+        } while (newTile == robber.getTileId());
+
+        robber.setTileId(newTile);
     }
 
     public List<Integer> getEdgeNodes(int edgeId) {
