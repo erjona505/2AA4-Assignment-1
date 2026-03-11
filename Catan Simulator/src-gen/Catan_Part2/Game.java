@@ -197,5 +197,7 @@ public class Game {
         System.out.println();
     }
 
-
+    public GameMap getMap() {
+        return map;
+    }
 }
