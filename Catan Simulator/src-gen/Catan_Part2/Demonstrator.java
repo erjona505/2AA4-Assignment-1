@@ -63,7 +63,7 @@ public class Demonstrator {
 
             game.initalRound();
 
-            game.runGame(exporter);
+//            game.runGame(exporter);
 
 
         }

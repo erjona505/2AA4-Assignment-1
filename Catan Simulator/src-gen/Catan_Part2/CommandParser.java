@@ -38,7 +38,7 @@ public class CommandParser {
 
         Pattern cityPattern = Pattern.compile("^build\\s+city\\s+(\\d+)$",  Pattern.CASE_INSENSITIVE);
         Pattern settlementPattern = Pattern.compile("^build\\s+settlement\\s+(\\d+)$",  Pattern.CASE_INSENSITIVE);
-        Pattern roadPattern = Pattern.compile("^build\\s+road\\s+\\[(\\d+)\\s*,\\s*(\\d+)\\]$",  Pattern.CASE_INSENSITIVE);
+        Pattern roadPattern = Pattern.compile("^build\\s+road\\s+(\\d+)\\s*,\\s*(\\d+)$",  Pattern.CASE_INSENSITIVE);
 
 
         if (rollPattern.matcher(input).matches()) {

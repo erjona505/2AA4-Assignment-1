@@ -20,8 +20,6 @@ import java.util.Random;
 public abstract class Agent {
 
     private int id;
-    private int edgeId;
-    private int nodeId;
 
     private int totalPoints;
     /**
@@ -88,21 +86,7 @@ public abstract class Agent {
      * @param map
      * @return boolean
      * **/
-    protected boolean tryBuildRoad(GameMap map) {
-        if (roadsRemaining <= 0) return false;
-        if(!checkRoadCost()){return false;}
-
-        edgeId=roadLocation(map);
-        if(edgeId==-1){return false;}
-
-        if(map.placeRoad(this, edgeId)){
-            buyRoad();
-            roadsRemaining--;
-            return true;
-        }
-
-        return false;
-    }
+    protected abstract boolean tryBuildRoad(GameMap map);
 
     /**
      * we try to build if we build we subtract 1 from settlementRemaining
@@ -111,45 +95,14 @@ public abstract class Agent {
      * **/
 
     //MAKE ABSTRACT METHOD INSETAD
-    protected boolean tryBuildSettlement(GameMap map){
-        if (settlementsRemaining <= 0) return false;
-        if(!checkSettlementCost()){return false;}
-
-        nodeId=settlementLocation(map, false);
-        if(nodeId==-1){return false;}
-
-        if(map.placeSettlement(this, nodeId, false)){
-            buySettlement();
-            settlementsRemaining--;
-            return true;
-        }
-
-        return false;
-    }
+    protected abstract boolean tryBuildSettlement(GameMap map);
 
     /**
      * we try to build if we build we subtract 1 from cityRemaining
      * @param map
      * @return boolean
      * **/
-    protected boolean tryBuildCity(GameMap map){
-        if (citiesRemaining <= 0) return false;
-        if(!checkCityCost()){return false;}
-
-        nodeId=cityLocation(map);
-        if (nodeId == -1) return false;
-
-        if(map.isSettlement(this, nodeId) && checkCityCost()){
-            map.upgrade(this, nodeId);
-            buyCity();
-            citiesRemaining--;
-            settlementsRemaining++;
-            return true;
-        }
-
-        return false;
-    }
-
+    protected abstract boolean tryBuildCity(GameMap map);
 
     /**
      *
