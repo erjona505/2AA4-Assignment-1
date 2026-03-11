@@ -1,5 +1,7 @@
 package Catan_Part2;
 
+import java.util.Scanner;
+
 import java.util.List;
 import java.util.Random;
 
@@ -81,14 +83,29 @@ public class Game {
 
 
     //run the game and export state after each round
-    public void runGame(GameState exporter) {
+    public void runGame() {
 
         while(!gameOver()){
             runRound();
-            exporter.export(this);
+            //exporter.export(this);
 
         }
 
+    }
+
+    //Helper function for runround
+    private void waitForGo(){
+        CommandParser p =new CommandParser();
+        Scanner sc= new Scanner(System.in);
+
+        while (true){
+            System.out.println("> ");
+            String input= sc.nextLine();
+            if (p.parser(input)==CommandType.GO){return;}
+            else{
+            System.out.println("Invalid! Type go to continue");}
+
+        }
     }
 
 	//runs one full round
@@ -103,12 +120,20 @@ public class Game {
         }
         else {
             map.distributeResources(dice_roll);
+            // Print each player's resources
         }
 
 
 		for (int i = 0; i < agents.length; i++){
 			int index = (startPlayerIndex + i) % agents.length;
-			agents[index].takeTurn(map, round);
+			agents[index].takeTurn(map, round, dice_roll);
+
+            //if this was a computers turn, we have to wait for human to let us go
+            if (agents[index] instanceof  ComputerAgent){
+                System.out.println("Player" + agents[index].getId() + "turn");
+                System.out.println("Type Go to Proceed");
+                waitForGo();
+            }
 		}
         round++;
 		stats();
@@ -173,7 +198,4 @@ public class Game {
     }
 
 
-    public GameMap getMap() {
-        return map;
-    }
 }

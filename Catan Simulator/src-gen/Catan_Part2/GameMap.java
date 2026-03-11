@@ -804,4 +804,14 @@ public class GameMap {
     public List<Integer> getEdgeNodes(int edgeId) {
         return edgeToNodes.get(edgeId);
     }
+//given two nodes, it will return the edge connecting them
+    public int getEdgeIdFromTwoNodes(int nodeA, int nodeB){
+        for (Map.Entry<Integer, List<Integer>> entry: edgeToNodes.entrySet()){
+            int edgeId=entry.getKey();
+            List<Integer> endpoints=entry.getValue();
+
+            if (endpoints.contains(nodeA) && endpoints.contains(nodeB)) return edgeId;
+        }
+        return -1;//no edge exists between those two nodes
+    }
 }
