@@ -81,7 +81,7 @@ public abstract class Agent {
      * @param map
      * retun
      */
-    public abstract void takeTurn(GameMap map, int round);
+    public abstract void takeTurn(GameMap map, int round, int rollDice);
 
     /**
      * we try to build if we build we subtract 1 from roadsRemaining
@@ -109,6 +109,8 @@ public abstract class Agent {
      * @param map
      * @return boolean
      * **/
+
+    //MAKE ABSTRACT METHOD INSETAD
     protected boolean tryBuildSettlement(GameMap map){
         if (settlementsRemaining <= 0) return false;
         if(!checkSettlementCost()){return false;}

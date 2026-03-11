@@ -18,9 +18,10 @@ public class HumanAgent extends Agent {
     }
 
     @Override
-    public void takeTurn(GameMap map, int round) {
+    public void takeTurn(GameMap map, int round, int diceRoll) {
 
         Scanner scanner = new Scanner(System.in);
+        boolean hasRolledThisTurn=false;
 
         boolean done = false;
 
@@ -28,11 +29,39 @@ public class HumanAgent extends Agent {
             System.out.print("> ");
             String input = scanner.nextLine();
 
-            CommandType type = parser.parser(input);
 
+            CommandType type = parser.parser(input);
+//TESTING TAKE OUT LATER
             System.out.println("Command type: " + type);
 
-            if(type == CommandType.BUILD_CITY){
+//ROLL actually happens in game but human has to trigger it since they are always the first player
+            //if not triggered then they cannot move on
+            if (type==CommandType.ROLL){
+                if (hasRolledThisTurn){
+                    System.out.println("You already rolled this turn ");
+                }
+                else {
+                    System.out.println( "Rolled:" +diceRoll +"for this turn" );
+                    //System.out.println("Your hand"+ getResources());
+                    hasRolledThisTurn=true;
+
+                }
+
+
+
+            }
+            else if (type==CommandType.LIST){
+                System.out.println("Your hand"+ getResources());
+
+            }
+
+
+
+            else if(type == CommandType.BUILD_CITY){
+                if (!hasRolledThisTurn){
+                    System.out.println("you must roll first");
+                    continue;
+                }
                 done=tryBuildCity(map);
                 if(done){
                     System.out.println("Successfully built city for node " + parser.getNodeId());}
@@ -43,7 +72,12 @@ public class HumanAgent extends Agent {
 
             }
 
-            if (type == CommandType.BUILD_SETTLEMENT) {
+            else if (type == CommandType.BUILD_SETTLEMENT) {
+                if (!hasRolledThisTurn){
+                    System.out.println("you must roll first");
+                    continue;
+                }
+
                 done=tryBuildSettlement(map);
                 if(done){
                     System.out.println("Successfully built settlement for node " + parser.getNodeId());}
@@ -52,7 +86,11 @@ public class HumanAgent extends Agent {
                 }
             }
 
-            if (type == CommandType.BUILD_ROAD) {
+            else if (type == CommandType.BUILD_ROAD) {
+                if (!hasRolledThisTurn){
+                    System.out.println("you must roll first");
+                    continue;
+                }
                 System.out.println("From node: " + parser.getFromNodeId());
                 System.out.println("To node: " + parser.getToNodeId());
                 done = tryBuildRoad(map);
@@ -63,19 +101,24 @@ public class HumanAgent extends Agent {
                 }
             }
 
-            if (type == CommandType.GO) {
+            else if (type == CommandType.GO) {
+                if (!hasRolledThisTurn){
+                    System.out.println("you must roll first");
+                    continue;
+                }
                 System.out.println("Go command detected. Exiting test.");
-                scanner.close();
+               // scanner.close();
                 return;
             }
 
-            if (type == CommandType.INVALID) {
+            else if (type == CommandType.INVALID) {
                 System.out.println("Invalid command");
             }
         }
 
 
     }
+
 
     @Override
     public boolean tryBuildCity(GameMap map){
@@ -95,15 +138,25 @@ public class HumanAgent extends Agent {
     @Override
     public boolean tryBuildSettlement(GameMap map){
 
-        if (roadsRemaining <= 0) return false;
-        if(!checkSettlementCost()){return false;}
+        if (settlementsRemaining <= 0){
+            System.out.println("no settlements remaining");
+            return false;
 
-        if(getNodeId()==-1){return false;}
+        }
+        if(!checkSettlementCost()){
+            System.out.println("Does not have enough funds");
+            return false;}
+
+        if(getNodeId()==-1){
+            System.out.println("node does not exists");
+            return false;}
 
         if(map.placeSettlement(this, parser.getNodeId(), false))
         {
             buySettlement();
             settlementsRemaining--;
+            System.out.println("placed settlement with no errors");
+
             return true;
         }
 
@@ -112,14 +165,33 @@ public class HumanAgent extends Agent {
     }
     @Override
     public boolean tryBuildRoad(GameMap map){
-        if (roadsRemaining <= 0) return false;
-        if(!checkRoadCost()){return false;}
+        if (roadsRemaining <= 0) {
+            System.out.println("no roads remaining ");
+            return false;}
+        if(!checkRoadCost()){
+            System.out.println("no funds left");
+            return false;}
 
-        if(getNodeId()==-1){return false;}
+        //get the nodes
+        int from= parser.getFromNodeId();
+        int to= parser.getToNodeId();
 
-        if(map.placeRoad(this, parser.getNodeId())){
+
+        if(from==-1 || to== -1){
+            System.out.println("nodes does not exist ");
+            return false;}
+
+        //Convert nodes into their connecting edge
+        int edgeId= map.getEdgeIdFromTwoNodes(to, from);
+        if (edgeId==-1){
+            System.out.println("no edge connects these two nodes");
+            return false;
+        }
+
+        if(map.placeRoad(this, edgeId)){
             buyRoad();
             roadsRemaining--;
+            System.out.println("placed road with no errors");
             return true;
         }
 

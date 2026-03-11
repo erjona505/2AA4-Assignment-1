@@ -45,7 +45,9 @@ public class Demonstrator {
 
        //create 4 agents with unique IDs and empty resources
             Agent[] agents = new Agent[4];
-                for (int i = 0; i < 4; i++) {
+            agents[0]= new HumanAgent(1, new Resources(), 0);
+
+                for (int i = 1; i < 4; i++) {
                 agents[i] = new ComputerAgent(i + 1, new Resources(), 0);
                 }
 

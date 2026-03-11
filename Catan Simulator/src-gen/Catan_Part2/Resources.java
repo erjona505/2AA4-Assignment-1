@@ -96,4 +96,14 @@ public class Resources {
         }
         return false;
     }
+
+    //Added a toString class so we can print out for list and roll
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<ResourceType, Integer> entry: resources.entrySet()){
+            sb.append(entry.getKey()).append("=").append(entry.getValue()).append(" ");
+        }
+        return sb.toString().trim();
+    }
 }

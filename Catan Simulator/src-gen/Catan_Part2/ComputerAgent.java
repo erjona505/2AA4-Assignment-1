@@ -35,7 +35,7 @@ public class ComputerAgent extends Agent{
 
 
     @Override
-    public void takeTurn(GameMap map, int round) {
+    public void takeTurn(GameMap map, int round, int rollDice) {
 
 
         int tries=0; //tries to make loop finite
