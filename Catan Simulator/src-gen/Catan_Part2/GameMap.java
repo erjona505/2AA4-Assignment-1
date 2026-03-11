@@ -744,8 +744,13 @@ public class GameMap {
             }
 
 
-
         }
+
+        
+    }
+
+    public List<Integer> getEdgeNodes(int edgeId) {
+        return edgeToNodes.get(edgeId);
     }
 //given two nodes, it will return the edge connecting them
     public int getEdgeIdFromTwoNodes(int nodeA, int nodeB){

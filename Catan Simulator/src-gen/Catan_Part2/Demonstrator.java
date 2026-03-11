@@ -19,6 +19,7 @@ public class Demonstrator {
         public static void main(String[] args) {
 
             int maxRounds = 0;
+            String visualizerPath = "state.json";
 
 
         //read the configuration file to determine the max number of rounds
@@ -33,6 +34,11 @@ public class Demonstrator {
                     System.out.println("Invalid number of rounds, must be between 1-8192.");
                     return;
                 }
+
+            if (sc.hasNextLine()) {
+                String[] path = sc.nextLine().split(":", 2);
+                visualizerPath = path[1].trim();
+            }
 
             } catch (Exception e) {
                 System.out.println("Error reading config file: " + e.getMessage());
@@ -54,10 +60,11 @@ public class Demonstrator {
 
             Game game = new Game(map, agents, maxRounds);
 
+            GameState exporter = new GameState(visualizerPath);
 
             game.initalRound();
 
-            game.runGame();
+            game.runGame(exporter);
 
 
         }
