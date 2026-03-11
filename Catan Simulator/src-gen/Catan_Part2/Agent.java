@@ -64,14 +64,6 @@ public abstract class Agent {
         return id;
     }
 
-    public int getEdgeId() {
-        return edgeId;
-    }
-
-    public int getNodeId() {
-        return nodeId;
-    }
-
 
     /**
      * Let the player take turn throw random building they can do with their resources

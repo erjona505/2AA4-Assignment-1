@@ -34,7 +34,13 @@ public class ComputerAgent extends Agent{
         super(id, resources, points);
     }
 
+    public int getEdgeId() {
+        return edgeId;
+    }
 
+    public int getNodeId() {
+        return nodeId;
+    }
 
     @Override
     public void takeTurn(GameMap map, int round, int rollDice) {
