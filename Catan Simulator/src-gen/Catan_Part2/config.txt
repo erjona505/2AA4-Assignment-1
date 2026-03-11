@@ -1,2 +1,2 @@
-rounds: 20
+rounds: 100
 visualizerPath: \..\2aa4-2026-base\assignments\visualize

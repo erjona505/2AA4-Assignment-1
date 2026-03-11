@@ -19,6 +19,8 @@ import java.util.Random;
  */
 public class ComputerAgent extends Agent{
 
+    private int edgeId;
+    private int nodeId;
     private final Random random = new Random();
 
     /**
@@ -32,7 +34,13 @@ public class ComputerAgent extends Agent{
         super(id, resources, points);
     }
 
+    public int getEdgeId() {
+        return edgeId;
+    }
 
+    public int getNodeId() {
+        return nodeId;
+    }
 
     @Override
     public void takeTurn(GameMap map, int round, int rollDice) {
@@ -90,5 +98,75 @@ public class ComputerAgent extends Agent{
         }while (isSevenCards());
 
 
+    }
+
+
+    /**
+     * we try to build if we build we subtract 1 from roadsRemaining
+     * @param map
+     * @return boolean
+     * **/
+    @Override
+    protected boolean tryBuildRoad(GameMap map) {
+        if (roadsRemaining <= 0) return false;
+        if(!checkRoadCost()){return false;}
+
+        edgeId=roadLocation(map);
+        if(edgeId==-1){return false;}
+
+        if(map.placeRoad(this, edgeId)){
+            buyRoad();
+            roadsRemaining--;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * we try to build if we build we subtract 1 from settlementRemaining
+     * @param map
+     * @return boolean
+     * **/
+    //MAKE ABSTRACT METHOD INSETAD
+    @Override
+    protected boolean tryBuildSettlement(GameMap map){
+        if (settlementsRemaining <= 0) return false;
+        if(!checkSettlementCost()){return false;}
+
+        nodeId=settlementLocation(map, false);
+        if(nodeId==-1){return false;}
+
+        if(map.placeSettlement(this, nodeId, false)){
+            buySettlement();
+            settlementsRemaining--;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * we try to build if we build we subtract 1 from cityRemaining
+     * @param map
+     * @return boolean
+     * **/
+    @Override
+    protected boolean tryBuildCity(GameMap map){
+        if (citiesRemaining <= 0) return false;
+        if(!checkCityCost()){return false;}
+
+        nodeId=cityLocation(map);
+        if (nodeId == -1) return false;
+
+        if(map.isSettlement(this, nodeId) && checkCityCost()){
+            map.upgrade(this, nodeId);
+            buyCity();
+            citiesRemaining--;
+            settlementsRemaining++;
+            return true;
+        }
+
+        return false;
     }
 }

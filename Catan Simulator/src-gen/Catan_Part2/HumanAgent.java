@@ -41,7 +41,7 @@ public class HumanAgent extends Agent {
                     System.out.println("You already rolled this turn ");
                 }
                 else {
-                    System.out.println( "Rolled:" +diceRoll +"for this turn" );
+                    System.out.println( "Rolled:" +diceRoll +" for this turn" );
                     //System.out.println("Your hand"+ getResources());
                     hasRolledThisTurn=true;
 
@@ -59,7 +59,7 @@ public class HumanAgent extends Agent {
 
             else if(type == CommandType.BUILD_CITY){
                 if (!hasRolledThisTurn){
-                    System.out.println("you must roll first");
+                    System.out.println("You must roll first");
                     continue;
                 }
                 done=tryBuildCity(map);
@@ -74,7 +74,7 @@ public class HumanAgent extends Agent {
 
             else if (type == CommandType.BUILD_SETTLEMENT) {
                 if (!hasRolledThisTurn){
-                    System.out.println("you must roll first");
+                    System.out.println("You must roll first");
                     continue;
                 }
 
@@ -125,7 +125,7 @@ public class HumanAgent extends Agent {
         if (citiesRemaining <= 0) return false;
         if(!checkCityCost()){return false;}
 
-        if(getNodeId()==-1){return false;}
+        if(parser.getNodeId()==-1){return false;}
 
         if(map.upgrade(this, parser.getNodeId())){
             buyCity();
@@ -147,7 +147,8 @@ public class HumanAgent extends Agent {
             System.out.println("Does not have enough funds");
             return false;}
 
-        if(getNodeId()==-1){
+
+        if(parser.getNodeId()==-1){
             System.out.println("node does not exists");
             return false;}
 
