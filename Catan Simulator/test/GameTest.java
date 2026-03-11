@@ -1,7 +1,8 @@
-import Catan_Part1.GameDice;
+import Catan_Part1.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 public class GameTest {
+
     @Test
     void simpleTest() {
         assertEquals(4, 2 + 2);

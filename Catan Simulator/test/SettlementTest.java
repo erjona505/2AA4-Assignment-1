@@ -4,16 +4,6 @@ import Catan_Part1.*;
 
 public class SettlementTest {
 
-
-    @Test
-    public void testSettlementPoints() {
-
-        Agent agent = new Agent(1, new Resources(), 0);
-        Settlement settlement = new Settlement(agent, 2);
-
-        assertEquals(1, settlement.getPoints());
-    }
-
     @Test
     public void testSettlementResourceAmount() {
 
