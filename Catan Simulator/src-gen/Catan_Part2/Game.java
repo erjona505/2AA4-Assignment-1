@@ -74,7 +74,7 @@ public class Game {
 
 
     //run the game and export state after each round
-    public void runGame(ExportGameState exporter) {
+    public void runGame(GameState exporter) {
 
         while(!gameOver()){
             runRound();

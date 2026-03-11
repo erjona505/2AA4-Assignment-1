@@ -11,11 +11,11 @@ import java.util.List;
  * @author Erjona Kalari
  *
  */
-public class ExportGameState {
+public class GameState {
 
     private String filename;
 
-    public ExportGameState(String filename) {
+    public GameState(String filename) {
         this.filename = filename;
     }
 
