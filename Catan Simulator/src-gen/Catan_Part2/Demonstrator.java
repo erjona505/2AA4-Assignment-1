@@ -57,7 +57,6 @@ public class Demonstrator {
                 agents[i] = new ComputerAgent(i + 1, new Resources(), 0);
                 }
 
-
             Game game = new Game(map, agents, maxRounds);
 
             GameState exporter = new GameState(visualizerPath);
