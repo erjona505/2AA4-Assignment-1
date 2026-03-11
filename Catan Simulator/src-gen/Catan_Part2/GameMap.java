@@ -350,51 +350,29 @@ public class GameMap {
 
     private void initTilesToNodes(){
 
-        addTileToNodes(0, 0, 1, 2, 4, 5, 6);
+        addTileToNodes(0, 0, 1, 2, 3, 4, 5); // center
 
         // inner ring ( 1-6)
-        addTileToNodes(1, 5, 16, 17, 18, 15, 14);  // Top-left inner
-        addTileToNodes(2, 16, 21, 19, 20, 22, 23);  // Top-right inner
-        addTileToNodes(3, 0, 5, 4, 2, 9, 8);        // Right inner
-        addTileToNodes(4, 23, 52, 53, 24, 7, 6);    // Bottom-right inner
-        addTileToNodes(5, 1, 6, 7, 24, 25, 26);     // Bottom-left inner
-        addTileToNodes(6, 14, 13, 12, 11, 10, 15);  // Left inner
+        addTileToNodes(1, 1, 6, 7, 8, 9, 2);  // Bottom-right inner
+        addTileToNodes(2, 3, 2, 9, 10, 11, 12);  // Bottom-left inner
+        addTileToNodes(3, 15, 4, 3, 12, 13, 14);        // Middle-left inner
+        addTileToNodes(4, 18, 16, 5, 4, 15, 17);    // Top-left inner
+        addTileToNodes(5, 21, 19, 20, 0, 5, 16);     // Top-right inner
+        addTileToNodes(6, 20, 22, 23, 6, 1, 0);  // Middle-right inner
 
         // Outer ring ( 7-18)
-        addTileToNodes(7, 38, 37, 36, 35, 34, 39);  // Far left
-        addTileToNodes(8, 17, 18, 40, 42, 41, 39);  // Top-left
-        addTileToNodes(9, 18, 21, 43, 44, 40, 18);  // Top
-        addTileToNodes(10, 21, 19, 20, 22, 23, 16); // Top-right
-        addTileToNodes(11, 46, 47, 45, 43, 21, 48); // Right-top
-        addTileToNodes(12, 48, 49, 50, 51, 52, 46); // Far right
-        addTileToNodes(13, 52, 23, 22, 20, 19, 53); // Right-bottom
-        addTileToNodes(14, 9, 8, 27, 26, 25, 2);    // Bottom-right
-        addTileToNodes(15, 27, 8, 7, 24, 25, 26);   // Bottom
-        addTileToNodes(16, 24, 7, 6, 1, 0, 25);     // Bottom-left
-        addTileToNodes(17, 33, 32, 31, 30, 28, 34); // Far bottom
-        addTileToNodes(18, 11, 10, 29, 28, 30, 12);
-
-    }
-
-    public List<Agent> robberTileAdjacent (Agent agentRolled, int tileId) {
-
-        List<Agent> choices = new ArrayList<>();
-        List<Integer> adjacentNodes = tilesToNodes.get(tileId);
-
-        for (int id : adjacentNodes){
-
-            Node node = getNode(id);
-
-            if (node != null && node.isOccupied()) {
-                Agent owner = node.getBuilding().getOwner();
-
-                if (owner != agentRolled && !choices.contains(owner)) {
-                    choices.add(owner);
-                }
-            }
-        }
-
-        return choices;
+        addTileToNodes(7, 7, 24, 25, 26, 27, 8);  // Bottom-right outer
+        addTileToNodes(8, 9, 8, 27, 28, 29, 10);  // Bottom-middle outer
+        addTileToNodes(9, 11, 10, 29, 30, 31, 32);  // Bottom-left outer
+        addTileToNodes(10, 13, 12, 11, 32, 33, 34); // Left-diagonal-bottom outer
+        addTileToNodes(11, 37, 14, 13, 34, 35, 36); // Left-middle outer
+        addTileToNodes(12, 39, 17, 15, 14, 37, 38); // Left-diagonal-top outer
+        addTileToNodes(13, 42, 40, 18, 17, 39, 41); // Top-left outer
+        addTileToNodes(14, 44, 43, 21, 16, 18, 40); // Top-middle outer
+        addTileToNodes(15, 45, 47, 46, 19, 21, 43); // Top-right outer
+        addTileToNodes(16, 46, 48, 49, 22, 20, 19); // Right-diagonal-top outer
+        addTileToNodes(17, 49, 50, 51, 52, 23, 22); // Right-middle outer
+        addTileToNodes(18, 23, 52, 53, 24, 6, 7); // Right-diagonal-bottom outer
 
     }
 
@@ -726,6 +704,7 @@ public class GameMap {
         Robber robber = new Robber();
 
         if (diceRoll == 7) {
+            System.out.println("No resources distributed (rolled a 7)");
             return;
         }
 
@@ -736,7 +715,7 @@ public class GameMap {
                 continue;
             }
 
-            // skips if robber is on that tile
+            // doesn't distribute resources if robber is on that tile
             if (tile.getId() == robber.getTileId()) {
                 continue;
             }
@@ -774,6 +753,7 @@ public class GameMap {
         
     }
 
+    // moves the robber to a random tile when a 7 is rolled
     public void moveRobberRandom(Robber robber) {
 
         Random rand = new Random();
@@ -784,6 +764,41 @@ public class GameMap {
         } while (newTile == robber.getTileId());
 
         robber.setTileId(newTile);
+        System.out.println("\nPlaced robber at tile " + robber.getTileId());
+    }
+
+    // gets the list of agents who have a settlement or city on the nodes adjacent to the tile the robber is on
+    public List<Agent> robberTileAdjacent (Agent agentRolled, int tileId) {
+
+        List<Agent> choices = new ArrayList<>();
+
+        // gets adjacent nodes from tiles to nodes
+        List<Integer> adjacentNodes = tilesToNodes.get(tileId);
+
+        for (int id : adjacentNodes){
+
+            Node node = getNode(id);
+
+            // if the node has a settlement or a city, get the owner, and add to list
+            if (node != null && node.isOccupied()) {
+                Agent owner = node.getBuilding().getOwner();
+
+                if (owner != agentRolled && !choices.contains(owner)) {
+                    choices.add(owner);
+                }
+            }
+        }
+        System.out.println("Adjacent player choices: ");
+
+        if (choices.isEmpty()) {
+            System.out.println("none");
+        }
+        for (int i =  0; i < choices.size(); i++) {
+            System.out.println(choices.get(i).getId());
+        }
+
+        return choices;
+
     }
 
     public List<Integer> getEdgeNodes(int edgeId) {

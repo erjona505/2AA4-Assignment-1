@@ -33,7 +33,8 @@ public class Game {
 
         System.out.println("------INITIAL SETUP-------");
 
-        Robber robber = new Robber();
+        robber = new Robber();
+        System.out.println("Initialized Robber\n");
 
 		for (int i = 0; i < agents.length; i++){
 
@@ -96,6 +97,7 @@ public class Game {
 		int dice_roll = dice.roll();
 
         if (dice_roll == 7) {
+            System.out.println("\nRolled a 7");
             Agent agentRolled = agents[startPlayerIndex];
             handleRobber(agentRolled);
         }
@@ -113,10 +115,12 @@ public class Game {
 
 	}
 
+    // handles the robber functions after a 7 is rolled
     private void handleRobber(Agent agentRolled) {
 
         Random random = new Random();
 
+        // discard half of the resource cards for agents who have more than 7 resource cards
         for (Agent agent : agents) {
 
             if (agent.getResources().totalCards() > 7) {
@@ -124,13 +128,17 @@ public class Game {
             }
         }
 
+        // moves robber to random tile
         map.moveRobberRandom(robber);
 
+        // chooses an agent to steal a card from
         List<Agent> choices = map.robberTileAdjacent(agentRolled, robber.getTileId());
 
         if (!choices.isEmpty()) {
             Agent victim = choices.get(random.nextInt(choices.size()));
             agentRolled.stealCard(victim);
+            System.out.println("Removed resource from player " + victim.getId() + " and added to player " + agentRolled.getId() + "\n");
+
         }
     }
 

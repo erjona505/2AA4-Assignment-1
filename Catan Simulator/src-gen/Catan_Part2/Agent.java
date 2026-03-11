@@ -311,28 +311,33 @@ public abstract class Agent {
         return valid.get(random.nextInt(valid.size()));
     }
 
+    // is called when agent has more than 7 cards so they need to return half
     protected void loseHalf() {
 
+        System.out.println("\nTotal agent resources: " + getResources().totalCards());
         int returned = 0;
         int half = resources.totalCards() / 2;
         ResourceType[] types = {ResourceType.WOOD, ResourceType.BRICK, ResourceType.SHEEP, ResourceType.ORE, ResourceType.WHEAT};
 
         while (returned < half) {
+            // picks a random type and checks if the agent has that, if it does, remove it
             ResourceType type = types[random.nextInt(types.length)];
-
             if (resources.hasResource(type, 1)) {
                 resources.remove(type, 1);
                 returned++;
             }
         }
+        System.out.println("New total agent resources: " + getResources().totalCards());
     }
 
+    // agent can steal card from another player if they roll a 7 and place a robber on the tile with that agent
     protected void stealCard(Agent victim) {
 
         if (victim.getResources().totalCards() == 0) {
             return;
         }
 
+        // picks a random resource card to steal from the agent
         ResourceType[] types = {ResourceType.WOOD, ResourceType.BRICK, ResourceType.SHEEP, ResourceType.ORE, ResourceType.WHEAT};
 
         ResourceType type;
@@ -340,8 +345,12 @@ public abstract class Agent {
             type = types[random.nextInt(types.length)];
         } while (!victim.getResources().hasResource(type, 1));
 
+        System.out.println("Victim Resources: " + victim.getResources().toString());
+        System.out.println("AgentRolled Resources: " + this.getResources().toString());
         victim.getResources().remove(type, 1);
         this.resources.add(type, 1);
+        System.out.println("Victim New Resources: " + victim.getResources().toString());
+        System.out.println("AgentRolled New Resources: " + this.getResources().toString());
     }
 
 }
