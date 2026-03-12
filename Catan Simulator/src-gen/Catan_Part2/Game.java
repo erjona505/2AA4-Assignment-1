@@ -17,6 +17,8 @@ public class Game {
 
 	private int startPlayerIndex = 0; //index of player who starts each round, rotates each round
 
+    private GameState exporter;
+
     private Robber robber;
 
 
@@ -94,11 +96,13 @@ public void  initalRound() {
 
 
     //run the game and export state after each round
-    public void runGame() {
+    public void runGame(GameState exporter) {
+
+        this.exporter = exporter;
 
         while(!gameOver()){
             runRound();
-            //exporter.export(this);
+            exporter.export(this);
 
         }
 
@@ -138,6 +142,8 @@ public void  initalRound() {
 		for (int i = 0; i < agents.length; i++){
 			int index = (startPlayerIndex + i) % agents.length;
 			agents[index].takeTurn(map, round, dice_roll);
+            exporter.export(this); //export after each agent's turn
+
 
             //if this was a computers turn, we have to wait for human to let us go
             if (agents[index] instanceof  ComputerAgent){

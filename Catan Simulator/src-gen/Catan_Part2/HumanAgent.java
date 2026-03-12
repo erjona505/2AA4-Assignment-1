@@ -5,6 +5,9 @@ import java.util.Scanner;
 public class HumanAgent extends Agent {
 
     CommandParser parser = new CommandParser();
+    private GameState exporter;
+
+
     /**
      * Constructor for agent
      *
@@ -12,8 +15,9 @@ public class HumanAgent extends Agent {
      * @param resources
      * @param points
      */
-    public HumanAgent(int id, Resources resources, int points) {
+    public HumanAgent(int id, Resources resources, int points, GameState exporter) {
         super(id, resources, points);
+        this.exporter = exporter;
 
     }
 
@@ -64,6 +68,7 @@ public class HumanAgent extends Agent {
                 }
                 done=tryBuildCity(map);
                 if(done){
+
                     System.out.println("Successfully built city for node " + parser.getNodeId());}
                 else{
                     System.out.println("Failed to built city for node " + parser.getNodeId());

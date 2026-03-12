@@ -155,52 +155,53 @@ public class GameMap {
     }
     //hard coding node to node relationships
     private void initNodeToNode(){
-        //Top Row
-        addAllNeighbors(42,41,40);
-        addAllNeighbors(44,40,43);
-        addAllNeighbors(45,43,47);
+        //top Row
+        addAllNeighbors(42, 40, 41);
+        addAllNeighbors(44, 40, 43);
+        addAllNeighbors(45, 43, 47);
 
         //upper middle row
-        addAllNeighbors(41,42,39);
-        addAllNeighbors(40,42,44,18);
-        addAllNeighbors(43,44,45,21);
-        addAllNeighbors(47,45,46);
+        addAllNeighbors(41, 42, 39);
+        addAllNeighbors(40, 42, 44, 18);
+        addAllNeighbors(43, 44, 45, 21);
+        addAllNeighbors(47, 45, 46);
 
-        //Middle row
-        addAllNeighbors(39,41,38);
-        addAllNeighbors(18,40,17,16);
-        addAllNeighbors(21,43,19,16);
-        addAllNeighbors(46,47,48);
+        //middle row
+        addAllNeighbors(39, 41, 38);
+        addAllNeighbors(18, 40, 17, 16);
+        addAllNeighbors(21, 43, 19, 16);
+        addAllNeighbors(46, 47, 48);
 
-        //Center Upper row
-        addAllNeighbors(38,39,37);
-        addAllNeighbors(17,18,15);
-        addAllNeighbors(16,18,21,5);
-        addAllNeighbors(19,21,20);
-        addAllNeighbors(48,46,49);
+        //center Upper row
+        addAllNeighbors(38, 39, 37);
+        addAllNeighbors(17, 18, 15);
+        addAllNeighbors(16, 18, 21, 5);
+        addAllNeighbors(19, 21, 20);
+        addAllNeighbors(48, 46, 49);
 
         //center row
-        addAllNeighbors(37,38,36);
-        addAllNeighbors(15,17,14);
-        addAllNeighbors(5,16,4,0);
-        addAllNeighbors(20,19,22);
-        addAllNeighbors(49,48,50);
+        addAllNeighbors(37, 38, 36);
+        addAllNeighbors(15, 17, 14);
+        addAllNeighbors(5, 16, 4, 0);
+        addAllNeighbors(20, 19, 22);
+        addAllNeighbors(49, 48, 50);
 
         //center lower row
-        addAllNeighbors(36,37,35);
-        addAllNeighbors(14,15,13);
-        addAllNeighbors(4,5,2);
-        addAllNeighbors(0,5,1);
-        addAllNeighbors(22,20,23);
-        addAllNeighbors(50,49,51);
+        addAllNeighbors(36, 37, 35);
+        addAllNeighbors(14, 15, 13);
+        addAllNeighbors(4, 5, 2, 3);
+        addAllNeighbors(0, 5, 1);
+        addAllNeighbors(22, 20, 23);
+        addAllNeighbors(50, 49, 51);
 
         //lower middle row
-        addAllNeighbors(35,36,34);
-        addAllNeighbors(13,14,12);
-        addAllNeighbors(2,4,9);
-        addAllNeighbors(1,0,6);
-        addAllNeighbors(23,22,52);
-        addAllNeighbors(51,50,52);
+        addAllNeighbors(35, 36, 34);
+        addAllNeighbors(13, 14, 12);
+        addAllNeighbors(2, 4, 9, 3);
+        addAllNeighbors(3, 2, 4);
+        addAllNeighbors(1, 0, 6);
+        addAllNeighbors(23, 22, 52);
+        addAllNeighbors(51, 50, 52);
 
         //lower row
         addAllNeighbors(34, 35, 33);
@@ -209,20 +210,20 @@ public class GameMap {
         addAllNeighbors(6, 1, 7);
         addAllNeighbors(52, 23, 53);
 
-        // Bottom
+        //bottom
         addAllNeighbors(33, 34, 32);
         addAllNeighbors(11, 12, 10);
         addAllNeighbors(8, 9, 27);
         addAllNeighbors(7, 6, 24);
         addAllNeighbors(53, 52, 24);
 
-      // Bottom even more
+        //bottom even more
         addAllNeighbors(32, 33, 31);
         addAllNeighbors(10, 11, 29);
         addAllNeighbors(27, 8, 26);
         addAllNeighbors(24, 7, 25);
 
-        // Tips
+        //tips
         addAllNeighbors(31, 32, 30);
         addAllNeighbors(29, 10, 28);
         addAllNeighbors(26, 27, 25);
@@ -353,26 +354,26 @@ public class GameMap {
         addTileToNodes(0, 0, 1, 2, 3, 4, 5); // center
 
         // inner ring ( 1-6)
-        addTileToNodes(1, 1, 6, 7, 8, 9, 2);  // Bottom-right inner
-        addTileToNodes(2, 3, 2, 9, 10, 11, 12);  // Bottom-left inner
-        addTileToNodes(3, 15, 4, 3, 12, 13, 14);        // Middle-left inner
-        addTileToNodes(4, 18, 16, 5, 4, 15, 17);    // Top-left inner
-        addTileToNodes(5, 21, 19, 20, 0, 5, 16);     // Top-right inner
-        addTileToNodes(6, 20, 22, 23, 6, 1, 0);  // Middle-right inner
+        addTileToNodes(1, 2, 6, 7, 8, 9, 3);  // Bottom-right inner
+        addTileToNodes(2, 4, 3, 9, 10, 11, 12);  // Bottom-left inner
+        addTileToNodes(3, 13, 5, 4, 12, 14, 15);        // Middle-left inner
+        addTileToNodes(4, 16, 17, 0, 5, 13, 18);    // Top-left inner
+        addTileToNodes(5, 19, 20, 21, 1, 0, 17);     // Top-right inner
+        addTileToNodes(6, 21, 22, 23, 6, 2, 1);  // Middle-right inner
 
         // Outer ring ( 7-18)
         addTileToNodes(7, 7, 24, 25, 26, 27, 8);  // Bottom-right outer
         addTileToNodes(8, 9, 8, 27, 28, 29, 10);  // Bottom-middle outer
         addTileToNodes(9, 11, 10, 29, 30, 31, 32);  // Bottom-left outer
-        addTileToNodes(10, 13, 12, 11, 32, 33, 34); // Left-diagonal-bottom outer
-        addTileToNodes(11, 37, 14, 13, 34, 35, 36); // Left-middle outer
-        addTileToNodes(12, 39, 17, 15, 14, 37, 38); // Left-diagonal-top outer
-        addTileToNodes(13, 42, 40, 18, 17, 39, 41); // Top-left outer
-        addTileToNodes(14, 44, 43, 21, 16, 18, 40); // Top-middle outer
-        addTileToNodes(15, 45, 47, 46, 19, 21, 43); // Top-right outer
-        addTileToNodes(16, 46, 48, 49, 22, 20, 19); // Right-diagonal-top outer
+        addTileToNodes(10, 14, 12, 11, 32, 33, 34); // Left-diagonal-bottom outer
+        addTileToNodes(11, 35, 15, 14, 34, 36, 37); // Left-middle outer
+        addTileToNodes(12, 38, 18, 13, 15, 35, 39); // Left-diagonal-top outer
+        addTileToNodes(13, 40, 42, 16, 18, 38, 42); // Top-left outer
+        addTileToNodes(14, 43, 44, 19, 17, 16, 41); // Top-middle outer
+        addTileToNodes(15, 45, 46, 47, 20, 19, 44); // Top-right outer
+        addTileToNodes(16, 47, 48, 49, 22, 21, 20); // Right-diagonal-top outer
         addTileToNodes(17, 49, 50, 51, 52, 23, 22); // Right-middle outer
-        addTileToNodes(18, 23, 52, 53, 24, 6, 7); // Right-diagonal-bottom outer
+        addTileToNodes(18, 23, 52, 53, 24, 7, 6); // Right-diagonal-bottom outer
 
     }
 
@@ -383,6 +384,7 @@ public class GameMap {
     }
 
     public boolean isValidSettlementPosition(int nodeId){
+        boolean valid = true;
         Node targetNode= getNode(nodeId);
         //check if the node does not exist
         if (targetNode==null)
@@ -392,19 +394,20 @@ public class GameMap {
         if (targetNode.getBuilding()!=null)
             return false;
 
+
         //check that no neigbor of the node is full (has a building etc)
         for (int neighborId: getNeighborNodes(nodeId)){
             //get that specfic node object
             Node neighbor=getNode(neighborId);
             //check if its a valid node and is not full
-            if (neighbor!= null && !neighbor.isOccupied()){ return true;}
+            if (neighbor!= null && neighbor.isOccupied()){ valid = false;}
         }
 
 
 
 
 //if it does not violate any rules we return true to indicate that the node is a valid position place
-        return true;
+        return valid;
     }
 //does this agent have atleast one road touching this node
     //if they do then they are allowed to build here
@@ -601,6 +604,10 @@ public class GameMap {
      */
     public boolean placeSettlement(Agent agent, int nodeId, boolean isInitialPlacement) {
         Node node = getNode(nodeId);
+
+        if(nodeId < 0){
+            return false;
+        }
 
         // return false if the node doesn't exist or is occupied
         if (node == null || node.isOccupied()) {

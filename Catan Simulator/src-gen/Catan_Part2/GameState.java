@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * The ExportGameState class exports the current state of the game to a JSON file.
- * It provides a method to convert the game state to JSON format and write it to a specified file.
+ * The GameState class exports the current state of the game to a JSON file.
+ * It provides methods to convert the game state to JSON format and write it to a specified file.
  *
  * @author Erjona Kalari
  *
@@ -48,8 +48,8 @@ public class GameState {
             if (edge == null || edge.getRoad() == null) continue;
 
             List<Integer> nodes = map.getEdgeNodes(i);
-            int a = nodes.get(0);
-            int b = nodes.get(1);
+            int a = Math.min(nodes.get(0), nodes.get(1));
+            int b = Math.max(nodes.get(0), nodes.get(1));
             String owner = colorFromId(edge.getRoad().getOwner().getId());
 
             //add a comma before every entry except the first
@@ -73,7 +73,12 @@ public class GameState {
             if (node == null || !node.isOccupied()) continue;
 
             Building building = node.getBuilding();
-            String type = (building instanceof City) ? "CITY" : "SETTLEMENT";
+            String type;
+            if (building instanceof City) {
+                type = "CITY";
+            } else {
+                type = "SETTLEMENT";
+            }
             String owner = colorFromId(building.getOwner().getId());
 
             //add a comma before every entry except the first
