@@ -26,7 +26,7 @@ This project implements a simulator for the board game Settlers of Catan, extend
 # Important Information about UML ❗❗❗
 The updated UML can be found here 
 - It is under Catan_UMl/Catan_part1.di/
-- 
+  
 # Human Player Interaction 👤
 When it is the human player's turn, the simulator reads commands from the command line
 Supported commands:
