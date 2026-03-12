@@ -32,7 +32,7 @@ Supported commands:
 - Build road [fromNodeId,toNodeId] (Builds a road between two nodes)
 - Go (Ends the player's turn and proceeds to the next agent)
 
-#Important Information about UML ❗❗❗
+# Important Information about UML ❗❗❗
 The updated UML can be found here 
 - It is under Catan_UMl/Catan_part1.di/
 
