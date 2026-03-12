@@ -135,6 +135,53 @@ public class HumanAgent extends Agent {
 
         return false;
     }
+
+    @Override
+    public void initialTurn(GameMap map, boolean distributeResources) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Settlement
+        boolean settlementPlaced = false;
+        while (!settlementPlaced) {
+            System.out.print("Enter settlement command (e.g. 'build settlement 5'): ");
+            String input = scanner.nextLine();
+            CommandType type = parser.parser(input);
+
+            if (type == CommandType.BUILD_SETTLEMENT) {
+                int nodeId = parser.getNodeId();
+                if (map.placeSettlement(this, nodeId, true)) {
+                    if (distributeResources) map.distributeInitialResources(this, nodeId);
+                    settlementPlaced = true;
+                } else {
+                    System.out.println("Invalid node, try again.");
+                }
+            } else {
+                System.out.println("Must use: build settlement <nodeId>");
+            }
+        }
+
+        // Road
+        boolean roadPlaced = false;
+        while (!roadPlaced) {
+            System.out.print("Enter road command (e.g. 'build road 3 ,5'): ");
+            String input = scanner.nextLine();
+            CommandType type = parser.parser(input);
+
+            if (type == CommandType.BUILD_ROAD) {
+                int from = parser.getFromNodeId();
+                int to = parser.getToNodeId();
+                int edgeId = map.getEdgeIdFromTwoNodes(from, to);
+                if (edgeId != -1 && map.placeRoad(this, edgeId)) {
+                    roadPlaced = true;
+                } else {
+                    System.out.println("Invalid road, try again.");
+                }
+            } else {
+                System.out.println("Must use: build road <fromNode> <toNode>");
+            }
+        }
+    }
+
     @Override
     public boolean tryBuildSettlement(GameMap map){
 

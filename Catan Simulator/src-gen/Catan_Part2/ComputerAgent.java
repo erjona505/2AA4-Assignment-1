@@ -169,4 +169,13 @@ public class ComputerAgent extends Agent{
 
         return false;
     }
+
+    @Override
+    public void initialTurn(GameMap map, boolean distributeResources) {
+        int nodeId = settlementLocation(map, true);
+        map.placeSettlement(this, nodeId, true);
+        if (distributeResources) map.distributeInitialResources(this, nodeId);
+        int edgeId = roadLocation(map);
+        map.placeRoad(this, edgeId);
+    }
 }

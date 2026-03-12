@@ -300,4 +300,6 @@ public abstract class Agent {
         System.out.println("AgentRolled New Resources: " + this.getResources().toString());
     }
 
+    public abstract void initialTurn(GameMap map, boolean distributeResources);
+
 }
