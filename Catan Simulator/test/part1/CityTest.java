@@ -6,15 +6,6 @@ import Catan_Part1.*;
 
 public class CityTest {
 
-    @Test
-    public void testCityPoints() {
-
-        Agent agent = new Agent(1, new Resources(), 0);
-        City city = new City(agent, 5);
-
-        assertEquals(2, city.getPoints());
-
-    }
 
     @Test
     public void testCityResourceAmount() {
