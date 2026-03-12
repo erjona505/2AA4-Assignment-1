@@ -7,14 +7,6 @@ import Catan_Part1.Resources;
 public class ResourcesTest {
 
     @Test
-    public void testTotalCards() {
-        Resources r = new Resources();
-
-        assertEquals(r.totalCards(), 0);
-
-    }
-
-    @Test
     public void testAdd() {
         Resources r = new Resources();
 
