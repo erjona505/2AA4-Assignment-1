@@ -32,6 +32,10 @@ Supported commands:
 - Build road [fromNodeId,toNodeId] (Builds a road between two nodes)
 - Go (Ends the player's turn and proceeds to the next agent)
 
+#Important Information about UML ❗❗❗
+The updated UML can be found here 
+- It is under Catan_UMl/Catan_part1.di/
+
 # Robber Mechanism 🃏
 The Robber is activated when a 7 is rolled
 The simulator performs the following actions:
