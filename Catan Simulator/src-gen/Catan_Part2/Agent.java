@@ -86,7 +86,6 @@ public abstract class Agent {
      * @return boolean
      * **/
 
-    //MAKE ABSTRACT METHOD INSETAD
     protected abstract boolean tryBuildSettlement(GameMap map);
 
     /**

@@ -32,56 +32,7 @@ public class Game {
 		this.maxRounds = maxRounds;
 	}
 
-//	//initial round, each agent place 1 settlement & 1 road
-//	public void initalRound(){
-//
-//        System.out.println("------INITIAL SETUP-------");
-//
-//        robber = new Robber();
-//        System.out.println("Initialized Robber\n");
-//
-//		for (int i = 0; i < agents.length; i++){
-//
-//			Agent agent = agents[i];
-//			int nodeId = agent.settlementLocation(map, true);
-//			map.placeSettlement(agent, nodeId, true);
-//            System.out.println(1 + " / " + agent.getId() + ": Built settlement at node " + nodeId);
-//
-//			int edgeId = agent.roadLocation(map);
-//			map.placeRoad(agent, edgeId);
-//            System.out.println(1 + " / " + agent.getId() + ": Built road at edge " + edgeId);
-//
-//		}
-//
-//        System.out.println();
-//
-//
-//		//reverse agent turn order for round 2
-//		for (int i = agents.length - 1; i >= 0; i--){
-//
-//
-//
-//			Agent agent = agents[i];
-//
-//			int nodeId = agent.settlementLocation(map, true);
-//			map.placeSettlement(agent, nodeId, true);
-//            System.out.println(2 + " / " + agent.getId() + ": Built settlement at node " + nodeId);
-//
-//            map.distributeInitialResources(agent, nodeId);
-//            System.out.println("Player " + agent.getId() + ": collected initial resources");
-//
-//            int edgeId = agent.roadLocation(map);
-//			map.placeRoad(agent, edgeId);
-//            System.out.println(2 + " / " + agent.getId() + ": Built road at edge " + edgeId);
-//
-//
-//
-//		}
-//
-//        System.out.println();
-//
-//
-//	}
+
 public void  initalRound() {
     System.out.println("------INITIAL SETUP-------");
     robber = new Robber();

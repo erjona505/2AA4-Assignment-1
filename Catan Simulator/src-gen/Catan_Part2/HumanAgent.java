@@ -36,7 +36,7 @@ public class HumanAgent extends Agent {
 
             CommandType type = parser.parser(input);
 //TESTING TAKE OUT LATER
-            System.out.println("Command type: " + type);
+            //System.out.println("Command type: " + type);
 
 //ROLL actually happens in game but human has to trigger it since they are always the first player
             //if not triggered then they cannot move on
