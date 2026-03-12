@@ -1,0 +1,248 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Game</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">Catan_Part1</a>
+</div>
+
+<h1>Coverage Summary for Class: Game (Catan_Part1)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Game</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (2/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    37.5%
+  </span>
+  <span class="absValue">
+    (6/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    27.7%
+  </span>
+  <span class="absValue">
+    (13/47)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package Catan_Part1;
+&nbsp;
+&nbsp;import java.util.Random;
+&nbsp;
+&nbsp;public class Game {
+&nbsp;	
+&nbsp;	private GameMap map;
+&nbsp;	
+&nbsp;	private Agent[] agents;
+&nbsp;
+&nbsp;	private Dice dice;
+&nbsp;	
+&nbsp;	private int round;
+&nbsp;
+&nbsp;	private int maxRounds;
+&nbsp;
+<b class="fc">&nbsp;	private int startPlayerIndex = 0; //index of player who starts each round, rotates each round</b>
+&nbsp;
+&nbsp;
+&nbsp;	//constructor 
+<b class="fc">&nbsp;	public Game(GameMap map, Agent[] agents, int maxRounds) {</b>
+<b class="fc">&nbsp;		this.map = map;</b>
+<b class="fc">&nbsp;		this.agents = agents;</b>
+<b class="fc">&nbsp;		this.dice = new GameDice();</b>
+<b class="fc">&nbsp;		this.round = 0;</b>
+<b class="fc">&nbsp;		this.maxRounds = maxRounds;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	//initial round, each agent place 1 settlement &amp; 1 road
+&nbsp;	public void initalRound(){
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;------INITIAL SETUP-------&quot;);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;		for (int i = 0; i &lt; agents.length; i++){</b>
+&nbsp;
+<b class="nc">&nbsp;			Agent agent = agents[i];</b>
+<b class="nc">&nbsp;			int nodeId = agent.settlementLocation(map, true);</b>
+<b class="nc">&nbsp;			map.placeSettlement(agent, nodeId, true);</b>
+<b class="nc">&nbsp;            System.out.println(1 + &quot; / &quot; + agent.getId() + &quot;: Built settlement at node &quot; + nodeId);</b>
+&nbsp;
+<b class="nc">&nbsp;			int edgeId = agent.roadLocation(map);</b>
+<b class="nc">&nbsp;			map.placeRoad(agent, edgeId);</b>
+<b class="nc">&nbsp;            System.out.println(1 + &quot; / &quot; + agent.getId() + &quot;: Built road at edge &quot; + edgeId);</b>
+&nbsp;			
+&nbsp;		}
+&nbsp;
+<b class="nc">&nbsp;        System.out.println();</b>
+&nbsp;
+&nbsp;
+&nbsp;		//reverse agent turn order for round 2
+<b class="nc">&nbsp;		for (int i = agents.length - 1; i &gt;= 0; i--){</b>
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;			Agent agent = agents[i];</b>
+&nbsp;			
+<b class="nc">&nbsp;			int nodeId = agent.settlementLocation(map, true);</b>
+<b class="nc">&nbsp;			map.placeSettlement(agent, nodeId, true);</b>
+<b class="nc">&nbsp;            System.out.println(2 + &quot; / &quot; + agent.getId() + &quot;: Built settlement at node &quot; + nodeId);</b>
+&nbsp;
+<b class="nc">&nbsp;            map.distributeInitialResources(agent, nodeId);</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Player &quot; + agent.getId() + &quot;: collected initial resources&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            int edgeId = agent.roadLocation(map);</b>
+<b class="nc">&nbsp;			map.placeRoad(agent, edgeId);</b>
+<b class="nc">&nbsp;            System.out.println(2 + &quot; / &quot; + agent.getId() + &quot;: Built road at edge &quot; + edgeId);</b>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;		}
+&nbsp;
+<b class="nc">&nbsp;        System.out.println();</b>
+&nbsp;
+&nbsp;
+&nbsp;	}
+&nbsp;
+&nbsp;	//runs the game
+&nbsp;	public void runGame() {
+<b class="nc">&nbsp;		while(!gameOver()){</b>
+<b class="nc">&nbsp;			runRound();</b>
+&nbsp;		}
+&nbsp;
+&nbsp;	}
+&nbsp;
+&nbsp;	//runs one full round
+&nbsp;	public void runRound() {
+&nbsp;
+<b class="nc">&nbsp;		int dice_roll = dice.roll();</b>
+<b class="nc">&nbsp;		map.distributeResources(dice_roll);</b>
+&nbsp;
+<b class="nc">&nbsp;		for (int i = 0; i &lt; agents.length; i++){</b>
+<b class="nc">&nbsp;			int index = (startPlayerIndex + i) % agents.length;</b>
+<b class="nc">&nbsp;			agents[index].takeTurn(map, round);</b>
+&nbsp;		}
+<b class="nc">&nbsp;        round++;</b>
+<b class="nc">&nbsp;		stats();</b>
+&nbsp;
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;	//check conditions to end the game
+&nbsp;	public boolean gameOver() {
+<b class="fc">&nbsp;		if (round &gt;= maxRounds){</b>
+<b class="fc">&nbsp;			return true;</b>
+&nbsp;		}
+&nbsp;
+<b class="fc">&nbsp;		for (Agent agent : agents) {</b>
+<b class="fc">&nbsp;            if (agent.getTotalPoints() &gt;= 10) {</b>
+<b class="fc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;        
+&nbsp;		}
+&nbsp;
+<b class="fc">&nbsp;	return false;</b>
+&nbsp;
+&nbsp;	}
+&nbsp;
+&nbsp;	//print round and each player points
+&nbsp;	public void stats(){
+&nbsp;
+<b class="nc">&nbsp;		System.out.print(&quot;Round &quot; + round + &quot;: &quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;		for (Agent agent : agents) {</b>
+<b class="nc">&nbsp;            System.out.print( &quot; Player &quot; + agent.getId() + &quot;: &quot; + agent.getTotalPoints() + &quot; &quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        System.out.println();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-03-11 23:32</div>
+</div>
+</body>
+</html>
