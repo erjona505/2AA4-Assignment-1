@@ -25,7 +25,7 @@ This project implements a simulator for the board game Settlers of Catan, extend
 
 # Important Information about UML ❗❗❗
 The updated UML can be found here 
-- It is under Catan_UMl/Catan_part1.di/
+- It is under Catan_UML/Catan_Part1/Catan_Part2_UML.PNG
 
   
 # Human Player Interaction 👤
