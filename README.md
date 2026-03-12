@@ -25,13 +25,13 @@ This project implements a simulator for the board game Settlers of Catan, extend
 
 # Important Information about Catan Part 2 ❗❗❗
 The Assignment 2: Change and evolution code can be found under:
-- Catan_Simulator/src_gen/Catan_Part2
+- Catan Simulator/src-gen/Catan_Part2
 
 The updated UML can be found here:
 - It is under Catan_UML/Catan_Part1/Catan_Part2_UML.PNG
 
 The visulaizer:
-- In the config.txt file update 'visualizerPath' to point to your local clone of the visualizer repository 
+- In the config.txt in Catan_Part2 file update 'visualizerPath' to point to your local clone of the visualizer repository 
 
   
 # Human Player Interaction 👤
