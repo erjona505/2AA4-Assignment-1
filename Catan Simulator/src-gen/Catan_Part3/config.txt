@@ -1,0 +1,2 @@
+rounds: 20
+visualizerPath: /home/erjona/2aa4-2026-base/assignments/visualize/state.json
