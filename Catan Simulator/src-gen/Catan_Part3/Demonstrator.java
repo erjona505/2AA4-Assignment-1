@@ -55,11 +55,11 @@ public class Demonstrator {
         //create and initialize the game map
             GameMap map = new GameMap();
             map.initboard();
-            GameState exporter = new GameState(visualizerPath);
+            Visualizer visualizer = new VisualizerAdapter(visualizerPath);
 
        //create 4 agents with unique IDs and empty resources
             Agent[] agents = new Agent[4];
-            agents[0]= new HumanAgent(1, new Resources(), 0, exporter);
+            agents[0]= new HumanAgent(1, new Resources(), 0, visualizer);
 
                 for (int i = 1; i < 4; i++) {
                 agents[i] = new ComputerAgent(i + 1, new Resources(), 0);
@@ -71,10 +71,10 @@ public class Demonstrator {
 
             //run the initial placement phase where each agent places
             game.initalRound();
-            exporter.export(game); //export after initial setup
+            visualizer.update(game); //update visualizer after initial setup
 
             //run the main game loop
-            game.runGame(exporter);
+            game.runGame(visualizer);
 
 
         }

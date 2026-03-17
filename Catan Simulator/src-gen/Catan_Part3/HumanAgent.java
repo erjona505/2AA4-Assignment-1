@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class HumanAgent extends Agent {
 
     CommandParser parser = new CommandParser();
-    private GameState exporter;
+    private Visualizer visualizer;
 
 
     /**
@@ -15,9 +15,9 @@ public class HumanAgent extends Agent {
      * @param resources
      * @param points
      */
-    public HumanAgent(int id, Resources resources, int points, GameState exporter) {
+    public HumanAgent(int id, Resources resources, int points, Visualizer visualizer) {
         super(id, resources, points);
-        this.exporter = exporter;
+        this.visualizer = visualizer;
 
     }
 
