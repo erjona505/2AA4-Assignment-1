@@ -156,76 +156,79 @@ public class GameMap {
     //hard coding node to node relationships
     private void initNodeToNode(){
         //top Row
-        addAllNeighbors(42, 40, 41);
-        addAllNeighbors(44, 40, 43);
-        addAllNeighbors(45, 43, 47);
+        addAllNeighbors(40, 42, 41);
+        addAllNeighbors(43, 41, 44);
+        addAllNeighbors(45, 44, 46);
 
         //upper middle row
-        addAllNeighbors(41, 42, 39);
-        addAllNeighbors(40, 42, 44, 18);
-        addAllNeighbors(43, 44, 45, 21);
-        addAllNeighbors(47, 45, 46);
+        addAllNeighbors(42, 40, 38);
+        addAllNeighbors(41, 40, 43, 16);
+        addAllNeighbors(44, 19, 43, 45);
+        addAllNeighbors(46, 47, 45);
 
         //middle row
-        addAllNeighbors(39, 41, 38);
-        addAllNeighbors(18, 40, 17, 16);
-        addAllNeighbors(21, 43, 19, 16);
-        addAllNeighbors(46, 47, 48);
+        addAllNeighbors(38, 42, 39, 18);
+        addAllNeighbors(16, 41, 17, 18);
+        addAllNeighbors(19, 44, 20, 17);
+        addAllNeighbors(47, 46, 48, 20);
 
         //center Upper row
-        addAllNeighbors(38, 39, 37);
-        addAllNeighbors(17, 18, 15);
-        addAllNeighbors(16, 18, 21, 5);
-        addAllNeighbors(19, 21, 20);
-        addAllNeighbors(48, 46, 49);
+        addAllNeighbors(39, 38, 35);
+        addAllNeighbors(18, 38, 16, 13);
+        addAllNeighbors(17, 0, 16, 19);
+        addAllNeighbors(20, 21, 19, 47);
+        addAllNeighbors(48, 49, 47);
 
         //center row
-        addAllNeighbors(37, 38, 36);
-        addAllNeighbors(15, 17, 14);
-        addAllNeighbors(5, 16, 4, 0);
-        addAllNeighbors(20, 19, 22);
-        addAllNeighbors(49, 48, 50);
+        addAllNeighbors(35, 39, 37, 15);
+        addAllNeighbors(13, 18, 5, 15);
+        addAllNeighbors(0, 5, 17, 1);
+        addAllNeighbors(21, 20, 22, 1);
+        addAllNeighbors(49, 48, 50, 22);
 
         //center lower row
-        addAllNeighbors(36, 37, 35);
-        addAllNeighbors(14, 15, 13);
-        addAllNeighbors(4, 5, 2, 3);
-        addAllNeighbors(0, 5, 1);
-        addAllNeighbors(22, 20, 23);
+        addAllNeighbors(37, 36, 35);
+        addAllNeighbors(15, 35, 13, 14);
+        addAllNeighbors(5, 13, 0, 4);
+        addAllNeighbors(1, 0, 21, 2);
+        addAllNeighbors(22, 21, 49, 23);
         addAllNeighbors(50, 49, 51);
 
         //lower middle row
-        addAllNeighbors(35, 36, 34);
-        addAllNeighbors(13, 14, 12);
-        addAllNeighbors(2, 4, 9, 3);
-        addAllNeighbors(3, 2, 4);
-        addAllNeighbors(1, 0, 6);
-        addAllNeighbors(23, 22, 52);
+        addAllNeighbors(36, 37, 34);
+        addAllNeighbors(14, 15, 12, 34);
+        addAllNeighbors(4, 5, 3, 12);
+        addAllNeighbors(2, 1, 6, 3);
+        addAllNeighbors(23, 22, 52, 6);
         addAllNeighbors(51, 50, 52);
 
         //lower row
-        addAllNeighbors(34, 35, 33);
-        addAllNeighbors(12, 13, 11);
-        addAllNeighbors(9, 2, 8);
-        addAllNeighbors(6, 1, 7);
-        addAllNeighbors(52, 23, 53);
+        addAllNeighbors(34, 36, 33);
+        addAllNeighbors(12, 14, 4, 11);
+        addAllNeighbors(3, 4, 2, 9);
+        addAllNeighbors(6, 2, 23, 7);
+        addAllNeighbors(52, 23, 51, 53);
 
         //bottom
         addAllNeighbors(33, 34, 32);
-        addAllNeighbors(11, 12, 10);
-        addAllNeighbors(8, 9, 27);
-        addAllNeighbors(7, 6, 24);
+        addAllNeighbors(11, 12, 10, 32);
+        addAllNeighbors(9, 3, 8, 10);
+        addAllNeighbors(7, 6, 24, 8);
         addAllNeighbors(53, 52, 24);
 
         //bottom even more
-        addAllNeighbors(32, 33, 31);
-        addAllNeighbors(10, 11, 29);
-        addAllNeighbors(27, 8, 26);
-        addAllNeighbors(24, 7, 25);
+        addAllNeighbors(32, 33, 11, 31);
+        addAllNeighbors(10, 11, 9, 29);
+        addAllNeighbors(8, 9, 7, 27);
+        addAllNeighbors(24, 7, 53, 25);
 
         //tips
         addAllNeighbors(31, 32, 30);
-        addAllNeighbors(29, 10, 28);
+        addAllNeighbors(29, 10, 28, 30);
+        addAllNeighbors(27, 8, 26, 28);
+        addAllNeighbors(25, 24, 26);
+        addAllNeighbors(30, 21, 29);
+        addAllNeighbors(28, 29, 27);
         addAllNeighbors(26, 27, 25);
     }
 
