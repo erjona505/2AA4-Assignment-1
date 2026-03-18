@@ -35,6 +35,8 @@ public class CommandParser {
         Pattern rollPattern = Pattern.compile("^roll$",  Pattern.CASE_INSENSITIVE);
         Pattern listPattern = Pattern.compile("^list$",  Pattern.CASE_INSENSITIVE);
         Pattern goPattern = Pattern.compile("^go$",  Pattern.CASE_INSENSITIVE);
+        Pattern undoPattern= Pattern.compile("^undo$",  Pattern.CASE_INSENSITIVE);
+        Pattern redoPattern= Pattern.compile("^redo$",  Pattern.CASE_INSENSITIVE);
 
         Pattern cityPattern = Pattern.compile("^build\\s+city\\s+(\\d+)$",  Pattern.CASE_INSENSITIVE);
         Pattern settlementPattern = Pattern.compile("^build\\s+settlement\\s+(\\d+)$",  Pattern.CASE_INSENSITIVE);
@@ -53,6 +55,16 @@ public class CommandParser {
 
         if (listPattern.matcher(input).matches()) {
             commandType = CommandType.LIST;
+            return commandType;
+        }
+
+        if(undoPattern.matcher(input).matches()) {
+            commandType = CommandType.UNDO;
+            return commandType;
+        }
+
+        if(redoPattern.matcher(input).matches()) {
+            commandType = CommandType.REDO;
             return commandType;
         }
 

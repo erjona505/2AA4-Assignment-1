@@ -821,4 +821,28 @@ public class GameMap {
         }
         return -1;//no edge exists between those two nodes
     }
+
+    protected void removeSettlement(HumanAgent humanAgent, int nodeId) {
+        Node node = getNode(nodeId);
+
+        humanAgent.addPoints(-node.getBuilding().getPoints()); //remove added points
+        node.setBuilding(null);
+    }
+
+    protected void removeCity(HumanAgent humanAgent, int nodeId) {
+        Node node = getNode(nodeId);
+
+        humanAgent.addPoints(-node.getBuilding().getPoints()); //remove added points
+        node.setBuilding(new Settlement(humanAgent, nodeId));
+    }
+
+    protected void removeRoad(HumanAgent humanAgent, int fromNodeId, int toNodeId) {
+        int edgeId = getEdgeIdFromTwoNodes(fromNodeId,toNodeId);
+
+        Edge edge = getEdge(edgeId);
+
+        humanAgent.addPoints(-edge.getRoad().getPoints()); //remove the added points
+        edge.setRoad(null); //remove the road
+    }
+
 }

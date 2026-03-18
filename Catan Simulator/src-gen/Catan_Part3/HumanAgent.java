@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 public class HumanAgent extends Agent {
 
-    CommandParser parser = new CommandParser();
+    private CommandParser parser = new CommandParser();
+    private CommandHistory history = new CommandHistory();
     private GameState exporter;
 
 
@@ -35,10 +36,10 @@ public class HumanAgent extends Agent {
 
 
             CommandType type = parser.parser(input);
-//TESTING TAKE OUT LATER
+            //TESTING TAKE OUT LATER
             //System.out.println("Command type: " + type);
 
-//ROLL actually happens in game but human has to trigger it since they are always the first player
+            //ROLL actually happens in game but human has to trigger it since they are always the first player
             //if not triggered then they cannot move on
             if (type== CommandType.ROLL){
                 if (hasRolledThisTurn){
@@ -66,15 +67,7 @@ public class HumanAgent extends Agent {
                     System.out.println("You must roll first");
                     continue;
                 }
-                done=tryBuildCity(map);
-                if(done){
-
-                    System.out.println("Successfully built city for node " + parser.getNodeId());}
-                else{
-                    System.out.println("Failed to built city for node " + parser.getNodeId());
-                }
-
-
+                history.executeCommand(new BuildCityCommand(this, map, parser.getNodeId() ));
             }
 
             else if (type == CommandType.BUILD_SETTLEMENT) {
@@ -82,13 +75,7 @@ public class HumanAgent extends Agent {
                     System.out.println("You must roll first");
                     continue;
                 }
-
-                done=tryBuildSettlement(map);
-                if(done){
-                    System.out.println("Successfully built settlement for node " + parser.getNodeId());}
-                else{
-                    System.out.println("Failed to built settlement for node " + parser.getNodeId());
-                }
+                history.executeCommand(new BuildSettlementCommand(this, map, parser.getNodeId() ));
             }
 
             else if (type == CommandType.BUILD_ROAD) {
@@ -96,14 +83,15 @@ public class HumanAgent extends Agent {
                     System.out.println("you must roll first");
                     continue;
                 }
-                System.out.println("From node: " + parser.getFromNodeId());
-                System.out.println("To node: " + parser.getToNodeId());
-                done = tryBuildRoad(map);
-                if(done){
-                    System.out.printf("Successfully built road form node %d to node %d" ,parser.getFromNodeId(),parser.getToNodeId());}
-                else{
-                    System.out.printf("Failed to built road for form node %d to node %d",parser.getFromNodeId(),parser.getToNodeId());
-                }
+                history.executeCommand(new BuildRoadCommand(this, map, parser.getFromNodeId(), parser.getToNodeId() ));
+            }
+
+            else if(type==CommandType.UNDO){
+                history.undoCommand();
+            }
+
+            else if(type==CommandType.REDO){
+                history.redoCommand();
             }
 
             else if (type == CommandType.GO) {
@@ -249,5 +237,25 @@ public class HumanAgent extends Agent {
         }
 
         return false;
+    }
+
+    //Return the resources when undo building
+    public void returnRoad(){
+        resources.add(ResourceType.WOOD, 1);
+        resources.add(ResourceType.BRICK, 1);
+    }
+
+    public void returnSettlemet(){
+
+        resources.add(ResourceType.WOOD, 1);
+        resources.add(ResourceType.BRICK, 1);
+        resources.add(ResourceType.WHEAT, 1);
+        resources.add(ResourceType.SHEEP, 1);
+    }
+
+    public void returnCity(){
+        resources.add(ResourceType.WHEAT, 2);
+        resources.add(ResourceType.ORE, 3);
+
     }
 }

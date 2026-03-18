@@ -24,7 +24,7 @@ public abstract class Agent {
     /**
      *
      */
-    private Resources resources;
+    protected Resources resources;
     protected int roadsRemaining;
     protected int settlementsRemaining;
     protected int citiesRemaining;
