@@ -23,9 +23,9 @@ This project implements a simulator for the board game Settlers of Catan, extend
 - Includes a Demonstrator class to showcase key functionality
 
 
-# Important Information about Catan Part 2 ❗❗❗
-The Assignment 2: Change and evolution code can be found under:
-- Catan Simulator/src-gen/Catan_Part2
+# Important Information about Catan Part 3 ❗❗❗
+The Assignment 3: Change and evolution code can be found under:
+- Catan Simulator/src-gen/Catan_Part3
 
 The updated UML can be found here:
 - It is under Catan_UML/Catan_Part1/Catan_Part2_UML.PNG
@@ -39,6 +39,8 @@ When it is the human player's turn, the simulator reads commands from the comman
 Supported commands:
 - Roll (Rolls the dice and distributes resources) 
 - List (Display all the resource cards currently in the player's hand
+- Redo (Redo the last undo action)
+- Undo (Undo the action) 
 - Build settlement [nodeId] (Builds a settlement at the specified node)
 - Build city [nodeId] (Upgrades a settlement to a city)
 - Build road [fromNodeId,toNodeId] (Builds a road between two nodes)
