@@ -57,33 +57,51 @@ public class ComputerAgent extends Agent {
     @Override
     public void takeTurn(GameMap map, int round, int rollDice) {
 
-        // operates the chain
-        boolean handled = chain.handle(this, map, round);
+        while (canTakeAction()) {
 
-        // if not handled, run value-based actions
-        if (!handled) {
+            // operates the chain
+            boolean handled = chain.handle(this, map, round);
+
+            // if not handled, run value-based actions
+            if (!handled) {
+                Rule best = selectAction(map);
+                if (best == null) break; //no more actions can be made
+                best.apply(this, map); //executes the action
+
+            }
+
 
         }
+
+
+
 
     }
 
 
     /**
      * we try to build if we build we subtract 1 from roadsRemaining
+     *
      * @param map
      * @return boolean
-     * **/
+     *
+     **/
     @Override
     protected boolean tryBuildRoad(GameMap map) {
         if (roadsRemaining <= 0) return false;
-        if(!checkRoadCost()){return false;}
+        if (!checkRoadCost()) {
+            return false;
+        }
 
-        edgeId=roadLocation(map);
-        if(edgeId==-1){return false;}
+        edgeId = roadLocation(map);
+        if (edgeId == -1) {
+            return false;
+        }
 
-        if(map.placeRoad(this, edgeId)){
+        if (map.placeRoad(this, edgeId)) {
             buyRoad();
             roadsRemaining--;
+
             return true;
         }
 
@@ -92,19 +110,25 @@ public class ComputerAgent extends Agent {
 
     /**
      * we try to build if we build we subtract 1 from settlementRemaining
+     *
      * @param map
      * @return boolean
-     * **/
+     *
+     **/
     //MAKE ABSTRACT METHOD INSETAD
     @Override
-    protected boolean tryBuildSettlement(GameMap map){
+    protected boolean tryBuildSettlement(GameMap map) {
         if (settlementsRemaining <= 0) return false;
-        if(!checkSettlementCost()){return false;}
+        if (!checkSettlementCost()) {
+            return false;
+        }
 
-        nodeId=settlementLocation(map, false);
-        if(nodeId==-1){return false;}
+        nodeId = settlementLocation(map, false);
+        if (nodeId == -1) {
+            return false;
+        }
 
-        if(map.placeSettlement(this, nodeId, false)){
+        if (map.placeSettlement(this, nodeId, false)) {
             buySettlement();
             settlementsRemaining--;
             return true;
@@ -115,18 +139,22 @@ public class ComputerAgent extends Agent {
 
     /**
      * we try to build if we build we subtract 1 from cityRemaining
+     *
      * @param map
      * @return boolean
-     * **/
+     *
+     **/
     @Override
-    protected boolean tryBuildCity(GameMap map){
+    protected boolean tryBuildCity(GameMap map) {
         if (citiesRemaining <= 0) return false;
-        if(!checkCityCost()){return false;}
+        if (!checkCityCost()) {
+            return false;
+        }
 
-        nodeId=cityLocation(map);
+        nodeId = cityLocation(map);
         if (nodeId == -1) return false;
 
-        if(map.isSettlement(this, nodeId) && checkCityCost()){
+        if (map.isSettlement(this, nodeId) && checkCityCost()) {
             map.upgrade(this, nodeId);
             buyCity();
             citiesRemaining--;
@@ -145,4 +173,48 @@ public class ComputerAgent extends Agent {
         int edgeId = roadLocation(map);
         map.placeRoad(this, edgeId);
     }
+
+
+    //checks if the agent can keep taking actions or if they ran out of money or there are no roads etc left
+    protected boolean canTakeAction() {
+        boolean canBuildRoad = roadsRemaining > 0 && checkRoadCost();
+        boolean canBuildSettlement = settlementsRemaining > 0 && checkSettlementCost();
+        boolean canBuildCity = citiesRemaining > 0 && checkCityCost();
+        return canBuildRoad || canBuildCity || canBuildSettlement;
+
+    }
+
+    //Evaluates all actions a computer can make and returns the one that yeilds the highest point
+    //if two actions both have the same result then a random one is done
+    protected Rule selectAction(GameMap map) {
+        ArrayList<Rule> rules = new ArrayList<>();
+        rules.add(new BuildSettlementRule());
+        rules.add(new BuildCityRule());
+        rules.add(new BuildRoadRule());
+
+        double bestValue = -1;
+        ArrayList<Rule> bestRules = new ArrayList<>();
+//loops through all the rules, if two rules have eqv value like both road and sett are 0.8 it returns a random one the 2
+        for (Rule r : rules) {
+            double val = r.evaluate(this, map);
+            if (val > bestValue) {
+                bestValue = val;
+                bestRules.clear();
+                bestRules.add(r);
+            } else if (val == bestValue) {
+                bestRules.add(r);
+            }
+        }
+
+        if (bestValue <= 0) return null;//no feasable action
+
+
+        Rule best= bestRules.get(random.nextInt(bestRules.size()));
+        System.out.println(getId() +": selected "+ best.getClass().getSimpleName());
+        return best;
+
+
+    }
 }
+
+
