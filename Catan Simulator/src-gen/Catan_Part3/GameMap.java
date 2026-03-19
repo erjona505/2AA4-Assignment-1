@@ -244,7 +244,7 @@ public class GameMap {
 
     //hard coding relationship between each edge and its own node
     private void initEdgeToNodes(){
-        // (0-9)
+        // (0-9) - First row top edges and side edges
         addEdgeBetweenNodes(0, 42, 40);
         addEdgeBetweenNodes(1, 40, 41);
         addEdgeBetweenNodes(2, 41, 43);
@@ -256,70 +256,58 @@ public class GameMap {
         addEdgeBetweenNodes(8, 19, 44);
         addEdgeBetweenNodes(9, 47, 46);
 
-        // (10-14)
+        // (10-22) - Second row top edges and side edges
         addEdgeBetweenNodes(10, 39, 38);
         addEdgeBetweenNodes(11, 38, 18);
         addEdgeBetweenNodes(12, 18, 16);
         addEdgeBetweenNodes(13, 16, 17);
         addEdgeBetweenNodes(14, 17, 19);
-
-        //  (15-19)
         addEdgeBetweenNodes(15, 19, 20);
-        addEdgeBetweenNodes(16, 28, 47);
+        addEdgeBetweenNodes(16, 20, 47);
         addEdgeBetweenNodes(17, 47, 48);
         addEdgeBetweenNodes(18, 35, 39);
         addEdgeBetweenNodes(19, 13, 18);
-
-        // Center (20-25)
         addEdgeBetweenNodes(20, 0, 17);
         addEdgeBetweenNodes(21, 21, 20);
         addEdgeBetweenNodes(22, 49, 48);
+
+        // (23-38) - Third row top edges and side edges
         addEdgeBetweenNodes(23, 37, 35);
         addEdgeBetweenNodes(24, 35, 15);
         addEdgeBetweenNodes(25, 15, 13);
-
-        // Center lower (26-31)
         addEdgeBetweenNodes(26, 13, 5);
         addEdgeBetweenNodes(27, 5, 0);
         addEdgeBetweenNodes(28, 0, 1);
         addEdgeBetweenNodes(29, 1, 21);
         addEdgeBetweenNodes(30, 21, 22);
         addEdgeBetweenNodes(31, 22, 49);
-
-        // Lower middle (32-37)
         addEdgeBetweenNodes(32, 49, 50);
         addEdgeBetweenNodes(33, 36, 37);
         addEdgeBetweenNodes(34, 14, 15);
         addEdgeBetweenNodes(35, 4, 5);
         addEdgeBetweenNodes(36, 2, 1);
         addEdgeBetweenNodes(37, 23, 22);
-
-        // Lower (38-42)
         addEdgeBetweenNodes(38, 51, 50);
+
+        // (39-53) - Fourth row top edges and side edges
         addEdgeBetweenNodes(39, 36, 34);
         addEdgeBetweenNodes(40, 34, 14);
         addEdgeBetweenNodes(41, 14, 12);
         addEdgeBetweenNodes(42, 12, 4);
-
-        // Bottom (43-47)
         addEdgeBetweenNodes(43, 4, 3);
         addEdgeBetweenNodes(44, 3, 2);
         addEdgeBetweenNodes(45, 2, 6);
         addEdgeBetweenNodes(46, 6, 23);
         addEdgeBetweenNodes(47, 23, 52);
-
-        // Bottom-most (48-51)
         addEdgeBetweenNodes(48, 52, 51);
         addEdgeBetweenNodes(49, 33, 34);
         addEdgeBetweenNodes(50, 11, 12);
-        addEdgeBetweenNodes(51, 9, 5);
-
-        // Bottom tips (52-54)
+        addEdgeBetweenNodes(51, 9, 3);
         addEdgeBetweenNodes(52, 7, 6);
         addEdgeBetweenNodes(53, 53, 52);
-        addEdgeBetweenNodes(54, 33, 32);
 
-        // Remaining edges to complete 72 (55-71)
+        // (54-63) - Fifth row top edges and side edges
+        addEdgeBetweenNodes(54, 33, 32);
         addEdgeBetweenNodes(55, 32, 11);
         addEdgeBetweenNodes(56, 11, 10);
         addEdgeBetweenNodes(57, 10, 9);
@@ -331,6 +319,8 @@ public class GameMap {
         addEdgeBetweenNodes(63, 29, 10);
         addEdgeBetweenNodes(64, 27, 8);
         addEdgeBetweenNodes(65, 25, 24);
+
+        // (66-71) - Fifth row bottom edges
         addEdgeBetweenNodes(66, 31, 30);
         addEdgeBetweenNodes(67, 30, 29);
         addEdgeBetweenNodes(68, 29, 28);
@@ -847,5 +837,182 @@ public class GameMap {
         humanAgent.addPoints(-edge.getRoad().getPoints()); //remove the added points
         edge.setRoad(null); //remove the road
     }
+
+    // finds an empty edge that would connect two of the agents disconnected road segments
+    // either one edge away (direct connection) or two edges away (one step closer)
+    public int findConnectingEdge(Agent agent) {
+
+        // looks for 1-edge gaps and builds a road if the two nodes of the
+        // empty edge have an agent road on their other ends.
+        for (int i = 0; i < 72; i++) {
+
+            Edge edge = getEdge(i);
+
+            // skips if edge is null or has road
+            if (edge == null || edge.isOccupied()) {
+                continue;
+            }
+
+            // gets the two nodes of the edge
+            List<Integer> ends = edgeToNodes.get(i);
+            int node1 = ends.get(0);
+            int node2 = ends.get(1);
+
+            // checks if each node is already connected to an agent road on other side
+            boolean isNode1Connected = hasAdjacentRoad(agent, node1);
+            boolean isNode2Connected = hasAdjacentRoad(agent, node2);
+
+            // fills the 1 edge gap
+            if (isNode1Connected && isNode2Connected) {
+                return i;
+            }
+
+
+        }
+
+        // looks for 2-edge gaps - builds a road to get one step closer to connecting
+        for (int i = 0; i < 72; i++) {
+
+            Edge edge = getEdge(i);
+            if (edge == null || edge.isOccupied()) {
+                continue;
+            }
+
+            List<Integer> ends = edgeToNodes.get(i);
+            int node1 = ends.get(0);
+            int node2 = ends.get(1);
+
+            boolean isNode1Connected = hasAdjacentRoad(agent, node1);
+            boolean isNode2Connected = hasAdjacentRoad(agent, node2);
+
+            // node 1 has a road and road2 doesnt
+            // check if node2 neighbours hava road
+            if (isNode1Connected && !isNode2Connected) {
+                for (int neighbour : getNeighborNodes(node2)) {
+                    if (hasAdjacentRoad(agent, neighbour)) {
+                        return i;
+                    }
+                }
+            }
+
+            // same check, other way
+            if (!isNode1Connected && isNode2Connected) {
+                for (int neighbour : getNeighborNodes(node1)) {
+                    if (hasAdjacentRoad(agent, neighbour)) {
+                        return i;
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    // calculates longest continuous road chain for an agent
+    public int getLongestRoad(Agent agent) {
+        int longestRoad = 0;
+
+        for (int i = 0; i < 72; i++) {
+            Edge edge = getEdge(i);
+            if (edge == null || !edge.isOccupied()) {
+                continue;
+            }
+            if (edge.getRoad().getOwner() != agent) {
+                continue;
+            }
+
+            List<Integer> ends = edgeToNodes.get(i);
+
+            // counts chain length starting from one end
+            // clears the set between the runs so both directions are checked properly
+            Set<Integer> checkedEdges = new HashSet<>();
+
+            int roadLength1 = countChain(agent, ends.get(0), checkedEdges);
+            checkedEdges.clear();
+            int roadLength2 = countChain(agent, ends.get(1), checkedEdges);
+
+            // keep the longest chain found so far
+            longestRoad = Math.max(longestRoad, Math.max(roadLength1, roadLength2));
+        }
+
+        return longestRoad;
+    }
+
+    // uses recursion to count the longest continuous road chain from a node
+    // uses backtracking to check all possible paths before finding longest one
+    private int countChain(Agent agent, int nodeId, Set<Integer> checkedEdges) {
+        int maxLength = 0;
+
+        for (int i = 0; i < 72; i++) {
+
+            // skips edges already used in the path
+            if (checkedEdges.contains(i)) {
+                continue;
+            }
+
+            Edge edge = getEdge(i);
+            if (edge == null || !edge.isOccupied()) {
+                continue;
+            }
+            if (edge.getRoad().getOwner() != agent) {
+                continue;
+            }
+
+
+            // skips edges that don't touch the current node
+            List<Integer> ends = edgeToNodes.get(i);
+            if (!ends.contains(nodeId)) {
+                continue;
+            }
+
+            // adds edge to set so we dont loop back
+            checkedEdges.add(i);
+
+            // find the node at the other end of the road
+            int otherEnd;
+
+            if (ends.get(0) == nodeId) {
+                otherEnd = ends.get(1);
+            }
+            else {
+                otherEnd = ends.get(0);
+            }
+
+            // stops if the other node has an enemy building we cant pass through
+            Node otherNode = getNode(otherEnd);
+            if (otherNode != null && otherNode.isOccupied() && otherNode.getBuilding().getOwner() != agent) {
+                checkedEdges.remove(i);
+                continue;
+            }
+
+            // counts this road as 1 and recurses however far the chain continues
+            int length = 1 + countChain(agent, ends.get(0), checkedEdges);
+            maxLength = Math.max(maxLength, length);
+
+            // backtracks and unmarks the edge so that other paths can check it
+            checkedEdges.remove(i);
+        }
+
+        return maxLength;
+    }
+
+    // find the longest road amongst opponents
+    public int getOpponentLongestRoad(Agent agent, Agent[] allAgents) {
+
+        int longestRoad = 0;
+
+        // checks every agent except current
+        for (Agent opponent : allAgents) {
+            if (opponent == agent) {
+                continue;
+            }
+
+            // stores the maximum road length
+            longestRoad = Math.max(longestRoad, getLongestRoad(opponent));
+        }
+
+        return longestRoad;
+    }
+
 
 }
