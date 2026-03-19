@@ -75,29 +75,56 @@ public void  initalRound() {
         }
     }
 
+    // updates the longest road bonus at end of each round
     public void updateLongestRoadPoints() {
 
         int highestLength = 0;
         Agent leader = null;
+        boolean tied = false;
 
+        // finds the agent with longest road
         for (Agent agent : agents) {
             int count = map.getLongestRoad(agent);
-            if (count > 5 && count > highestLength) {
-                highestLength = count;
-                leader = agent;
+            if (count >= 5) {
+                if (count > highestLength) {
+                    highestLength = count;
+                    leader = agent;
+                    tied = false;
+                } else if (count == highestLength) {
+                    // another agent matches the leader
+                    tied = true;
+                }
+
             }
         }
 
+        // if tied and the current leader is one of the tied players, they stay lead
+        if (tied && longestRoadAgent != null && map.getLongestRoad(longestRoadAgent) == highestLength) {
+            return; // no changes
+        }
+
+        // if it is tied and there is no current holder, nobody gets it
+        if (tied) {
+            leader = null;
+        }
+
+        // transfer the 2 points if the leader changes
         if (leader != longestRoadAgent) {
+            // remove bonus from previous leader
             if (longestRoadAgent != null) {
                 longestRoadAgent.addPoints(-2);
+                if (longestRoadAgent.getTotalPoints() < 0) {
+                    longestRoadAgent.addPoints(2); // safety check if points go negative
+                }
                 System.out.println("Player " + longestRoadAgent.getId() + " lost 2 VPs and longest road.");
             }
+            // give bonus to new leader
             if (leader != null) {
                 leader.addPoints(2);
                 System.out.println("Player " + leader.getId() + " gained 2 VPs and longest road");
             }
 
+            // updated current holder
             longestRoadAgent = leader;
 
 

@@ -35,6 +35,7 @@ public class ComputerAgent extends Agent {
 
         super(id, resources, points);
 
+        // creates the constraint handler
         OverSevenCardsHandler h1 = new OverSevenCardsHandler();
         ConnectRoadSegmentsHandler h2 = new ConnectRoadSegmentsHandler();
         LongestRoadHandler h3 = new LongestRoadHandler(allAgents);
@@ -56,8 +57,10 @@ public class ComputerAgent extends Agent {
     @Override
     public void takeTurn(GameMap map, int round, int rollDice) {
 
+        // operates the chain
         boolean handled = chain.handle(this, map, round);
 
+        // if not handled, run value-based actions
         if (!handled) {
 
         }

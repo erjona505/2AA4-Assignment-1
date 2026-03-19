@@ -5,10 +5,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * implements R3.3 constraint of if the agent has more than 7 cards
+ * they must spend them by building roads, settlements or cities
+ *
+ * keeps building in a loop until cards drop to 7 or below or until nothing can be built
+ */
 public class OverSevenCardsHandler extends ConstraintHandler {
     @Override
     public boolean handle(Agent agent, GameMap map, int round) {
 
+        // if constraint doesnt apply, pass to next handler
         if (agent.getResources().totalCards() <= 7) {
             return passToSuccessor(agent, map, round);
         }
@@ -16,10 +23,11 @@ public class OverSevenCardsHandler extends ConstraintHandler {
         ComputerAgent computer = (ComputerAgent) agent;
         boolean alreadyBuilt = true;
 
+        // keeps building until cards are at or below 7 or cant build anything
         while (agent.getResources().totalCards() > 7 && alreadyBuilt) {
             alreadyBuilt = false;
 
-
+            // shuffles build options
             List<Integer> options = new ArrayList<>(); //list our options
             options.add(0);
             options.add(1);
