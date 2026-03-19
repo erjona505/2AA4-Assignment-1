@@ -39,8 +39,8 @@ When it is the human player's turn, the simulator reads commands from the comman
 Supported commands:
 - Roll (Rolls the dice and distributes resources) 
 - List (Display all the resource cards currently in the player's hand
-- Redo (Redo the last undo action)
-- Undo (Undo the action) 
+- Undo (Undo the last action)
+- Redo (Redo last undone action)
 - Build settlement [nodeId] (Builds a settlement at the specified node)
 - Build city [nodeId] (Upgrades a settlement to a city)
 - Build road [fromNodeId,toNodeId] (Builds a road between two nodes)
@@ -90,8 +90,7 @@ The JSON file contains information about:
 
 # Project Structure 📂
 ```
- 
-    Catan-Simulator
+Catan-Simulator
 │
 ├── src
 │   │
@@ -111,30 +110,56 @@ The JSON file contains information about:
 │   │   │ Settlement.java
 │   │   │ Tile.java
 │   │
-│   └── Catan_Part2
+│   ├── Catan_Part2
+│   │   │ Agent.java
+│   │   │ Building.java
+│   │   │ City.java
+│   │   │ Command.java
+│   │   │ CommandParser.java
+│   │   │ CommandType.java
+│   │   │ ComputerAgent.java
+│   │   │ config.txt
+│   │   │ Demonstrator.java
+│   │   │ Edge.java
+│   │   │ ExportGameState.java
+│   │   │ Game.java
+│   │   │ GameDice.java
+│   │   │ GameMap.java
+│   │   │ GameState.java
+│   │   │ HumanAgent.java
+│   │   │ Node.java
+│   │   │ ResourceType.java
+│   │   │ Road.java
+│   │   │ Robber.java
+│   │   │ Settlement.java
+│   │   │ Tile.java
+│   │
+│   └── Catan_Part3
 │       │ Agent.java
-│       │ Building.java
-│       │ City.java
+│       │ BuildCityCommand.java
+│       │ BuildCityRule.java
+│       │ BuildRoadCommand.java
+│       │ BuildRoadRule.java
+│       │ BuildSettlementCommand.java
+│       │ BuildSettlementRule.java
 │       │ Command.java
+│       │ CommandHistory.java
 │       │ CommandParser.java
 │       │ CommandType.java
 │       │ ComputerAgent.java
 │       │ config.txt
 │       │ Demonstrator.java
-│       │ Edge.java
-│       │ ExportGameState.java
 │       │ Game.java
-│       │ GameDice.java
 │       │ GameMap.java
 │       │ GameState.java
 │       │ HumanAgent.java
-│       │ Node.java
-│       │ ResourceType.java
-│       │ Road.java
 │       │ Robber.java
-│       │ Settlement.java
-│       │ Tile.java
- └── UML
+│       │ Rule.java
+│       │ Visualizer.java
+│       │ VisualizerAdapter.java
+│       │ ... (nodes, tiles, roads, resources, etc.)
+│
+└── UML
 
 │
 ├── Task1
