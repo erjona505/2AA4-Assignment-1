@@ -106,7 +106,11 @@ public class GameState {
     //writes the JSON string to the output file
     private void writeToFile(String json) {
         try {
-            FileWriter writer = new FileWriter(filename);
+            //FileWriter writer = new FileWriter(filename);
+            File file = new File(filename);
+            file.getParentFile().mkdirs(); // creates parent directories if they don't exist
+            FileWriter writer = new FileWriter(file);
+
             writer.write(json);
             writer.close();
         } catch (IOException e) {

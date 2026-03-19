@@ -1,2 +1,2 @@
 rounds: 100
-visualizerPath: \..\2aa4-2026-base\assignments\visualize
+visualizerPath: C:\Users\harno\HP_Harnoor_Work\McMaster\Second Year (2025-26)\Second Sem\SFRWENG 2AA4\2aa4-2026-base\assignments\visualize\state.json

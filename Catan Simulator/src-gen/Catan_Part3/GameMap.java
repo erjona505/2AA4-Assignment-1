@@ -244,99 +244,89 @@ public class GameMap {
 
     //hard coding relationship between each edge and its own node
     private void initEdgeToNodes(){
-        // (0-9)
-        addEdgeBetweenNodes(0, 42, 41);
-        addEdgeBetweenNodes(1, 42, 40);
-        addEdgeBetweenNodes(2, 41, 39);
-        addEdgeBetweenNodes(3, 40, 44);
-        addEdgeBetweenNodes(4, 40, 18);
-        addEdgeBetweenNodes(5, 44, 43);
-        addEdgeBetweenNodes(6, 43, 45);
-        addEdgeBetweenNodes(7, 43, 21);
-        addEdgeBetweenNodes(8, 45, 47);
+        // (0-9) - First row top edges and side edges
+        addEdgeBetweenNodes(0, 42, 40);
+        addEdgeBetweenNodes(1, 40, 41);
+        addEdgeBetweenNodes(2, 41, 43);
+        addEdgeBetweenNodes(3, 43, 44);
+        addEdgeBetweenNodes(4, 44, 45);
+        addEdgeBetweenNodes(5, 45, 46);
+        addEdgeBetweenNodes(6, 38, 42);
+        addEdgeBetweenNodes(7, 16, 41);
+        addEdgeBetweenNodes(8, 19, 44);
         addEdgeBetweenNodes(9, 47, 46);
 
-        // (10-14)
+        // (10-22) - Second row top edges and side edges
         addEdgeBetweenNodes(10, 39, 38);
-        addEdgeBetweenNodes(11, 18, 17);
+        addEdgeBetweenNodes(11, 38, 18);
         addEdgeBetweenNodes(12, 18, 16);
-        addEdgeBetweenNodes(13, 21, 19);
-        addEdgeBetweenNodes(14, 46, 48);
+        addEdgeBetweenNodes(13, 16, 17);
+        addEdgeBetweenNodes(14, 17, 19);
+        addEdgeBetweenNodes(15, 19, 20);
+        addEdgeBetweenNodes(16, 20, 47);
+        addEdgeBetweenNodes(17, 47, 48);
+        addEdgeBetweenNodes(18, 35, 39);
+        addEdgeBetweenNodes(19, 13, 18);
+        addEdgeBetweenNodes(20, 0, 17);
+        addEdgeBetweenNodes(21, 21, 20);
+        addEdgeBetweenNodes(22, 49, 48);
 
-        //  (15-19)
-        addEdgeBetweenNodes(15, 38, 37);
-        addEdgeBetweenNodes(16, 17, 15);
-        addEdgeBetweenNodes(17, 16, 5);
-        addEdgeBetweenNodes(18, 19, 20);
-        addEdgeBetweenNodes(19, 48, 49);
+        // (23-38) - Third row top edges and side edges
+        addEdgeBetweenNodes(23, 37, 35);
+        addEdgeBetweenNodes(24, 35, 15);
+        addEdgeBetweenNodes(25, 15, 13);
+        addEdgeBetweenNodes(26, 13, 5);
+        addEdgeBetweenNodes(27, 5, 0);
+        addEdgeBetweenNodes(28, 0, 1);
+        addEdgeBetweenNodes(29, 1, 21);
+        addEdgeBetweenNodes(30, 21, 22);
+        addEdgeBetweenNodes(31, 22, 49);
+        addEdgeBetweenNodes(32, 49, 50);
+        addEdgeBetweenNodes(33, 36, 37);
+        addEdgeBetweenNodes(34, 14, 15);
+        addEdgeBetweenNodes(35, 4, 5);
+        addEdgeBetweenNodes(36, 2, 1);
+        addEdgeBetweenNodes(37, 23, 22);
+        addEdgeBetweenNodes(38, 51, 50);
 
-        // Center (20-25)
-        addEdgeBetweenNodes(20, 37, 36);
-        addEdgeBetweenNodes(21, 15, 14);
-        addEdgeBetweenNodes(22, 5, 4);
-        addEdgeBetweenNodes(23, 5, 0);
-        addEdgeBetweenNodes(24, 20, 22);
-        addEdgeBetweenNodes(25, 49, 50);
+        // (39-53) - Fourth row top edges and side edges
+        addEdgeBetweenNodes(39, 36, 34);
+        addEdgeBetweenNodes(40, 34, 14);
+        addEdgeBetweenNodes(41, 14, 12);
+        addEdgeBetweenNodes(42, 12, 4);
+        addEdgeBetweenNodes(43, 4, 3);
+        addEdgeBetweenNodes(44, 3, 2);
+        addEdgeBetweenNodes(45, 2, 6);
+        addEdgeBetweenNodes(46, 6, 23);
+        addEdgeBetweenNodes(47, 23, 52);
+        addEdgeBetweenNodes(48, 52, 51);
+        addEdgeBetweenNodes(49, 33, 34);
+        addEdgeBetweenNodes(50, 11, 12);
+        addEdgeBetweenNodes(51, 9, 3);
+        addEdgeBetweenNodes(52, 7, 6);
+        addEdgeBetweenNodes(53, 53, 52);
 
-        // Center lower (26-31)
-        addEdgeBetweenNodes(26, 36, 35);
-        addEdgeBetweenNodes(27, 14, 13);
-        addEdgeBetweenNodes(28, 4, 2);
-        addEdgeBetweenNodes(29, 0, 1);
-        addEdgeBetweenNodes(30, 22, 23);
-        addEdgeBetweenNodes(31, 50, 51);
+        // (54-63) - Fifth row top edges and side edges
+        addEdgeBetweenNodes(54, 33, 32);
+        addEdgeBetweenNodes(55, 32, 11);
+        addEdgeBetweenNodes(56, 11, 10);
+        addEdgeBetweenNodes(57, 10, 9);
+        addEdgeBetweenNodes(58, 9, 8);
+        addEdgeBetweenNodes(59, 8, 7);
+        addEdgeBetweenNodes(60, 7, 24);
+        addEdgeBetweenNodes(61, 24, 53);
+        addEdgeBetweenNodes(62, 31, 32);
+        addEdgeBetweenNodes(63, 29, 10);
+        addEdgeBetweenNodes(64, 27, 8);
+        addEdgeBetweenNodes(65, 25, 24);
 
-        // Lower middle (32-37)
-        addEdgeBetweenNodes(32, 35, 34);
-        addEdgeBetweenNodes(33, 13, 12);
-        addEdgeBetweenNodes(34, 2, 9);
-        addEdgeBetweenNodes(35, 1, 6);
-        addEdgeBetweenNodes(36, 23, 52);
-        addEdgeBetweenNodes(37, 51, 52);
-
-        // Lower (38-42)
-        addEdgeBetweenNodes(38, 34, 33);
-        addEdgeBetweenNodes(39, 12, 11);
-        addEdgeBetweenNodes(40, 9, 8);
-        addEdgeBetweenNodes(41, 6, 7);
-        addEdgeBetweenNodes(42, 52, 53);
-
-        // Bottom (43-47)
-        addEdgeBetweenNodes(43, 33, 32);
-        addEdgeBetweenNodes(44, 11, 10);
-        addEdgeBetweenNodes(45, 8, 27);
-        addEdgeBetweenNodes(46, 7, 24);
-        addEdgeBetweenNodes(47, 53, 24);
-
-        // Bottom-most (48-51)
-        addEdgeBetweenNodes(48, 32, 31);
-        addEdgeBetweenNodes(49, 10, 29);
-        addEdgeBetweenNodes(50, 27, 26);
-        addEdgeBetweenNodes(51, 24, 25);
-
-        // Bottom tips (52-54)
-        addEdgeBetweenNodes(52, 31, 30);
-        addEdgeBetweenNodes(53, 29, 28);
-        addEdgeBetweenNodes(54, 26, 25);
-
-        // Remaining edges to complete 72 (55-71)
-        addEdgeBetweenNodes(55, 41, 40);
-        addEdgeBetweenNodes(56, 44, 18);
-        addEdgeBetweenNodes(57, 21, 16);
-        addEdgeBetweenNodes(58, 16, 21);
-        addEdgeBetweenNodes(59, 17, 18);
-        addEdgeBetweenNodes(60, 15, 17);
-        addEdgeBetweenNodes(61, 14, 15);
-        addEdgeBetweenNodes(62, 13, 14);
-        addEdgeBetweenNodes(63, 12, 13);
-        addEdgeBetweenNodes(64, 11, 12);
-        addEdgeBetweenNodes(65, 10, 11);
-        addEdgeBetweenNodes(66, 4, 5);
-        addEdgeBetweenNodes(67, 2, 4);
-        addEdgeBetweenNodes(68, 9, 2);
-        addEdgeBetweenNodes(69, 8, 9);
-        addEdgeBetweenNodes(70, 1, 0);
-        addEdgeBetweenNodes(71, 6, 1);
+        // (66-71) - Fifth row bottom edges
+        addEdgeBetweenNodes(66, 31, 30);
+        addEdgeBetweenNodes(67, 30, 29);
+        addEdgeBetweenNodes(68, 29, 28);
+        addEdgeBetweenNodes(69, 28, 27);
+        addEdgeBetweenNodes(70, 27, 26);
+        addEdgeBetweenNodes(71, 26, 25);
     }
 
     //helper methods for tiles with nodes
@@ -847,5 +837,150 @@ public class GameMap {
         humanAgent.addPoints(-edge.getRoad().getPoints()); //remove the added points
         edge.setRoad(null); //remove the road
     }
+
+    public int findConnectingEdge(Agent agent) {
+
+        // check one edge away
+        for (int i = 0; i < 72; i++) {
+
+            Edge edge = getEdge(i);
+            if (edge == null || edge.isOccupied()) {
+                continue;
+            }
+
+            List<Integer> ends = edgeToNodes.get(i);
+            int node1 = ends.get(0);
+            int node2 = ends.get(1);
+
+            boolean isNode1Connected = hasAdjacentRoad(agent, node1);
+            boolean isNode2Connected = hasAdjacentRoad(agent, node2);
+
+            if (isNode1Connected && isNode2Connected) {
+                return i;
+            }
+
+
+        }
+
+        // check 2 edges away
+        for (int i = 0; i < 72; i++) {
+
+            Edge edge = getEdge(i);
+            if (edge == null || edge.isOccupied()) {
+                continue;
+            }
+
+            List<Integer> ends = edgeToNodes.get(i);
+            int node1 = ends.get(0);
+            int node2 = ends.get(1);
+
+            boolean isNode1Connected = hasAdjacentRoad(agent, node1);
+            boolean isNode2Connected = hasAdjacentRoad(agent, node2);
+
+            if (isNode1Connected && !isNode2Connected) {
+                for (int neighbour : getNeighborNodes(node2)) {
+                    if (hasAdjacentRoad(agent, neighbour)) {
+                        return i;
+                    }
+                }
+            }
+            if (!isNode1Connected && isNode2Connected) {
+                for (int neighbour : getNeighborNodes(node1)) {
+                    if (hasAdjacentRoad(agent, neighbour)) {
+                        return i;
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    public int getLongestRoad(Agent agent) {
+        int longestRoad = 0;
+
+        for (int i = 0; i < 72; i++) {
+            Edge edge = getEdge(i);
+            if (edge == null || !edge.isOccupied()) {
+                continue;
+            }
+            if (edge.getRoad().getOwner() != agent) {
+                continue;
+            }
+
+            List<Integer> ends = edgeToNodes.get(i);
+            Set<Integer> checkedEdges = new HashSet<>();
+
+            int roadLength1 = countChain(agent, ends.get(0), checkedEdges);
+            checkedEdges.clear();
+            int roadLength2 = countChain(agent, ends.get(1), checkedEdges);
+
+            longestRoad = Math.max(longestRoad, Math.max(roadLength1, roadLength2));
+        }
+
+        return longestRoad;
+    }
+
+    private int countChain(Agent agent, int nodeId, Set<Integer> checkedEdges) {
+        int maxLength = 0;
+
+        for (int i = 0; i < 72; i++) {
+
+            if (checkedEdges.contains(i)) {
+                continue;
+            }
+
+            Edge edge = getEdge(i);
+            if (edge == null || !edge.isOccupied()) {
+                continue;
+            }
+            if (edge.getRoad().getOwner() != agent) {
+                continue;
+            }
+
+            List<Integer> ends = edgeToNodes.get(i);
+            if (!ends.contains(nodeId)) {
+                continue;
+            }
+
+            checkedEdges.add(i);
+            int otherEnd;
+
+            if (ends.get(0) == nodeId) {
+                otherEnd = ends.get(1);
+            }
+            else {
+                otherEnd = ends.get(0);
+            }
+
+            Node otherNode = getNode(otherEnd);
+            if (otherNode != null && otherNode.isOccupied() && otherNode.getBuilding().getOwner() != agent) {
+                checkedEdges.remove(i);
+                continue;
+            }
+
+            int length = 1 + countChain(agent, ends.get(0), checkedEdges);
+            maxLength = Math.max(maxLength, length);
+            checkedEdges.remove(i);
+        }
+
+        return maxLength;
+    }
+
+    public int getOpponentLongestRoad(Agent agent, Agent[] allAgents) {
+
+        int longestRoad = 0;
+
+        for (Agent opponent : allAgents) {
+            if (opponent == agent) {
+                continue;
+            }
+
+            longestRoad = Math.max(longestRoad, getLongestRoad(opponent));
+        }
+
+        return longestRoad;
+    }
+
 
 }

@@ -62,7 +62,7 @@ public class Demonstrator {
             agents[0]= new HumanAgent(1, new Resources(), 0, visualizer);
 
                 for (int i = 1; i < 4; i++) {
-                agents[i] = new ComputerAgent(i + 1, new Resources(), 0);
+                agents[i] = new ComputerAgent(i + 1, new Resources(), 0, agents);
                 }
 
 

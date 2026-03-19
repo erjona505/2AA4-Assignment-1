@@ -20,6 +20,8 @@ public class Game {
 
     private Robber robber;
 
+    private Agent longestRoadAgent = null;
+
 
     GameDice dice = new GameDice();
 
@@ -73,6 +75,36 @@ public void  initalRound() {
         }
     }
 
+    public void updateLongestRoadPoints() {
+
+        int highestLength = 0;
+        Agent leader = null;
+
+        for (Agent agent : agents) {
+            int count = map.getLongestRoad(agent);
+            if (count > 5 && count > highestLength) {
+                highestLength = count;
+                leader = agent;
+            }
+        }
+
+        if (leader != longestRoadAgent) {
+            if (longestRoadAgent != null) {
+                longestRoadAgent.addPoints(-2);
+                System.out.println("Player " + longestRoadAgent.getId() + " lost 2 VPs and longest road.");
+            }
+            if (leader != null) {
+                leader.addPoints(2);
+                System.out.println("Player " + leader.getId() + " gained 2 VPs and longest road");
+            }
+
+            longestRoadAgent = leader;
+
+
+        }
+    }
+
+
 	//runs one full round
 	public void runRound() {
 
@@ -103,6 +135,8 @@ public void  initalRound() {
             }
 		}
         round++;
+
+        updateLongestRoadPoints();
 		stats();
 
 	}
