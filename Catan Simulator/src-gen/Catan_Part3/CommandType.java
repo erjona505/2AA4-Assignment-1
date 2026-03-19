@@ -7,5 +7,7 @@ public enum CommandType {
     BUILD_ROAD,
     BUILD_SETTLEMENT,
     BUILD_CITY,
+    UNDO,
+    REDO,
     INVALID
 }
