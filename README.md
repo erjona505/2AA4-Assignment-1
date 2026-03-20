@@ -30,8 +30,8 @@ The Assignment 3: Change and evolution code can be found under:
 The updated UML can be found here:
 - It is under Catan_UML/Catan_Part1/Catan_Part3_UML.PNG
 
-The # visulaizer:
-- In the config.txt in Catan_Part3 file update 'visualizerPath' to point to your local clone of the visualizer file
+The visulaizer:
+- In the config.txt file in Catan_Part3, update 'visualizerPath' to point to your local clone of the visualizer file
 - In the visualizer file:
      - We modified the _apply_state_to_board method in light_visualizer.py to bypass catanatron's built-in placement validation, which caused errors when loading our game state from JSON.
      - This was because the visualizer loads all buildings and roads at once as a snapshot, not in the original turn-by-turn order. Catanatron's validation removes neighboring nodes from its buildable
