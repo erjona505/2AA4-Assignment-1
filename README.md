@@ -28,7 +28,7 @@ The Assignment 3: Change and evolution code can be found under:
 - Catan Simulator/src-gen/Catan_Part3
 
 The updated UML can be found here:
-- It is under Catan_UML/Catan_Part1/Catan_Part3_UML.PNG
+- It is Catan_Part3_UML.PNG
 
 The visulaizer:
 - In the config.txt file in Catan_Part3, update 'visualizerPath' to point to your local clone of the visualizer file
