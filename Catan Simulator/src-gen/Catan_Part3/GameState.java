@@ -1,5 +1,6 @@
 package Catan_Part3;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -17,11 +18,13 @@ public class GameState {
 
     public GameState(String filename) {
         this.filename = filename;
+        writeToFile("{\"roads\": [], \"buildings\":[]}");
     }
 
     //converts the game state to JSON and writes it to the file
     public void export(Game game) {
         String json = toJson(game);
+
         writeToFile(json);
     }
 
