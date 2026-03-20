@@ -99,6 +99,19 @@ public class HumanAgent extends Agent {
                     System.out.println("you must roll first");
                     continue;
                 }
+
+                if (getResources().totalCards() > 7) {
+
+                    boolean canAfford = checkCityCost() || checkRoadCost() || checkSettlementCost();
+
+                    if (canAfford) {
+                        System.out.println("You have " + getResources().totalCards() + " cards. You must build something to get to 7 cards or below.");
+                        continue;
+                    }
+                    else {
+                        System.out.println("You have " + getResources().totalCards() + " cards but cannot afford anything. Moving to next player's turn.");
+                    }
+                }
                 System.out.println("Go command detected. Exiting test.");
                // scanner.close();
                 return;

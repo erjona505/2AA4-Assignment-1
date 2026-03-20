@@ -4,6 +4,8 @@
 package Catan_Part3;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -20,6 +22,7 @@ public class ComputerAgent extends Agent {
     private int edgeId;
     private int nodeId;
     private final Random random = new Random();
+    private ConstraintHandler chain;
 
     /**
      * Constructor for agent
@@ -28,8 +31,18 @@ public class ComputerAgent extends Agent {
      * @param resources
      * @param points
      */
-    public ComputerAgent(int id, Resources resources, int points) {
+    public ComputerAgent(int id, Resources resources, int points, Agent[] allAgents) {
+
         super(id, resources, points);
+
+        // creates the constraint handler
+        OverSevenCardsHandler h1 = new OverSevenCardsHandler();
+        ConnectRoadSegmentsHandler h2 = new ConnectRoadSegmentsHandler();
+        LongestRoadHandler h3 = new LongestRoadHandler(allAgents);
+
+        h1.setSuccessor(h2);
+        h2.setSuccessor(h3);
+        chain = h1;
     }
 
     public int getEdgeId() {
@@ -40,71 +53,30 @@ public class ComputerAgent extends Agent {
         return nodeId;
     }
 
+
     @Override
     public void takeTurn(GameMap map, int round, int rollDice) {
+
         while (canTakeAction()) {
 
-            Rule best = selectAction(map);
-            if (best == null) break; //no more actions can be made
-            best.apply(this, map); //executes the action
+            // operates the chain
+            boolean handled = chain.handle(this, map, round);
+
+            // if not handled, run value-based actions
+            if (!handled) {
+                Rule best = selectAction(map);
+                if (best == null) break; //no more actions can be made
+                best.apply(this, map); //executes the action
+
+            }
+
 
         }
+
+
+
+
     }
-
-
-//        int tries=0; //tries to make loop finite
-//        do { //start with one turn initially
-//            tries++;
-//            if (tries > 50) return; // safety break
-//            boolean built = false;
-//
-//            List<Integer> options = new ArrayList<>(); //list our options
-//            options.add(0);
-//            options.add(1);
-//            options.add(2);
-//            Collections.shuffle(options, random); //shuffling the cards
-//
-//            //loop through the options
-//            for (int choice : options) {
-//
-//                if (choice == 0){
-//                    built = tryBuildRoad(map);
-//
-//                    if (built) {
-//                        System.out.println(round + " / " + getId() + ": Built road at edge " + getEdgeId());
-//                    }
-//                }
-//                else if ( choice == 1) {
-//                    built = tryBuildSettlement(map);
-//
-//                    if (built) {
-//                        System.out.println(round + " / " + getId() + ": Built settlement at node " + getNodeId());
-//                    }
-//                }
-//
-//                else {
-//                    built = tryBuildCity(map);
-//
-//                    if (built) {
-//                        System.out.println(round + " / " + getId() + ": Upgraded to city at node " + getNodeId());
-//                    }
-//                }
-//
-//                if (built) {
-//                    break;
-//                }
-//            }
-//
-//
-//            // If nothing worked, end the turn
-//            if (!built) {
-//                return;
-//            }
-//
-//        }while (isSevenCards());
-//
-
-    // }
 
 
     /**

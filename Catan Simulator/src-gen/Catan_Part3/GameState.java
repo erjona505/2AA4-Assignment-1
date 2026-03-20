@@ -1,6 +1,5 @@
 package Catan_Part3;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -107,9 +106,8 @@ public class GameState {
     private void writeToFile(String json) {
         try {
             //FileWriter writer = new FileWriter(filename);
-
             File file = new File(filename);
-            file.getParentFile().mkdirs();
+            file.getParentFile().mkdirs(); // creates parent directories if they don't exist
             FileWriter writer = new FileWriter(file);
 
             writer.write(json);
