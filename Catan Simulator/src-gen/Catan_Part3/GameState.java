@@ -1,5 +1,6 @@
 package Catan_Part3;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -105,7 +106,12 @@ public class GameState {
     //writes the JSON string to the output file
     private void writeToFile(String json) {
         try {
-            FileWriter writer = new FileWriter(filename);
+            //FileWriter writer = new FileWriter(filename);
+
+            File file = new File(filename);
+            file.getParentFile().mkdirs();
+            FileWriter writer = new FileWriter(file);
+
             writer.write(json);
             writer.close();
         } catch (IOException e) {
