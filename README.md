@@ -38,25 +38,25 @@ The visulaizer:
        list after each settlement, so later settlements in the JSON would fail even though they were valid when originally placed during the game.
      - Our change so the visualizer only needs to render the board state and not re-simulate it:
 
-       def _apply_state_to_board(self, board: Board):
-          for building_data in self.state_data.get("buildings", []):
-              node_id = building_data["node"]
-              color = self._parse_color(building_data["owner"])
-              building_type = building_data["type"]
-
-              if building_type == "SETTLEMENT":
-                  board.buildings[node_id] = (color, SETTLEMENT)
-              elif building_type == "CITY":
-                  board.buildings[node_id] = (color, CITY)
-
-              board.connected_components[color].append({node_id})
-
-          for road_data in self.state_data.get("roads", []):
-              edge = (road_data["a"], road_data["b"])
-              inverted = (road_data["b"], road_data["a"])
-              color = self._parse_color(road_data["owner"])
-              board.roads[edge] = color
-              board.roads[inverted] = color
+                def _apply_state_to_board(self, board: Board):
+                   for building_data in self.state_data.get("buildings", []):
+                       node_id = building_data["node"]
+                       color = self._parse_color(building_data["owner"])
+                       building_type = building_data["type"]
+         
+                       if building_type == "SETTLEMENT":
+                           board.buildings[node_id] = (color, SETTLEMENT)
+                       elif building_type == "CITY":
+                           board.buildings[node_id] = (color, CITY)
+         
+                       board.connected_components[color].append({node_id})
+         
+                   for road_data in self.state_data.get("roads", []):
+                       edge = (road_data["a"], road_data["b"])
+                       inverted = (road_data["b"], road_data["a"])
+                       color = self._parse_color(road_data["owner"])
+                       board.roads[edge] = color
+                       board.roads[inverted] = color
 
 # Human Player Interaction 👤
 When it is the human player's turn, the simulator reads commands from the command line
