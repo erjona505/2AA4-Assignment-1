@@ -28,12 +28,36 @@ The Assignment 3: Change and evolution code can be found under:
 - Catan Simulator/src-gen/Catan_Part3
 
 The updated UML can be found here:
-- It is under Catan_UML/Catan_Part1/Catan_Part2_UML.PNG
+- It is under Catan_UML/Catan_Part1/Catan_Part3_UML.PNG
 
-The visulaizer:
-- In the config.txt in Catan_Part2 file update 'visualizerPath' to point to your local clone of the visualizer repository 
+The # visulaizer:
+- In the config.txt in Catan_Part3 file update 'visualizerPath' to point to your local clone of the visualizer file
+- In the visualizer file:
+     - We modified the _apply_state_to_board method in light_visualizer.py to bypass catanatron's built-in placement validation, which caused errors when loading our game state from JSON.
+     - This was because the visualizer loads all buildings and roads at once as a snapshot, not in the original turn-by-turn order. Catanatron's validation removes neighboring nodes from its buildable
+       list after each settlement, so later settlements in the JSON would fail even though they were valid when originally placed during the game.
+     - Our change so the visualizer only needs to render the board state and not re-simulate it:
 
-  
+       def _apply_state_to_board(self, board: Board):
+          for building_data in self.state_data.get("buildings", []):
+              node_id = building_data["node"]
+              color = self._parse_color(building_data["owner"])
+              building_type = building_data["type"]
+
+              if building_type == "SETTLEMENT":
+                  board.buildings[node_id] = (color, SETTLEMENT)
+              elif building_type == "CITY":
+                  board.buildings[node_id] = (color, CITY)
+
+              board.connected_components[color].append({node_id})
+
+          for road_data in self.state_data.get("roads", []):
+              edge = (road_data["a"], road_data["b"])
+              inverted = (road_data["b"], road_data["a"])
+              color = self._parse_color(road_data["owner"])
+              board.roads[edge] = color
+              board.roads[inverted] = color
+
 # Human Player Interaction 👤
 When it is the human player's turn, the simulator reads commands from the command line
 Supported commands:
